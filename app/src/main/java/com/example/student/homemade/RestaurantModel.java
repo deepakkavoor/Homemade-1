@@ -20,7 +20,7 @@ public class RestaurantModel {
 
 
 
-    String getRestaurantName() {
+    public String getRestaurantName() {
         return restaurantName;
     }
 
@@ -28,7 +28,7 @@ public class RestaurantModel {
         return distance;
     }
 
-    String getImageResourceId() {
+    public String getImageResourceId() {
         return imageResourceId;
     }
 

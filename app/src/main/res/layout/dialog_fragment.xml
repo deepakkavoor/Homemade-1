@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="0dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/dialog_bg"
     android:gravity="center">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FFFFFF"
+        android:background="@color/Grey"
         >
-<!--title,dialog image,description rating bar,review title, reviews and order button-->
+        <!--title,dialog image,description rating bar,review title, reviews and order button-->
         <TextView
-            android:background="#3f51b5"
+            android:background="@color/colorPrimaryLight"
             android:textAlignment="center"
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -24,7 +28,7 @@
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:textSize="40sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/primaryText"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@id/dialog_image"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,13 +53,13 @@
             android:layout_height="wrap_content"
             android:textStyle="italic"
             android:text="  "
-            android:textColor="#212121"
+            android:textColor="@color/primaryText"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@id/dialog_image" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#3f51b5"
+            android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@id/description"
             app:layout_constraintBottom_toTopOf="@id/rating"/>
 
@@ -68,12 +72,12 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             app:layout_constraintBottom_toTopOf="@id/view"
-             />
+            />
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#3f51b5"
+            android:background="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@id/rating"
             app:layout_constraintBottom_toTopOf="@id/reviewtitle"/>
         <TextView
@@ -85,29 +89,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reviews"
-            android:textColor="#212121"
+            android:textColor="@color/primaryText"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/rating"
             app:layout_constraintBottom_toTopOf="@id/reviews"
             />
-            <TextView
-                android:id="@+id/reviews"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reviews"
-                android:textColor="#212121"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/dismiss"
-                app:layout_constraintTop_toBottomOf="@id/reviewtitle" />
+        <TextView
+            android:id="@+id/reviews"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviews"
+            android:textColor="#212121"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/dismiss"
+            app:layout_constraintTop_toBottomOf="@id/reviewtitle" />
 
 
         <com.lid.lib.LabelButtonView
             android:id="@+id/dismiss"
-            android:background="#03a9f4"
+            android:background="@color/colorPrimaryLight"
             app:label_text="CLICK"
-            android:textColor="#ffffff"
+            android:textColor="@color/primaryText"
             android:gravity="center"
             android:textSize="20sp"
             android:clickable="true"
