@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#69f0ae</color>
+    <color name="colorPrimaryDark">#2bbd7e</color>
+    <color name="colorPrimaryLight">#9fffe0</color>
+    <color name="colorSecondary">#33691e</color>
+    <color name="colorSecondaryLight">#629749</color>
+    <color name="colorSecondaryDark">#003d00</color>
+    <color name="primaryText">#000000</color>
+    <color name="secondaryText">#ffffff</color>
+    <color name="backgroundColor">#cfd8dc</color>
     <color name="colorAccent">#FF4081</color>
     <color name="signupColor">#066e8a</color>
     <color name="colorPrimary3">#3F51B5</color>
@@ -9,11 +16,13 @@
     <color name="colorPrimaryDark3">#23283a</color>
     <color name="colorPrimaryDark2">#D81B60</color>
     <color name="colorAccent2">#f1f5f8</color>
-    <color name="white">#fff</color>
+    <color name="white">#ffffff</color>
     <color name="azur">#f1f5f8</color>
     <color name="colorAccent3">#D81B60</color>
     <color name="pink">#fe104d</color>
     <color name="blue">#3F51B5</color>
     <color name="bluedark">#303F9F</color>
     <color name="pinkish">#FF4081</color>
+    <color name="FacebookButtonColor">#1E82CE</color>
+    <color name="GoogleButtonColor">#CE1E53</color>
 </resources>

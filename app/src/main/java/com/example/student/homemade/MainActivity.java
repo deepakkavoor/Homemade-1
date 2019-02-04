@@ -1,13 +1,17 @@
 package com.example.student.homemade;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
     private DrawerLayout mDrawer;
 
     private Toolbar toolbar;
+    private Context context;
 
     private NavigationView navigationView;
 
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         Toolbar toolbar = findViewById(R.id.toolbar);
         //logout = findViewById(R.id.main_btn_logout);
         setSupportActionBar(toolbar);
@@ -150,23 +156,65 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 fragmentClass = MassOrderFragment.class;
                 break;
             case R.id.main_btn_logout:
-                fragmentClass = MassOrderFragment.class;
-                //Logic for logout
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken("853704140115-a7gjo5s8uvvsfig7ij7s1t6cg9ejh1ld.apps.googleusercontent.com")
-                        .requestEmail()
-                        .build();
-                FirebaseAuth.getInstance().signOut();
-                GoogleSignIn.getClient(getApplicationContext(), gso).signOut();
-                LoginManager.getInstance().logOut();
 
-                //intent to login page
-                Intent newLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(newLoginIntent);
-                finish();
+                //Logic for logout
+
+
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(context);//, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(context);
+                }
+                builder//.setTitle("Logout")
+                        .setMessage("Are you sure you want to logout from your account?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+
+                                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                        .requestIdToken("853704140115-a7gjo5s8uvvsfig7ij7s1t6cg9ejh1ld.apps.googleusercontent.com")
+                                        .requestEmail()
+                                        .build();
+                                FirebaseAuth.getInstance().signOut();
+                                GoogleSignIn.getClient(getApplicationContext(), gso).signOut();
+                                LoginManager.getInstance().logOut();
+
+                                //intent to login page
+                                Intent newLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(newLoginIntent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+                fragmentClass = MassOrderFragment.class;
+
+
+//                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                        .requestIdToken("853704140115-a7gjo5s8uvvsfig7ij7s1t6cg9ejh1ld.apps.googleusercontent.com")
+//                        .requestEmail()
+//                        .build();
+//                FirebaseAuth.getInstance().signOut();
+//                GoogleSignIn.getClient(getApplicationContext(), gso).signOut();
+//                LoginManager.getInstance().logOut();
+//
+//                //intent to login page
+//                Intent newLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+//                startActivity(newLoginIntent);
+//                finish();
 
 
                 break;
+
+
+
             default:
                 fragmentClass = ProviderUIFragment.class;
 

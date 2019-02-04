@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/signupColor"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:background="@color/signupColor"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,19 +24,19 @@
             android:src="@mipmap/login" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="15dp"
-            android:background="@drawable/shapeemail"
             android:id="@+id/etEmail"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/shapeemail"
             android:drawableLeft="@drawable/ic_person_black_24dp"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:hint="Email"
-
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textColorHighlight="@color/white"/>
+            android:padding="5dp"
+            android:textColor="@color/primaryText"
+            android:textColorHighlight="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textSize="12sp" />
 
 
         <!--<android.support.design.widget.TextInputLayout-->
@@ -46,18 +46,19 @@
 
         <EditText
             android:id="@+id/etPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
-            android:padding="15dp"
+            android:padding="5dp"
             android:background="@drawable/shapeemail"
             android:drawableLeft="@drawable/ic_lock_black_24dp"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:hint="Password"
             android:password="true"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textColorHighlight="@color/white"/>
+            android:textSize = "12sp"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/primaryText"
+            android:textColorHighlight="@color/primaryText"/>
 
         <!--</android.support.design.widget.TextInputLayout>-->
 
@@ -78,20 +79,21 @@
         <!--android:buttonTint="@color/white"-->
         <!--android:checked="true"/>-->
         <Button
-            android:shadowColor="@android:color/transparent"
             android:id="@+id/btnForgot"
-            android:layout_width="233dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_width="90dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="60dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/shapesignup"
             android:drawableLeft="@drawable/ic_lock_open_black_24dp"
-            android:drawablePadding="6dp"
+            android:drawablePadding="0dp"
+            android:textSize = "8sp"
             android:padding="4dp"
-            android:text="Forgot Password"
-            android:textColor="@color/white"
-            android:background="@drawable/shapesignup" />
+            android:shadowColor="@android:color/transparent"
+
+            android:text="Forgot Password" />
 
 
 
@@ -100,54 +102,89 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log In"
-            android:shadowColor="@android:color/transparent"
-            android:padding="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="190dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/shapelogin"/>
+            android:background="@drawable/shapelogin"
+            android:padding="0dp"
+            android:textSize = "10sp"
+            android:shadowColor="@android:color/transparent"
+            android:text="Log In" />
 
         <Button
             android:id="@+id/btnReg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign Up"
-            android:shadowColor="@android:color/transparent"
-            android:padding="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="-35dp"
+            android:layout_marginRight="190dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="0dp"
             android:background="@drawable/shapesignup"
-            android:textColor="@color/white"/>
+            android:padding="0dp"
+            android:textSize = "10sp"
+            android:shadowColor="@android:color/transparent"
+            android:text="Sign Up" />
 
-        <com.google.android.gms.common.SignInButton
+        <!--<com.google.android.gms.common.SignInButton-->
+            <!--android:id="@+id/sign_in_button"-->
+            <!--android:layout_width="175dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:text = "Google sign in"/>-->
+
+
+
+        <!--<com.facebook.login.widget.LoginButton-->
+            <!--android:id="@+id/login_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="10dp" />-->
+
+        <Button
             android:id="@+id/sign_in_button"
-            android:layout_width="175dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="190dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginRight="190dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shapegooglefacebook"
+            android:padding="0dp"
+            android:shadowColor="@android:color/transparent"
+            android:text="Google sign-in"
+            android:textSize="8sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorHighlight="@color/white" />
 
-
-
-        <com.facebook.login.widget.LoginButton
+        <Button
             android:id="@+id/login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp" />
-
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="190dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shapefacebook"
+            android:padding="0dp"
+            android:shadowColor="@android:color/transparent"
+            android:text="Facebook sign-in"
+            android:textSize="8sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textColorHighlight="@color/white" />
 
 
 
     </LinearLayout>
 
-</ScrollView>
+<!--</ScrollView>-->
