@@ -128,7 +128,8 @@ public class LunchActivity extends AppCompatActivity {
                 String item3_cost = spinner3_quantity.getText().toString();
 
                 Log.d("item", item);
-                Log.d("item_price", "" + item_price);
+                Log.d("item_price_length", "" + item_price);
+                Log.d("item_price", "" + item_cost);
                 Log.d("item1", item1);
                 Log.d("item1_quantity", "" + item1_price);
                 Log.d("item2", item2);
@@ -143,7 +144,7 @@ public class LunchActivity extends AppCompatActivity {
 
                 if (!item.equals("None") && !item_price.equals("0"))
                     menu_items.add(item + "( " + item_cost + " )");
-                else if (item_price.equals("0")) {
+                else if (!item.equals("None") && item_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -151,7 +152,7 @@ public class LunchActivity extends AppCompatActivity {
                     Intent intent = new Intent(LunchActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                else if(item.equals("None")){
+                else if(item.equals("None") && !item_price.equals(("0"))){
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -163,7 +164,7 @@ public class LunchActivity extends AppCompatActivity {
 
                 if (!item1.equals("None") && !item1_price.equals("0"))
                     menu_items.add(item1 + "( " + item1_cost + " )");
-                else if (item1_price.equals("0")) {
+                else if (!item1.equals("None") && item1_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -171,7 +172,7 @@ public class LunchActivity extends AppCompatActivity {
                     Intent intent = new Intent(LunchActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                else if(item1.equals("None")){
+                else if(item1.equals("None") && !item1_price.equals(("0"))){
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -182,7 +183,7 @@ public class LunchActivity extends AppCompatActivity {
 
                 if (!item2.equals("None") && !item2_price.equals("0"))
                     menu_items.add(item2 + "( " + item2_cost + " )");
-                else if (item2_price.equals("0")) {
+                else if (!item2.equals("None") && item2_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -190,7 +191,7 @@ public class LunchActivity extends AppCompatActivity {
                     Intent intent = new Intent(LunchActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                else if(item2.equals("None")){
+                else if(item2.equals("None") && !item2_price.equals(("0"))){
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -201,7 +202,7 @@ public class LunchActivity extends AppCompatActivity {
 
                 if (!item3.equals("None") && !item3_price.equals("0"))
                     menu_items.add(item3 + "( " + item3_cost + " )");
-                else if (item3_price.equals("0")) {
+                else if (!item3.equals("None") && item3_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -209,7 +210,7 @@ public class LunchActivity extends AppCompatActivity {
                     Intent intent = new Intent(LunchActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                else if(item3.equals("None")){
+                else if(item3.equals("None") && !item3_price.equals(("0"))){
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);

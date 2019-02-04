@@ -112,9 +112,10 @@ public class SnacksActivity extends AppCompatActivity {
                 if (!item2.equals(""))
                     menu_items = new ArrayList<String>(fixedLenghtList);
 
+
                 if (!item.equals("None") && !item_price.equals("0"))
                     menu_items.add(item + "( " + item_cost + " )");
-                else if (item_price.equals("0")) {
+                else if(!item.equals("None") && item_price.equals("0")){
                     text = "Price not entered";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -122,7 +123,7 @@ public class SnacksActivity extends AppCompatActivity {
                     Intent intent = new Intent(SnacksActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                else if(item.equals("None")){
+                else if(item.equals("None")&& !item_price.equals("0")){
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -134,7 +135,7 @@ public class SnacksActivity extends AppCompatActivity {
 
                 if (!item1.equals("None") && !item1_price.equals("0"))
                     menu_items.add(item1 + "( " + item1_cost + " )");
-                else if (item1_price.equals("0")) {
+                else if(!item1.equals("None") && item1_price.equals("0")){
                     text = "Price not entered";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -142,7 +143,7 @@ public class SnacksActivity extends AppCompatActivity {
                     Intent intent = new Intent(SnacksActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                else if(item1.equals("None")){
+                else if(item1.equals("None") && !item1_price.equals("0")){
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
