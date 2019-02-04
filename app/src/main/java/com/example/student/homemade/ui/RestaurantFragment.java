@@ -348,10 +348,11 @@ public class RestaurantFragment extends Fragment {
             if(restaurantModel.getRestaurantName().contains(text)){
                 temp.add(restaurantModel);
             }
-            if(text.isEmpty()) {
-                temp.clear();
-                temp.addAll(dupRestaurantList);
-            }
+
+        }
+        if(text.isEmpty()) {
+            temp.clear();
+            temp.addAll(dupRestaurantList);
         }
         updateList(temp);
     }
