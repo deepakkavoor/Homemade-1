@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">Homemade</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="facebook_app_id">235018157407367</string>
+    <string name="fb_login_protocol_scheme">fb235018157407367</string>
+
+    <string name="hello_blank_fragment">Blank</string>
+    <string name="dist_from_curr_loc">Distance from current location</string>
+    <string name="title_activity_sign_up_buyer">SignUpBuyer</string>
+    <string name="rate_review">Ratenreview</string>
+    <string name="cancel_order">Cancel Your Order</string>
+
+<string-array name="array_quantity">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="breakfast_array">
+        <item>None</item>
+        <item>Idli</item>
+        <item>Dosa</item>
+        <item>Paratha</item>
+        <item>Poha</item>
+        <item>Masala Dosa</item>
+        <item>Puri</item>
+        <item>Vada</item>
+    </string-array>
+    <string-array name="breakfast_drinks_array">
+        <item>None</item>
+        <item>Coffee</item>
+        <item>Tea</item>
+        <item>Milk</item>
+        <item>Badam Milk</item>
+    </string-array>
+    <string-array name="appetizer_array">
+        <item>None</item>
+        <item>Payasa</item>
+        <item>Kosambri</item>
+        <item>Puliogare</item>
+        <item>Mango Gojju</item>
+        <item>Hapla</item>
+    </string-array>
+    <string-array name="main_course_array">
+        <item>None</item>
+        <item>Rice</item>
+        <item>Bisi Bele Bath</item>
+        <item>Pumpkin halwa</item>
+        <item>Ragi balls</item>
+    </string-array>
+    <string-array name="dessert_array">
+        <item>None</item>
+        <item>Obattu</item>
+        <item>Ice Cream</item>
+        <item>Pheni</item>
+    </string-array>
+    <string-array name="lunch_dinner_drinks_array">
+        <item>None</item>
+        <item>Buttermilk</item>
+        <item>Milk</item>
+        <item>Badam Milk</item>
+    </string-array>
+    <string-array name="snacks_array">
+        <item>None</item>
+        <item>Samosa</item>
+        <item>Vada</item>
+        <item>Vada</item>
+        <item>Dahi Vada</item>
+    </string-array>
+    <string-array name="snacks_drinks_array">
+        <item>None</item>
+        <item>Coffee</item>
+        <item>Tea</item>
+        <item>Milk</item>
+        <item>Badam Milk</item>
+    </string-array>
+
+</resources>
