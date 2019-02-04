@@ -85,10 +85,15 @@ public class RestaurantFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                restaurantList.clear();
+                restaurantList.addAll(dupRestaurantList);
+                filter(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                restaurantList.clear();
+                restaurantList.addAll(dupRestaurantList);
                 filter(s.toString());
             }
         });
@@ -345,7 +350,7 @@ public class RestaurantFragment extends Fragment {
     void filter(String text){
         ArrayList<RestaurantModel> temp = new ArrayList();
         for(RestaurantModel restaurantModel:restaurantList) {
-            if(restaurantModel.getRestaurantName().contains(text)){
+            if(restaurantModel.getRestaurantName().toLowerCase().contains(text.toLowerCase())){
                 temp.add(restaurantModel);
             }
 
