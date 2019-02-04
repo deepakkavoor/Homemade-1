@@ -137,12 +137,19 @@ public class DinnerActivity extends AppCompatActivity {
                 Log.d("item3_quantity", item3_price);
                 Log.d("additional_menu", item4);
                 String[] elements = item4.split(",");
+
+
+                String item_cost = spinner_quantity.getText().toString();
+                String item1_cost = spinner1_quantity.getText().toString();
+                String item2_cost = spinner2_quantity.getText().toString();
+                String item3_cost = spinner3_quantity.getText().toString();
+
                 List<String> fixedLenghtList = Arrays.asList(elements);
                 if (!item4.equals(""))
                     menu_items = new ArrayList<String>(fixedLenghtList);
 
                 if (!item.equals("None") && !item_price.equals("0"))
-                    menu_items.add(item + "( " + item_price + " )");
+                    menu_items.add(item + "( " + item_cost + " )");
                 else if (item_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
@@ -161,7 +168,7 @@ public class DinnerActivity extends AppCompatActivity {
                 }
 
                 if (!item1.equals("None") && !item1_price.equals("0"))
-                    menu_items.add(item1 + "( " + item1_price + " )");
+                    menu_items.add(item1 + "( " + item1_cost + " )");
                 else if (item1_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
@@ -180,7 +187,7 @@ public class DinnerActivity extends AppCompatActivity {
                 }
 
                 if (!item2.equals("None") && !item2_price.equals("0"))
-                    menu_items.add(item2 + "( " + item2_price + " )");
+                    menu_items.add(item2 + "( " + item2_cost + " )");
                 else if(item2_price.equals(("0"))){
                     text = "Price not entered";
                     flag = 1;
@@ -200,7 +207,7 @@ public class DinnerActivity extends AppCompatActivity {
 
 
                 if (!item3.equals("None") && !item3_price.equals("0"))
-                    menu_items.add(item3 + "( " + item3_price + " )");
+                    menu_items.add(item3 + "( " + item3_cost + " )");
                 else if (item3_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;

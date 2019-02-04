@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/Grey"
+    android:background="@color/grey"
     android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/Green"
+            android:backgroundTint="@color/green"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             android:paddingLeft="56dp"

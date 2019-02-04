@@ -106,12 +106,14 @@ public class SnacksActivity extends AppCompatActivity {
                 Log.d("additional_menu", item2);
                 String[] elements = item2.split(",");
                 List<String> fixedLenghtList = Arrays.asList(elements);
+                String item_cost = spinner_quantity.getText().toString();
+                String item1_cost = spinner1_quantity.getText().toString();
 
                 if (!item2.equals(""))
                     menu_items = new ArrayList<String>(fixedLenghtList);
 
                 if (!item.equals("None") && !item_price.equals("0"))
-                    menu_items.add(item + "( " + item_price + " )");
+                    menu_items.add(item + "( " + item_cost + " )");
                 else if (item_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
@@ -131,7 +133,7 @@ public class SnacksActivity extends AppCompatActivity {
 
 
                 if (!item1.equals("None") && !item1_price.equals("0"))
-                    menu_items.add(item1 + "( " + item1_price + " )");
+                    menu_items.add(item1 + "( " + item1_cost + " )");
                 else if (item1_price.equals("0")) {
                     text = "Price not entered";
                     flag = 1;
