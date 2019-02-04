@@ -32,10 +32,17 @@ public class BreakfastActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button breakfast_upload;
     int menuID;
-    int flag=0;
-    //    public void pre_fill_form(){
-//
-//    }
+    int flag = 0;
+    public boolean isNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            // s is not numeric
+            return false;
+        }
+    }
     private ArrayList<String> menu_items = new ArrayList<String>();
 
     @Override
@@ -46,7 +53,6 @@ public class BreakfastActivity extends AppCompatActivity {
         //PLEASE PASS provider ID to this activity from login page
         final int myproviderID = 13;
         //PLEASE PASS provider ID to this activity from login page
-
 
 
         final Spinner spinner = (Spinner) findViewById(R.id.breakfast_spinner);
@@ -67,7 +73,6 @@ public class BreakfastActivity extends AppCompatActivity {
         final EditText spinner1_quantity = (EditText) findViewById(R.id.breakfast_drinks_spinner_quantity);
 
         final EditText additional_menu = (EditText) findViewById(R.id.additional_breakfast);
-
 
 
 //        Intent intent = getIntent();
@@ -180,17 +185,16 @@ public class BreakfastActivity extends AppCompatActivity {
                     menu_items = new ArrayList<String>(fixedLenghtList);
 
 
-                if (!item.equals("None") && !item_price.equals("0"))
+                if (!item.equals("None") && !item_price.equals("0") && isNumeric(item_cost))
                     menu_items.add(item + "( " + item_cost + " )");
-                else if(!item.equals("None") && item_price.equals("0")){
-                    text = "Price not entered";
+                else if ((!item.equals("None") && item_price.equals("0")) || !isNumeric(item_cost)) {
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                     Intent intent = new Intent(BreakfastActivity.this, MainActivity.class);
                     startActivity(intent);
-                }
-                else if(item.equals("None")&& !item_price.equals("0")){
+                } else if (item.equals("None") && !item_price.equals("0")) {
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
@@ -200,17 +204,16 @@ public class BreakfastActivity extends AppCompatActivity {
                 }
 
 
-                if (!item1.equals("None") && !item1_price.equals("0"))
+                if (!item1.equals("None") && !item1_price.equals("0") && isNumeric(item1_cost))
                     menu_items.add(item1 + "( " + item1_cost + " )");
-                else if(!item1.equals("None") && item1_price.equals("0")){
-                    text = "Price not entered";
+                else if ((!item1.equals("None") && item1_price.equals("0")) || !isNumeric(item1_cost)) {
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                     Intent intent = new Intent(BreakfastActivity.this, MainActivity.class);
                     startActivity(intent);
-                }
-                else if(item1.equals("None") && !item1_price.equals("0")){
+                } else if (item1.equals("None") && !item1_price.equals("0")) {
                     text = "Menu not entered with respective price";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);

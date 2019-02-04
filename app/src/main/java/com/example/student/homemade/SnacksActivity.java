@@ -34,7 +34,16 @@ public class SnacksActivity extends AppCompatActivity {
     int menuID;
     int flag=0;
     private ArrayList<String> menu_items = new ArrayList<String>();
-
+    public boolean isNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            // s is not numeric
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,10 +122,10 @@ public class SnacksActivity extends AppCompatActivity {
                     menu_items = new ArrayList<String>(fixedLenghtList);
 
 
-                if (!item.equals("None") && !item_price.equals("0"))
+                if (!item.equals("None") && !item_price.equals("0")  && isNumeric(item1_cost))
                     menu_items.add(item + "( " + item_cost + " )");
-                else if(!item.equals("None") && item_price.equals("0")){
-                    text = "Price not entered";
+                else if ((!item1.equals("None") && item1_price.equals("0")) || !isNumeric(item1_cost)){
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -133,10 +142,10 @@ public class SnacksActivity extends AppCompatActivity {
                 }
 
 
-                if (!item1.equals("None") && !item1_price.equals("0"))
+                if (!item1.equals("None") && !item1_price.equals("0") && isNumeric(item1_cost))
                     menu_items.add(item1 + "( " + item1_cost + " )");
-                else if(!item1.equals("None") && item1_price.equals("0")){
-                    text = "Price not entered";
+                else if ((!item1.equals("None") && item1_price.equals("0")) || !isNumeric(item1_cost)){
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();

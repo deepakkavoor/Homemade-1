@@ -35,6 +35,16 @@ public class DinnerActivity extends AppCompatActivity {
     int flag=0;
 
     private ArrayList<String> menu_items = new ArrayList<String>();
+    public boolean isNumeric(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            // s is not numeric
+            return false;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,10 +158,10 @@ public class DinnerActivity extends AppCompatActivity {
                 if (!item4.equals(""))
                     menu_items = new ArrayList<String>(fixedLenghtList);
 
-                if (!item.equals("None") && !item_price.equals("0"))
+                if (!item.equals("None") && !item_price.equals("0") && isNumeric(item_cost))
                     menu_items.add(item + "( " + item_cost + " )");
-                else if (!item.equals("None") && item_price.equals("0")) {
-                    text = "Price not entered";
+                else if ((!item.equals("None") && item_price.equals("0")) || !isNumeric(item_cost)) {
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -168,10 +178,10 @@ public class DinnerActivity extends AppCompatActivity {
                 }
 
 
-                if (!item1.equals("None") && !item1_price.equals("0"))
+                if (!item1.equals("None") && !item1_price.equals("0") && isNumeric(item1_cost))
                     menu_items.add(item1 + "( " + item1_cost + " )");
-                else if (!item1.equals("None") && item1_price.equals("0")) {
-                    text = "Price not entered";
+                else if ((!item1.equals("None") && item1_price.equals("0")) || !isNumeric(item1_cost)) {
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -187,10 +197,10 @@ public class DinnerActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-                if (!item2.equals("None") && !item2_price.equals("0"))
+                if (!item2.equals("None") && !item2_price.equals("0") && isNumeric(item2_cost))
                     menu_items.add(item2 + "( " + item2_cost + " )");
-                else if (!item2.equals("None") && item2_price.equals("0")) {
-                    text = "Price not entered";
+                else if ((!item2.equals("None") && item2_price.equals("0")) || !isNumeric(item2_cost)) {
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -206,10 +216,10 @@ public class DinnerActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-                if (!item3.equals("None") && !item3_price.equals("0"))
+                if (!item3.equals("None") && !item3_price.equals("0") && isNumeric(item3_cost))
                     menu_items.add(item3 + "( " + item3_cost + " )");
-                else if (!item3.equals("None") && item3_price.equals("0")) {
-                    text = "Price not entered";
+                else if ((!item3.equals("None") && item3_price.equals("0")) || !isNumeric(item3_cost)) {
+                    text = "Price not valid";
                     flag = 1;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -224,7 +234,6 @@ public class DinnerActivity extends AppCompatActivity {
                     Intent intent = new Intent(DinnerActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-
                 Log.d("ACTUAL MENU ID ", "" + menuID);
 
                 Log.d("Array : ", menu_items.toString());
