@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/Grey"
+        android:background="@color/grey"
         >
         <!--title,dialog image,description rating bar,review title, reviews and order button-->
         <TextView

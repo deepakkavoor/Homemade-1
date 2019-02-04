@@ -25,6 +25,6 @@
     <color name="pinkish">#FF4081</color>
     <color name="FacebookButtonColor">#1E82CE</color>
     <color name="GoogleButtonColor">#CE1E53</color>
-    <color name="Grey">#EBEBEB</color>
-    <color name="Green">#216621</color>
+    <color name="grey">#EBEBEB</color>
+    <color name="green">#216621</color>
 </resources>

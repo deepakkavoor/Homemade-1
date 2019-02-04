@@ -4,7 +4,7 @@
     android:id="@+id/card_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Grey"
+    android:background="@color/grey"
     android:paddingTop="70dp"
     android:paddingBottom="0dp">
 
