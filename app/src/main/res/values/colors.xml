@@ -8,7 +8,7 @@
     <color name="colorSecondaryDark">#003d00</color>
     <color name="primaryText">#000000</color>
     <color name="secondaryText">#ffffff</color>
-    <color name="backgroundColor">#cfd8dc</color>
+    <color name="backgroundColor">#b0bec5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="signupColor">#066e8a</color>
     <color name="colorPrimary3">#3F51B5</color>
@@ -25,4 +25,6 @@
     <color name="pinkish">#FF4081</color>
     <color name="FacebookButtonColor">#1E82CE</color>
     <color name="GoogleButtonColor">#CE1E53</color>
+    <color name="Grey">#EBEBEB</color>
+    <color name="Green">#216621</color>
 </resources>

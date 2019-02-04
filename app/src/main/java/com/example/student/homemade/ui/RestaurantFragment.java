@@ -8,12 +8,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toolbar;
 
 import com.example.student.homemade.R;
 import com.example.student.homemade.RestaurantAdapter;
@@ -41,11 +46,13 @@ public class RestaurantFragment extends Fragment {
     final double longitude = 74.8031;
     View v;
     String TAG = "RestaurantFragment";
-    ArrayList<RestaurantModel> restaurantList;
+    ArrayList<RestaurantModel> restaurantList,dupRestaurantList;
     RecyclerView mRecyclerView;
     RestaurantAdapter myAdapter;
     private MainViewModel mViewModel;
     ProgressBar progressBar;
+    EditText editText;
+
 
     //Sets up the database
 
@@ -64,9 +71,28 @@ public class RestaurantFragment extends Fragment {
 
         v = inflater.inflate(R.layout.restaurant_card, container, false);
         mRecyclerView = v.findViewById(R.id.cardView);
+        editText=v.findViewById(R.id.inputSearch);
         getActivity().setTitle("Restaurants Available");
         progressBar= v.findViewById(R.id.progress_circular);
         progressBar.setVisibility(View.VISIBLE);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
 
 
         return v;
@@ -83,8 +109,10 @@ public class RestaurantFragment extends Fragment {
 
 
 
+
         mRecyclerView.setHasFixedSize(true);
         restaurantList = new ArrayList<>();
+        dupRestaurantList=new ArrayList<>();
 
         LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity());
         MyLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -112,7 +140,7 @@ public class RestaurantFragment extends Fragment {
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference provider =  db.collection("Provider");
-                provider.get()
+        provider.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task  ) {
@@ -263,6 +291,7 @@ public class RestaurantFragment extends Fragment {
 
 //                                                Log.d(TAG,String.valueOf(counter[0]));
                                                 restaurantList.add(restaurantModel);
+                                                dupRestaurantList.add(restaurantModel);
 
                                                 myAdapter.notifyDataSetChanged();
 
@@ -306,6 +335,25 @@ public class RestaurantFragment extends Fragment {
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    public void updateList(ArrayList<RestaurantModel> list){
+        restaurantList.clear();
+        restaurantList.addAll(list);
+        myAdapter.notifyDataSetChanged();
+    }
+    void filter(String text){
+        ArrayList<RestaurantModel> temp = new ArrayList();
+        for(RestaurantModel restaurantModel:restaurantList) {
+            if(restaurantModel.getRestaurantName().contains(text)){
+                temp.add(restaurantModel);
+            }
+            if(text.isEmpty()) {
+                temp.clear();
+                temp.addAll(dupRestaurantList);
+            }
+        }
+        updateList(temp);
     }
 
 

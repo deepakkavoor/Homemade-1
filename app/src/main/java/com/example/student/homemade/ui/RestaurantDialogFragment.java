@@ -1,5 +1,7 @@
 package com.example.student.homemade.ui;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -34,6 +37,12 @@ public class RestaurantDialogFragment extends DialogFragment {
         this.stars="4";
         this.title="Restaurant Name";
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(RestaurantDialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
+    }
 //    public RestaurantDialogFragment(String title,String stars) {
 //        this.stars=stars;
 //        this.title=title;
@@ -52,7 +61,7 @@ public class RestaurantDialogFragment extends DialogFragment {
             stars = args.getString("stars","4");
             ArrayList<String> reviews= args.getStringArrayList("reviews");
             for(String i: reviews) {
-                review_text.append(i +"\n\n");
+                review_text.append(i +"\n");
             }
             Log.d("review_text",review_text.toString());
             descr = args.getString("description", "Be the first to describe this place!");
@@ -72,12 +81,14 @@ public class RestaurantDialogFragment extends DialogFragment {
 
 
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dialog_fragment, container, false);
         getDialog().setTitle("Simple Dialog");
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
         return rootView;
@@ -90,4 +101,3 @@ public class RestaurantDialogFragment extends DialogFragment {
 
     }
 }
-

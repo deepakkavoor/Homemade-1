@@ -20,11 +20,11 @@ import java.util.HashMap;
 
 public class ChooseActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Button breakfast;
+    CardView breakfast;
     Button update;
-    Button lunch;
-    Button snacks;
-    Button dinner;
+    CardView lunch;
+    CardView snacks;
+    CardView dinner;
     @Override
     protected void onStart() {
         super.onStart();
