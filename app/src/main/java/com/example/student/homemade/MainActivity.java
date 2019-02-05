@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.student.homemade.ui.ConsumerDetailsLayout;
 import com.example.student.homemade.ui.ConsumerUIFragment;
 import com.example.student.homemade.ui.DeliveryAndTrackingFragment;
 import com.example.student.homemade.ui.HistoricalOrdersFragment;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         setContentView(R.layout.activity_main);
         context = this;
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setTitle("Dashboard");
         //logout = findViewById(R.id.main_btn_logout);
         setSupportActionBar(toolbar);
 
@@ -150,18 +152,28 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 break;
             case R.id.rest_list:
                 fragmentClass = RestaurantFragment.class;
+                //toolbar.setTitle("Resturant List");
                 break;
             case R.id.historical_orders:
                 fragmentClass = HistoricalOrdersFragment.class;
+               // toolbar.setTitle("Resturant List");
                 break;
             case R.id.mass_orders:
                 fragmentClass = MassOrderFragment.class;
+               // toolbar.setTitle("Mass Order");
                 break;
             case R.id.trending_items:
-                fragmentClass = TrendingItemsFragment.class;
+               fragmentClass = TrendingItemsFragment.class;
+               // toolbar.setTitle("Trending Items");
                 break;
             case R.id.delivery_and_tracking:
                 fragmentClass = DeliveryAndTrackingFragment.class;
+               // toolbar.setTitle("Delivery and Tracking");
+                break;
+            case R.id.user_button:
+                Intent intent1 = new Intent(context, ConsumerDetailsLayout.class);
+                startActivity(intent1);
+                fragmentClass = MassOrderFragment.class;
                 break;
             case R.id.cancel_order:
                 Intent intent = new Intent(context,CancelOrder.class);

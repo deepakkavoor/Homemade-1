@@ -26,7 +26,7 @@ public class ConsumerUIFragment extends Fragment {
 
     // DECLARING BUTTONS TO CHANGE LAYOUT
     Context context;
-    Button userButton; // FOR USER PAGE
+
     Button orderingButton; //FOR ORDERING PAGE
     Button reviewButton;
 
@@ -64,16 +64,10 @@ public class ConsumerUIFragment extends Fragment {
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_consumer_ui, container, false);
         context=getActivity();
-        userButton = (Button) v.findViewById(R.id.user_button);
+
         orderingButton = (Button) v.findViewById(R.id.orderButton);
         reviewButton = (Button) v.findViewById(R.id.review_button);
-        userButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity() , ConsumerDetailsLayout.class);
-                startActivity(intent);
-            }
-        });
+
         orderingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

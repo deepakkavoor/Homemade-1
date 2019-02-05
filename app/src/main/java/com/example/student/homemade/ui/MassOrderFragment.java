@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.student.homemade.MainActivity;
 import com.example.student.homemade.R;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
@@ -126,6 +128,9 @@ public class MassOrderFragment extends Fragment {
         // Inflate the layout for this fragment
 
         v=  inflater.inflate(R.layout.fragment_mass_order, container, false);
+
+
+
         dateText = (EditText) v.findViewById(R.id.dateText);
         timeText = (EditText) v.findViewById(R.id.timeText);
         addressText = (EditText) v.findViewById(R.id.addressText);
@@ -137,6 +142,15 @@ public class MassOrderFragment extends Fragment {
                 android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.items));
         arrayAdapterItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerItems.setAdapter(arrayAdapterItems);
+
+        //SPINNER FOR NUMBER OF ITEMS
+        spinnerItems = (Spinner) v.findViewById(R.id.numebrOfItems);
+        ArrayAdapter<String> arrayAdapterNumber = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.numbers));
+        arrayAdapterItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerItems.setAdapter(arrayAdapterNumber);
+
+
 
         //CREATING 2ND SPINNER FOR SELLER AND SELLER ARRAY IS IN res/vales/strings.xml NAMED "seller"
         spinnerSeller = (Spinner) v.findViewById(R.id.spinnerSeller);
