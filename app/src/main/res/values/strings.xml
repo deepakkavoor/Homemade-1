@@ -10,7 +10,7 @@
     <string name="rate_review">Ratenreview</string>
     <string name="cancel_order">Cancel Your Order</string>
 
-<string-array name="array_quantity">
+    <string-array name="array_quantity">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -78,6 +78,23 @@
         <item>Tea</item>
         <item>Milk</item>
         <item>Badam Milk</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>ALOO PARATHA</item>
+        <item>BHINDI SABJI</item>
+        <item>PALAK PANEER</item>
+        <item>CHICKEN KABAB</item>
+        <item>ALOO DUM</item>
+    </string-array>
+
+    <string-array name="seller">
+        <item>SHARMA HOUSE FOOD</item>
+        <item>KUMAR FOOD HOUSE FOOD</item>
+        <item>CHITTI MAHARAJA KI DUKAN</item>
+        <item>JAIN HOUSE FOOD</item>
+        <item>KRISHNA FOOD CENTER</item>
+        <item>GOPAL CENTER OF FOOD</item>
     </string-array>
 
 </resources>

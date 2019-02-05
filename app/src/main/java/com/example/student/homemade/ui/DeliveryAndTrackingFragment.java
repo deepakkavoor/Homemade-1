@@ -1,33 +1,24 @@
 package com.example.student.homemade.ui;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.student.homemade.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HistoricalOrdersFragment.OnFragmentInteractionListener} interface
+ * {@link DeliveryAndTrackingFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HistoricalOrdersFragment#newInstance} factory method to
+ * Use the {@link DeliveryAndTrackingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HistoricalOrdersFragment extends Fragment {
-
-    View v;
-    int[] IMAGES = {R.drawable.alooparatha,R.drawable.biriyani,R.drawable.chicken_kabab,R.drawable.dosaidli,R.drawable.muturpaneer,R.drawable.poori_bhaji,R.drawable.samosa,};
-    String[] NAMES={"Aloo-Paratha","Biriyani","Chicken kabab","Dosa-Idli","Paneer","Poori-Bhaji","Samosa"};
-    String[] DESCRIPTION = {"SHARMA HOUSE FOOD","KUMAR FOOD HOUSE FOOD","MAHARAJA KI DUKAN","JAIN HOUSE FOOD","KRISHNA FOOD CENTER","GOPAL CENTER OF FOOD","TEMP HOUSE"};
-
+public class DeliveryAndTrackingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +30,7 @@ public class HistoricalOrdersFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public HistoricalOrdersFragment() {
+    public DeliveryAndTrackingFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +40,11 @@ public class HistoricalOrdersFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HistoricalOrdersFragment.
+     * @return A new instance of fragment DeliveryAndTrackingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HistoricalOrdersFragment newInstance(String param1, String param2) {
-        HistoricalOrdersFragment fragment = new HistoricalOrdersFragment();
+    public static DeliveryAndTrackingFragment newInstance(String param1, String param2) {
+        DeliveryAndTrackingFragment fragment = new DeliveryAndTrackingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,52 +65,16 @@ public class HistoricalOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_historical_orders, container, false);
-
-        ListView listView = (ListView) v.findViewById(R.id.listview);
-        HistoricalOrdersFragment.CustomAdapter customAdapter = new CustomAdapter();
-        listView.setAdapter(customAdapter);
-        return v;
+        return inflater.inflate(R.layout.fragment_delivery_and_tracking, container, false);
     }
 
-
-
-    class CustomAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return IMAGES.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup parent) {
-            view = getLayoutInflater().inflate(R.layout.trending_items_custom_view,null);
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView2);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_names);
-            TextView textView_description = (TextView) view.findViewById(R.id.textView_description);
-
-            imageView.setImageResource(IMAGES[i]);
-            textView_name.setText(NAMES[i]);
-            textView_description.setText(DESCRIPTION[i]);
-            return view;
-        }
-    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
 
     @Override
