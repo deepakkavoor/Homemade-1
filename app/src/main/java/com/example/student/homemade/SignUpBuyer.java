@@ -104,7 +104,8 @@ public class SignUpBuyer extends AppCompatActivity {
 
 
     public void confirmInput(View v) {
-        if(!validateEmail() | !validatePassword() |!validateUsername()) {
+        // validate password has been removed because of regex problems
+        if(!validateEmail() |!validateUsername()) {
             return;
         }
 

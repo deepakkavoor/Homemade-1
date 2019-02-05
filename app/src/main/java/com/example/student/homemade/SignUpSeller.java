@@ -74,11 +74,6 @@ public class SignUpSeller extends AppCompatActivity {
             return false;
         }
 
-        if(usernameInput.length() > 15) {
-            textInputUsername.setError("Field cannot have greater than 15 characters");
-            return false;
-        }
-
         else {
             textInputUsername.setError(null);
             return true;
@@ -123,7 +118,8 @@ public class SignUpSeller extends AppCompatActivity {
 
 
     public void confirmInput(View v) {
-        if(!validateEmail() | !validatePassword() |!validateUsername() |!validateRestaurantName()) {
+        // validate password has been removed because of regex problems
+        if(!validateEmail() | !validateUsername() | !validateRestaurantName()) {
             return;
         }
 

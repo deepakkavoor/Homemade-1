@@ -15,14 +15,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="50dp"
-            android:background="@color/colorPrimaryDark3">
+            android:background="@color/colorSecondaryLight">
 
             <TextView
                 android:id="@+id/welcome_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="40sp"
-                android:textColor="#fff"
+                android:textColor="@color/colorPrimaryDark3"
                 android:text="Welcome to Home Made Food"/>
             <TextView
                 android:id="@+id/description_text"
@@ -43,7 +43,7 @@
                     android:id="@+id/buyer_button"
                     android:layout_margin="10dp"
                     android:textColor="#fff"
-                    android:background="@drawable/buttonstylepink"
+                    android:background="@drawable/buttonstyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SignUp as Buyer"/>
@@ -80,7 +80,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/buttonstylepink"
+                android:background="@drawable/buttonstyle"
                 android:text="Login"
                 android:textColor="#fff"/>
         </LinearLayout>
