@@ -1,23 +1,97 @@
 package com.example.student.homemade.ui;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.student.homemade.MainActivity;
 import com.example.student.homemade.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MassOrderFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MassOrderFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+
 public class MassOrderFragment extends Fragment {
+
+    View v;
+    //MAKING VARIBALES FOR TEXT VIEWS
+    TextView submitTextView,headingText;
+    EditText dateText,timeText,addressText;
+    Button submitButton;
+    Spinner spinnerItems,spinnerSeller;
+
+
+    public int checkForValidInput() {
+
+        //INPUT FROM USER
+        String date1 = dateText.getText().toString();
+        String time1 = timeText.getText().toString();
+        String address1 = addressText.getText().toString();
+        if(date1.length() < 10) return 1;
+        int temp1 = Integer.parseInt(date1.substring(0,2));
+        int temp2 = Integer.parseInt(date1.substring(3,5));
+        int temp3 = Integer.parseInt(date1.substring(6,10));
+        //CHECKING FOR CORRECT DATE
+        Toast.makeText(getActivity(),date1.substring(0,2), Toast.LENGTH_SHORT).show();
+        return 0;
+
+    }
+
+    //SUBMIT BUTTON IN ACTION
+    public int submitToUserButton(View view)
+    {
+        // CHECKING FOR VALID INPUT FROM USER
+//        int temp1 = checkForValidInput();
+//        if(temp1 != 0){
+//            if(temp1 == 1)
+//                Toast.makeText(getActivity(), "DATE FORMAT NOT CORRECT", Toast.LENGTH_SHORT).show();
+//            else if(temp1 == 2)
+//                Toast.makeText(getActivity(), "TIME NOT CORRECT", Toast.LENGTH_SHORT).show();
+//            else if(temp1 == 3)
+//                Toast.makeText(getActivity(), "ADDRESS BAR EMPTY", Toast.LENGTH_SHORT).show();
+//
+//            return 1;
+//        }
+
+
+        Toast.makeText(getActivity(), "ORDER SUBMITTED TO USER", Toast.LENGTH_SHORT).show();
+        //INITIALISING ALL THE TEXTS
+        headingText = (TextView) v.findViewById(R.id.headingText);
+        dateText = (EditText) v.findViewById(R.id.dateText);
+        addressText = (EditText) v.findViewById(R.id.addressText);
+        timeText = (EditText) v.findViewById(R.id.timeText);
+        submitTextView = (TextView) v.findViewById(R.id.submitTextView);
+        submitButton = (Button) v.findViewById(R.id.submitToSellerButton);
+        //INITIALISING DONE
+
+        //NOW MAKING EVERYTHING INVISIBLE
+        headingText.setVisibility(view.GONE);
+        dateText.setVisibility(view.GONE);
+        addressText.setVisibility(view.GONE);
+        timeText.setVisibility(view.GONE);
+        submitTextView.setVisibility(view.GONE);
+        submitButton.setVisibility(view.GONE);
+        spinnerItems.setVisibility(view.GONE);
+        spinnerSeller.setVisibility(view.GONE);
+        //EVERYTHING INVISIBLE ON BUTTON CLICK
+
+        submitTextView.setVisibility(View.VISIBLE);
+        return 1;
+
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,21 +107,8 @@ public class MassOrderFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MassOrderFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MassOrderFragment newInstance(String param1, String param2) {
+    public static MassOrderFragment newInstance() {
         MassOrderFragment fragment = new MassOrderFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -65,7 +126,69 @@ public class MassOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mass_order, container, false);
+
+        v=  inflater.inflate(R.layout.fragment_mass_order, container, false);
+
+
+
+        dateText = (EditText) v.findViewById(R.id.dateText);
+        timeText = (EditText) v.findViewById(R.id.timeText);
+        addressText = (EditText) v.findViewById(R.id.addressText);
+
+        submitButton = (Button) v.findViewById(R.id.submitToSellerButton);
+        //CREATING A SPINNER AND ITEMS STRING ARRAY IS IN res/values/strings.xml NAMED "items"
+        spinnerItems = (Spinner) v.findViewById(R.id.spinnerItems);
+        ArrayAdapter<String> arrayAdapterItems = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.items));
+        arrayAdapterItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerItems.setAdapter(arrayAdapterItems);
+
+        //SPINNER FOR NUMBER OF ITEMS
+        spinnerItems = (Spinner) v.findViewById(R.id.numebrOfItems);
+        ArrayAdapter<String> arrayAdapterNumber = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.numbers));
+        arrayAdapterItems.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerItems.setAdapter(arrayAdapterNumber);
+
+
+
+        //CREATING 2ND SPINNER FOR SELLER AND SELLER ARRAY IS IN res/vales/strings.xml NAMED "seller"
+        spinnerSeller = (Spinner) v.findViewById(R.id.spinnerSeller);
+        ArrayAdapter<String> arrayAdapterSeller = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.seller));
+        arrayAdapterSeller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSeller.setAdapter(arrayAdapterSeller);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String date1 = "1234567890";
+                date1 = dateText.getText().toString();
+                String time1 = timeText.getText().toString();
+                String address1 = addressText.getText().toString();
+                Pattern DATE_PATTERN = Pattern.compile("^((19|2[0-9])[0-9]{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$");
+                Pattern TIME_PATTERN = Pattern.compile("(1[012]|[1-9]):[0-5][0-9](\\\\s)?(?i)(am|pm)");
+
+
+                if( !DATE_PATTERN.matcher(date1).matches() ) {
+                    Toast.makeText(getActivity(), "DATE FORMAT NOT CORRECT", Toast.LENGTH_SHORT).show();
+                }
+                else if( !TIME_PATTERN.matcher(time1).matches() )
+                {
+                    Toast.makeText(getActivity(), "TIME FORMAT NOT CORRECT", Toast.LENGTH_SHORT).show();
+                }
+                else if(address1.length() == 0)
+                {
+                    Toast.makeText(getActivity(), "ADDRESS BAR EMPTY", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    submitToUserButton(v);
+                }
+
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
