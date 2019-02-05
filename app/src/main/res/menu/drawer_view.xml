@@ -23,6 +23,9 @@
             android:id="@+id/delivery_and_tracking"
             android:title="Delivery and Tracking" />
         <item
+            android:id="@+id/user_button"
+            android:title="User Details" />
+        <item
             android:id="@+id/main_btn_logout"
             android:title="Logout" />
     </group>
