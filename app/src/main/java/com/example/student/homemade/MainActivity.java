@@ -21,9 +21,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.student.homemade.ui.ConsumerUIFragment;
+import com.example.student.homemade.ui.DeliveryAndTrackingFragment;
 import com.example.student.homemade.ui.HistoricalOrdersFragment;
 import com.example.student.homemade.ui.MassOrderFragment;
 import com.example.student.homemade.ui.RestaurantFragment;
+import com.example.student.homemade.ui.TrendingItemsFragment;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -153,6 +155,17 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 fragmentClass = HistoricalOrdersFragment.class;
                 break;
             case R.id.mass_orders:
+                fragmentClass = MassOrderFragment.class;
+                break;
+            case R.id.trending_items:
+                fragmentClass = TrendingItemsFragment.class;
+                break;
+            case R.id.delivery_and_tracking:
+                fragmentClass = DeliveryAndTrackingFragment.class;
+                break;
+            case R.id.cancel_order:
+                Intent intent = new Intent(context,CancelOrder.class);
+                startActivity(intent);
                 fragmentClass = MassOrderFragment.class;
                 break;
             case R.id.main_btn_logout:

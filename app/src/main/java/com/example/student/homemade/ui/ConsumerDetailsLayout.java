@@ -1,0 +1,17 @@
+package com.example.student.homemade.ui;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import com.example.student.homemade.R;
+
+public class ConsumerDetailsLayout extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_consumer_details_layout);
+
+
+    }
+}

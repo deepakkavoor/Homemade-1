@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpSeller"></activity>
+        <activity android:name=".ui.ConsumerDetailsLayout"></activity>
+        <activity android:name=".SignUpSeller" />
         <activity
             android:name=".SignUpBuyer"
             android:label="@string/title_activity_sign_up_buyer"
@@ -52,41 +53,39 @@
         <activity
             android:name=".RatingandReviewActivity"
             android:label="Ratings and Reviews"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".CancelOrder"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".CancelOrder"
             android:label="Cancel Order"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".BreakfastActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".BreakfastActivity"
             android:label="Breakfast"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".LunchActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".LunchActivity"
             android:label="Lunch"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".DinnerActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".DinnerActivity"
             android:label="Lunch"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".SnacksActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SnacksActivity"
             android:label="Lunch"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".ChooseActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ChooseActivity"
             android:label="Lunch"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".OrdersHistoryActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".OrdersHistoryActivity"
             android:label="Lunch"
-            android:theme="@style/AppTheme"
-            />
-        <activity android:name=".CurrentOrdersActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".CurrentOrdersActivity"
             android:label="Lunch"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
