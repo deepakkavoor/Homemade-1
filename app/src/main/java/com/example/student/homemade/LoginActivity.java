@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openStartPageActivity();
+                openSplashPageActivity();
             }
         });
 
@@ -438,8 +438,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //----------------Opens the start activity page i.e Signup pages and intro's
-    public void openStartPageActivity() {
-        Intent startIntent = new Intent(this, StartPage.class);
+    public void openSplashPageActivity() {
+        Intent startIntent = new Intent(this, SplashActivity.class);
         startActivity(startIntent);
     }
 }
