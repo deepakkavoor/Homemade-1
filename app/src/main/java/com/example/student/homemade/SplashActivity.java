@@ -20,12 +20,12 @@ public class SplashActivity extends AppCompatActivity {
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.splash_screen_transition);
         iv.startAnimation(myanim);
 
-        final Intent i = new Intent(this, StartPage.class);
+        final Intent i = new Intent(this, SliderActivity.class);
 
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(5000);
+                    sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -115,4 +115,7 @@
         <item>15</item>
     </string-array>
 
+    <string name="start">Start</string>
+    <string name="next">Next</string>
+
 </resources>
