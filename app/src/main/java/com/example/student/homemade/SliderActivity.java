@@ -43,7 +43,7 @@ public class SliderActivity extends AppCompatActivity {
 
     // btnSkipClick
     public  void btnSkipClick(View v) {
-        launchHomeScreen();
+        launchStartScreen();
     }
 
     //btnNextClick
@@ -56,11 +56,11 @@ public class SliderActivity extends AppCompatActivity {
             // move to next screen
             sViewPager.setCurrentItem(current);
         } else {
-            launchHomeScreen();
+            launchStartScreen();
         }
     }
 
-    private void launchHomeScreen() {
+    private void launchStartScreen() {
         startActivity(new Intent(this, StartPage.class));
         finish();
     }

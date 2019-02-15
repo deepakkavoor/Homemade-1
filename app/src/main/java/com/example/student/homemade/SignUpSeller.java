@@ -172,15 +172,29 @@ public class SignUpSeller extends AppCompatActivity {
                     input += "\n";
 
                     Map<String, Object> user = new HashMap<>();
-                    user.put("username", textInputUsername.getText().toString());
+                    user.put("active",true);
+                    user.put("address",null);
+                    user.put("description", textInputRestaurantDetails.getText().toString());
                     user.put("email", textInputEmail.getText().toString());
+                    user.put("imageResourceId", textInputImageResourceId.getText().toString());
+                    //user.menu("menu",)
+                    user.put("phone",textInputPhoneNumber.getText().toString());
+                    user.put("profilepictures",textInputProfilePicture.getText().toString());
+                    user.put("restaurantname", textInputRestaurantName.getText().toString());
+                    //user.put("userid", )
+                    user.put("username", textInputUsername.getText().toString());
+                    user.put("wallet", 100);
                     user.put("password", textInputPassword.getText().toString());
-                    user.put("restaurant name", textInputRestaurantName.getText().toString());
-                    user.put("restaurant details", textInputRestaurantDetails.getText().toString());
-                    user.put("restaurant phone number", textInputPhoneNumber.getText().toString());
-                    user.put("restaurant image resource id", textInputImageResourceId.getText().toString());
-                    user.put("restaurant person profile image id", textInputProfilePicture.getText().toString());
                     user.put("typeOfUser", "Provider");
+//                    user.put("username", textInputUsername.getText().toString());
+//                    user.put("email", textInputEmail.getText().toString());
+//                    user.put("password", textInputPassword.getText().toString());
+//                    user.put("restaurant name", textInputRestaurantName.getText().toString());
+//                    user.put("restaurant details", textInputRestaurantDetails.getText().toString());
+//                    user.put("restaurant phone number", textInputPhoneNumber.getText().toString());
+//                    user.put("restaurant image resource id", textInputImageResourceId.getText().toString());
+//                    user.put("restaurant person profile image id", textInputProfilePicture.getText().toString());
+//                    user.put("typeOfUser", "Provider");
 
                     db.collection("user").document(textInputEmail.getText().toString()).set(user)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -211,7 +225,7 @@ public class SignUpSeller extends AppCompatActivity {
                                 }
                             });
 
-                    Toast.makeText(getApplicationContext(), "Successfull Sign Up. Go to Login and Start Over", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Successfull Sign Up. Please go back and click Login to go to your Dashboard.", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(SignUpSeller.this, LoginActivity.class);
                     startActivity(intent);
                 }
