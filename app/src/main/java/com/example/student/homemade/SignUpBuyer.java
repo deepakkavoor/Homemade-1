@@ -1,14 +1,27 @@
 package com.example.student.homemade;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SignUpBuyer extends AppCompatActivity {
@@ -23,6 +36,7 @@ public class SignUpBuyer extends AppCompatActivity {
             //".{4,}" +                     //at least 4 characters
             "$");
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     public EditText textInputEmail;
     public EditText textInputUsername;
     public EditText textInputPassword;
@@ -116,6 +130,58 @@ public class SignUpBuyer extends AppCompatActivity {
         input += "Password: " + textInputPassword.getText().toString();
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(textInputEmail.getText().toString(), textInputPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isComplete()) {
+                    String input = "Email: " + textInputEmail.getText().toString();
+                    input += "\n";
+                    input += "Username: " + textInputUsername.getText().toString();
+                    input += "\n";
+                    input += "Password: " + textInputPassword.getText().toString();
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("username", textInputUsername.getText().toString());
+                    user.put("email", textInputEmail.getText().toString());
+                    user.put("password", textInputPassword.getText().toString());
+                    user.put("typeOfUser", "Consumer");
+
+                    db.collection("user").document(textInputEmail.getText().toString()).set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("SignUP", "Signup of " + textInputEmail.getText().toString() + " successful.");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("SignUP", "Signup of " + textInputEmail.getText().toString() + " failure.");
+                                }
+                            });
+
+                    db.collection("Consumer").document(textInputEmail.getText().toString()).set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("SignUP", "Signup of " + textInputEmail.getText().toString() + " successful.");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("SignUP", "Signup of " + textInputEmail.getText().toString() + " failure.");
+                                }
+                            });
+
+                    Toast.makeText(getApplicationContext(), "Successfull Sign Up. Go to Login and Start Over", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
 

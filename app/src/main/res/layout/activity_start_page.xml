@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,19 +16,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="50dp"
-            android:background="@color/colorSecondaryLight">
+            android:background="@mipmap/back">
 
             <TextView
                 android:id="@+id/welcome_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="40sp"
-                android:textColor="@color/colorPrimaryDark3"
+                android:textColor="@color/white"
                 android:text="Welcome to Home Made Food"/>
             <TextView
                 android:id="@+id/description_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
                 android:textColor="#fff"
                 android:text="Home Made food is a food delivery app where you can choose amazing home made food that remind you of your mother's cooking. Please Click the appropriate button to continue."
                 android:textSize="15sp"
@@ -42,20 +44,20 @@
                 <Button
                     android:id="@+id/buyer_button"
                     android:layout_margin="10dp"
-                    android:textColor="#fff"
-                    android:background="@drawable/buttonstyle"
+                    android:textColor="#070404"
+                    android:background="@drawable/shapelogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SignUp as Buyer"/>
+                    android:text="Sign Up as Buyer"/>
 
                 <Button
                     android:id="@+id/seller_button"
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Signup as Seller"
-                    android:background="@drawable/buttonstyle2"
-                    android:textColor="#fff"/>
+                    android:text="Sign up as Seller"
+                    android:background="@drawable/shapelogin"
+                    android:textColor="#070404"/>
             </LinearLayout>
 
         </LinearLayout>
