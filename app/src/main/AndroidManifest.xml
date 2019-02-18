@@ -11,10 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_home_made_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SliderActivity"
-            android:label="SliderIntro"></activity>
-        <activity android:name=".SplashActivity"
-            android:label="SplashScreen"/>
+        <activity
+            android:name=".SliderActivity"
+            android:label="SliderIntro" />
+        <activity
+            android:name=".SplashActivity"
+            android:label="SplashScreen" />
         <activity android:name=".ui.ConsumerDetailsLayout" />
         <activity android:name=".SignUpSeller" />
         <activity
@@ -90,6 +92,7 @@
             android:name=".CurrentOrdersActivity"
             android:label="Lunch"
             android:theme="@style/AppTheme" />
+        <activity android:name=".MenuActivity"></activity>
     </application>
 
 </manifest>

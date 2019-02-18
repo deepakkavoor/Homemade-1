@@ -18,10 +18,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
-            android:text="UPLOAD MENU"
+            android:text="Upload Menu"
             android:textColor="@color/primaryText"
-            android:textSize="40sp"
-            android:typeface="serif" />
+            android:textSize="40sp" />
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/button_breakfast"

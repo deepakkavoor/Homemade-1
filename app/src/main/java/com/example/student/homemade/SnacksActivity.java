@@ -57,7 +57,7 @@ public class SnacksActivity extends AppCompatActivity {
 
         final Spinner spinner = (Spinner) findViewById(R.id.snacks_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.snacks_array, android.R.layout.simple_spinner_item);
+                R.array.food_array,  android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -66,7 +66,7 @@ public class SnacksActivity extends AppCompatActivity {
 
         final Spinner spinner1 = (Spinner) findViewById(R.id.snacks_drinks_spinner);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
-                R.array.snacks_drinks_array, android.R.layout.simple_spinner_item);
+                R.array.food_array,  android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
 

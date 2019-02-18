@@ -58,7 +58,7 @@ public class LunchActivity extends AppCompatActivity {
 
         final Spinner spinner = (Spinner) findViewById(R.id.appetizer_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.appetizer_array, android.R.layout.simple_spinner_item);
+                R.array.food_array,  android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -68,7 +68,7 @@ public class LunchActivity extends AppCompatActivity {
 
         final Spinner spinner1 = (Spinner) findViewById(R.id.main_course_spinner);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
-                R.array.main_course_array, android.R.layout.simple_spinner_item);
+                R.array.food_array,  android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
 
@@ -77,7 +77,7 @@ public class LunchActivity extends AppCompatActivity {
 
         final Spinner spinner2 = (Spinner) findViewById(R.id.dessert_spinner);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
-                R.array.dessert_array, android.R.layout.simple_spinner_item);
+                R.array.food_array,  android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter2);
 
@@ -85,7 +85,7 @@ public class LunchActivity extends AppCompatActivity {
 
         final Spinner spinner3 = (Spinner) findViewById(R.id.lunch_drinks_spinner);
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this,
-                R.array.lunch_dinner_drinks_array, android.R.layout.simple_spinner_item);
+                R.array.food_array,  android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(adapter3);
 
