@@ -20,9 +20,8 @@
         <item>6</item>
         <item>7</item>
     </string-array>
-
-    <string-array name="breakfast_array">
-        <item>None</item>
+<string name="Rs">\u20B9</string>
+    <string-array name="food_array">
         <item>Idli</item>
         <item>Dosa</item>
         <item>Paratha</item>
@@ -30,50 +29,44 @@
         <item>Masala Dosa</item>
         <item>Puri</item>
         <item>Vada</item>
-    </string-array>
-    <string-array name="breakfast_drinks_array">
-        <item>None</item>
         <item>Coffee</item>
         <item>Tea</item>
         <item>Milk</item>
         <item>Badam Milk</item>
-    </string-array>
-    <string-array name="appetizer_array">
-        <item>None</item>
         <item>Payasa</item>
         <item>Kosambri</item>
         <item>Puliogare</item>
         <item>Mango Gojju</item>
         <item>Hapla</item>
-    </string-array>
-    <string-array name="main_course_array">
-        <item>None</item>
         <item>Rice</item>
         <item>Bisi Bele Bath</item>
         <item>Pumpkin halwa</item>
         <item>Ragi balls</item>
-    </string-array>
-    <string-array name="dessert_array">
-        <item>None</item>
         <item>Obattu</item>
         <item>Ice Cream</item>
         <item>Pheni</item>
-    </string-array>
-    <string-array name="lunch_dinner_drinks_array">
-        <item>None</item>
         <item>Buttermilk</item>
         <item>Milk</item>
         <item>Badam Milk</item>
-    </string-array>
-    <string-array name="snacks_array">
-        <item>None</item>
+        <item>Payasa</item>
+        <item>Kosambri</item>
+        <item>Puliogare</item>
+        <item>Mango Gojju</item>
+        <item>Hapla</item>
+        <item>Rice</item>
+        <item>Bisi Bele Bath</item>
+        <item>Pumpkin halwa</item>
+        <item>Ragi balls</item>
+        <item>Obattu</item>
+        <item>Ice Cream</item>
+        <item>Pheni</item>
+        <item>Buttermilk</item>
+        <item>Milk</item>
+        <item>Badam Milk</item>
         <item>Samosa</item>
         <item>Vada</item>
         <item>Vada</item>
         <item>Dahi Vada</item>
-    </string-array>
-    <string-array name="snacks_drinks_array">
-        <item>None</item>
         <item>Coffee</item>
         <item>Tea</item>
         <item>Milk</item>

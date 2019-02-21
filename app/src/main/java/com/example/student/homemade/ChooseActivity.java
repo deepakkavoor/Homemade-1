@@ -43,9 +43,9 @@ public class ChooseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(ChooseActivity.this, BreakfastActivity.class);
+                Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
 
-                intent.putExtra("type","breakfast");
+                intent.putExtra("type","Breakfast");
                 startActivity(intent);
             }
         });
@@ -55,8 +55,8 @@ public class ChooseActivity extends AppCompatActivity {
         lunch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseActivity.this, LunchActivity.class);
-                intent.putExtra("type", "lunch");
+                Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
+                intent.putExtra("type", "Lunch");
                 startActivity(intent);
             }
         });
@@ -65,8 +65,8 @@ public class ChooseActivity extends AppCompatActivity {
         dinner.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseActivity.this, DinnerActivity.class);
-                intent.putExtra("type", "dinner");
+                Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
+                intent.putExtra("type", "Dinner");
                 startActivity(intent);
             }
         });
@@ -75,14 +75,14 @@ public class ChooseActivity extends AppCompatActivity {
         snacks.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseActivity.this, SnacksActivity.class);
-                intent.putExtra("type", "snacks");
+                Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
+                intent.putExtra("type", "Snacks");
                 startActivity(intent);
             }
         });
 
         update = findViewById(R.id.button_update);
-
+        update.setVisibility(View.GONE);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

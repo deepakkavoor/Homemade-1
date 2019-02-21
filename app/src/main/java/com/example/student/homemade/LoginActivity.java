@@ -81,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mCallbackManager = CallbackManager.Factory.create();
         mAuth = FirebaseAuth.getInstance();
-
         //--------Passing Intent to Start Page
         register.setOnClickListener(new View.OnClickListener() {
             @Override
