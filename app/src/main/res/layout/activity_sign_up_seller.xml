@@ -47,6 +47,47 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_gravity="center_horizontal"/>
 
+
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_picture"
+                        android:src="@drawable/userphoto"
+                        android:padding="25dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/restaurant_picture"
+                        android:src="@drawable/restaurant_symbol"
+                        android:padding="25dp"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:gravity="center"
+                    android:text="Click on the left image to add the owner icon."/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:gravity="center"
+                    android:text="Click on the right one to add Restaurant Picture"/>
+
+
+
                 <EditText
                     android:id="@+id/text_input_username"
                     android:background="@drawable/edittextstyle"
@@ -83,6 +124,7 @@
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>
+
 
                 <EditText
                     android:id="@+id/text_input_image_resource_id"

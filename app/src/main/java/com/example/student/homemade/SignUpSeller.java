@@ -1,14 +1,22 @@
 package com.example.student.homemade;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +53,12 @@ public class SignUpSeller extends AppCompatActivity {
     public EditText textInputPhoneNumber;
     public EditText textInputProfilePicture;
     public EditText textInputImageResourceId;
+    public ImageView imageUserPhoto;;
+    public ImageView imageRestaurantPhoto;
+    public static int PReqCode = 1;
+    public static int REQUESCODE = 1;
+    public Uri pickedImgUserUri;
+    public Uri pickedImgRestaurantUri;
     private Typeface myFont;
     private TextView headText;
 
@@ -66,7 +80,97 @@ public class SignUpSeller extends AppCompatActivity {
         textInputPhoneNumber = findViewById(R.id.text_input_phone_number);
         textInputImageResourceId = findViewById(R.id.text_input_image_resource_id);
         textInputProfilePicture = findViewById(R.id.text_input_profile_picture_id);
+
+        //User Image
+        imageUserPhoto = findViewById(R.id.profile_picture);
+
+        imageUserPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(Build.VERSION.SDK_INT >= 28) {
+                    checkAndRequestforPermission();
+                }
+
+                else {
+                    openGallery();
+                }
+
+            }
+        });
+
+
+        //Restaurant Image
+        imageRestaurantPhoto = findViewById(R.id.restaurant_picture);
+
+        imageRestaurantPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(Build.VERSION.SDK_INT >= 28) {
+                    checkAndRequestforPermission();
+                }
+
+                else {
+                    openGallery();
+                }
+
+            }
+        });
     }
+
+
+    private void openGallery() {
+        //open gallery intent and wait for user to pick an image!
+
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, REQUESCODE);
+
+    }
+
+
+
+    private void checkAndRequestforPermission() {
+
+        if(ContextCompat.checkSelfPermission(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if(ActivityCompat.shouldShowRequestPermissionRationale(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(SignUpSeller.this, "Please accept required permission", Toast.LENGTH_SHORT).show();
+            }
+
+            else {
+                ActivityCompat.requestPermissions(SignUpSeller.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PReqCode);
+            }
+        }
+
+        else
+            openGallery();
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null) {
+            //the user has successfully picked an image
+            // we need to save the reference to a uri variable
+
+            pickedImgUserUri = data.getData();
+            imageUserPhoto.setImageURI(pickedImgUserUri);
+
+            pickedImgRestaurantUri = data.getData();
+            imageRestaurantPhoto.setImageURI(pickedImgRestaurantUri);
+        }
+
+    }
+
+
 
     private boolean validateEmail() {
         String emailInput = textInputEmail.getText().toString().trim();
