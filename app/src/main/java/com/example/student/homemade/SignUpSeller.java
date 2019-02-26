@@ -52,7 +52,7 @@ public class SignUpSeller extends AppCompatActivity {
     public EditText textInputPassword;
     public EditText textInputPhoneNumber;
     public EditText textInputProfilePicture;
-    public EditText textInputImageResourceId;
+    //public EditText ;
     public ImageView imageUserPhoto;;
     public ImageView imageRestaurantPhoto;
     public static int PReqCode = 1;
@@ -78,8 +78,8 @@ public class SignUpSeller extends AppCompatActivity {
         textInputRestaurantName = findViewById(R.id.text_input_restaurant_name);
         textInputRestaurantDetails = findViewById(R.id.text_input_restaurant_details);
         textInputPhoneNumber = findViewById(R.id.text_input_phone_number);
-        textInputImageResourceId = findViewById(R.id.text_input_image_resource_id);
-        textInputProfilePicture = findViewById(R.id.text_input_profile_picture_id);
+        //textInputImageResourceId = findViewById(R.id.text_input_image_resource_id);
+        //textInputProfilePicture = findViewById(R.id.text_input_profile_picture_id);
 
         //User Image
         imageUserPhoto = findViewById(R.id.profile_picture);
@@ -228,10 +228,14 @@ public class SignUpSeller extends AppCompatActivity {
             textInputPassword.setError("Field cannot be empty");
             return false;
         }
-        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            textInputPassword.setError("Password too weak. Must have atleast one small, one capital letter and one special character.");
+        else if(passwordInput.length() < 8) {
+            textInputPassword.setError("Field cannot have less than 8 characters");
             return false;
         }
+//        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+//            textInputPassword.setError("Password too weak. Must have atleast one small, one capital letter and one special character.");
+//            return false;
+//        }
         else {
             textInputPassword.setError(null);
             return true;
@@ -241,7 +245,7 @@ public class SignUpSeller extends AppCompatActivity {
 
     public void confirmInput(View v) {
         // validate password has been removed because of regex problems
-        if(!validateEmail() | !validateUsername() | !validateRestaurantName()) {
+        if(!validateEmail() || !validateUsername() || !validateRestaurantName() || !validatePassword()) {
             return;
         }
 
@@ -280,10 +284,10 @@ public class SignUpSeller extends AppCompatActivity {
                     user.put("address",null);
                     user.put("description", textInputRestaurantDetails.getText().toString());
                     user.put("email", textInputEmail.getText().toString());
-                    user.put("imageResourceId", textInputImageResourceId.getText().toString());
+                    //user.put("imageResourceId", textInputImageResourceId.getText().toString());
                     //user.menu("menu",)
                     user.put("phone",textInputPhoneNumber.getText().toString());
-                    user.put("profilepictures",textInputProfilePicture.getText().toString());
+                    //user.put("profilepictures",textInputProfilePicture.getText().toString());
                     user.put("restaurantname", textInputRestaurantName.getText().toString());
                     //user.put("userid", )
                     user.put("username", textInputUsername.getText().toString());

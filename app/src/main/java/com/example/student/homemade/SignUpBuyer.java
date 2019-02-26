@@ -190,10 +190,14 @@ public class SignUpBuyer extends AppCompatActivity {
             textInputPassword.setError("Field cannot be empty");
             return false;
         }
-        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            textInputPassword.setError("Password too weak. Must have atleast one small, one capital letter and one special character.");
+        else if(passwordInput.length() < 8) {
+            textInputPassword.setError("Field cannot have less than 8 characters");
             return false;
         }
+//        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+//            textInputPassword.setError("Password too weak. Must have atleast one small, one capital letter and one special character.");
+//            return false;
+//        }
         else {
             textInputPassword.setError(null);
             return true;
@@ -203,25 +207,25 @@ public class SignUpBuyer extends AppCompatActivity {
 
     public void confirmInput(View v) {
         // validate password has been removed because of regex problems
-        if(!validateEmail() |!validateUsername()) {
+        if(!validateEmail() || !validateUsername() || !validatePassword()) {
             return;
         }
 
-        // Study Firebase Storage Properly before implememting this thing
+        // Study Firebase Storage Properly before and implement this thing properly
 
-//        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("consumers_photos");
-//        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
-//        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
-//                    }
-//                });
-//            }
-//        });
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("consumers_photos");
+        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
+                    }
+                });
+            }
+        });
 
         String input = "Email: " + textInputEmail.getText().toString();
         input += "\n";
