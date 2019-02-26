@@ -113,10 +113,14 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+<<<<<<< HEAD
     <string name="title_activity_maps">Map</string>
     <string name="normal_map">Normal Map</string>
     <string name="hybrid_map">Hybrid Map</string>
     <string name="satellite_map">Satellite Map</string>
     <string name="terrain_map">Terrain Map</string>
+=======
+    <string name="homemade_food_lovers">Homemade Food Lovers</string>
+>>>>>>> 52abb210c2d2f151f49f3b2f68fa8b843c9dc384
 
 </resources>
