@@ -65,22 +65,6 @@
             android:label="Cancel Order"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".BreakfastActivity"
-            android:label="Breakfast"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".LunchActivity"
-            android:label="Lunch"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".DinnerActivity"
-            android:label="Lunch"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".SnacksActivity"
-            android:label="Lunch"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".ChooseActivity"
             android:label="Lunch"
             android:theme="@style/AppTheme" />
@@ -92,7 +76,8 @@
             android:name=".CurrentOrdersActivity"
             android:label="Lunch"
             android:theme="@style/AppTheme" />
-        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".ReviewDisplayActivity"></activity>
     </application>
 
 </manifest>
