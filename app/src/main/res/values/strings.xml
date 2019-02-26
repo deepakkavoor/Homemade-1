@@ -115,4 +115,15 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="homemade_food_lovers">Homemade Food Lovers</string>
 
+
+    <string name="min_rating">Min Rating:</string>
+
+    <string-array name="filter_array">
+        <item>None Selected</item>
+        <item>Alphabetically</item>
+        <item>Distance: Near to Far</item>
+        <item>Rating: High to Low</item>
+    </string-array>
+
+
 </resources>
