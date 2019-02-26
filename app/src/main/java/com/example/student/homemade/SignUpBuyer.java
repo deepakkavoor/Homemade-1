@@ -190,10 +190,14 @@ public class SignUpBuyer extends AppCompatActivity {
             textInputPassword.setError("Field cannot be empty");
             return false;
         }
-        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            textInputPassword.setError("Password too weak. Must have atleast one small, one capital letter and one special character.");
+        else if(passwordInput.length() < 8) {
+            textInputPassword.setError("Field cannot have less than 8 characters");
             return false;
         }
+//        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+//            textInputPassword.setError("Password too weak. Must have atleast one small, one capital letter and one special character.");
+//            return false;
+//        }
         else {
             textInputPassword.setError(null);
             return true;
@@ -203,7 +207,7 @@ public class SignUpBuyer extends AppCompatActivity {
 
     public void confirmInput(View v) {
         // validate password has been removed because of regex problems
-        if(!validateEmail() |!validateUsername()) {
+        if(!validateEmail() || !validateUsername() || !validatePassword()) {
             return;
         }
 

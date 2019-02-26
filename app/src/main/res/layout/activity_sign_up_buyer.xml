@@ -52,35 +52,85 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/text_input_username"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/edittextstyle"
-                android:hint="Username"
-                android:inputType="textShortMessage" />
 
-            <EditText
-                android:id="@+id/text_input_email"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+            <android.support.design.widget.TextInputLayout
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/edittextstyle"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/text_input_password"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="300dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittextstyle"
+                    android:inputType="textShortMessage"
+                    android:hint="Username" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/edittextstyle"
-                android:hint="Password"
-                android:inputType="textPassword" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/text_input_email"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edittextstyle"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="300dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittextstyle"
+                    android:inputType="textPassword"
+                    android:hint="Password" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<EditText-->
+                <!--android:id="@+id/text_input_password"-->
+                <!--android:layout_width="300dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:background="@drawable/edittextstyle"-->
+                <!--android:hint="Password"-->
+                <!--android:inputType="textPassword" />-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/text_input_email"-->
+                <!--android:layout_width="300dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:background="@drawable/edittextstyle"-->
+                <!--android:hint="Email"-->
+                <!--android:inputType="textEmailAddress" />-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/text_input_password"-->
+                <!--android:layout_width="300dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:background="@drawable/edittextstyle"-->
+                <!--android:hint="Password"-->
+                <!--android:inputType="textPassword" />-->
+
+
             <Button
                 android:textColor="@color/white"
                 android:background="@drawable/buttonstyle"
