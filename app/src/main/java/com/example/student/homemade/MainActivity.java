@@ -23,7 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.student.homemade.ui.ConsumerDetailsLayout;
+import com.example.student.homemade.ui.ConsumerDetailsFragment;
 import com.example.student.homemade.ui.ConsumerUIFragment;
 import com.example.student.homemade.ui.DeliveryAndTrackingFragment;
 import com.example.student.homemade.ui.HistoricalOrdersFragment;
@@ -218,9 +218,9 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 // toolbar.setTitle("Delivery and Tracking");
                 break;
             case R.id.user_button:
-                Intent intent1 = new Intent(context, ConsumerDetailsLayout.class);
-                startActivity(intent1);
-                fragmentClass = MassOrderFragment.class;
+//                Intent intent1 = new Intent(context, ConsumerDetailsFragment.class);
+//                startActivity(intent1);
+                fragmentClass = ConsumerDetailsFragment.class;
                 break;
             case R.id.cancel_order:
                 Intent intent = new Intent(context,CancelOrder.class);
