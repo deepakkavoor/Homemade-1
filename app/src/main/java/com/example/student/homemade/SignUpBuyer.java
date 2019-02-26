@@ -211,21 +211,21 @@ public class SignUpBuyer extends AppCompatActivity {
             return;
         }
 
-        // Study Firebase Storage Properly before implememting this thing
+        // Study Firebase Storage Properly before and implement this thing properly
 
-//        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("consumers_photos");
-//        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
-//        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
-//                    }
-//                });
-//            }
-//        });
+        StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("consumers_photos");
+        final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
+        imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
+                    }
+                });
+            }
+        });
 
         String input = "Email: " + textInputEmail.getText().toString();
         input += "\n";
