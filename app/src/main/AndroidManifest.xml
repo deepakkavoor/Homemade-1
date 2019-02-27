@@ -32,7 +32,10 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+
+        </activity>
         <activity
             android:name=".SliderActivity"
             android:label="SliderIntro" />
