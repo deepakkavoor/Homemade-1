@@ -215,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 break;
             case R.id.delivery_and_tracking:
                 fragmentClass = DeliveryAndTrackingFragment.class;
+                Intent intentMap = new Intent(context, MapsActivity.class);
+                startActivity(intentMap);
                 // toolbar.setTitle("Delivery and Tracking");
                 break;
             case R.id.user_button:
