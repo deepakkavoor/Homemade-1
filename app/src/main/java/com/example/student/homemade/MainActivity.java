@@ -227,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
             case R.id.cancel_order:
                 fragmentClass = CancelOrderFragment.class;
                 break;
+            case R.id.user_feedback:
+                fragmentClass = FeedbackFragment.class;
+                break;
             case R.id.main_btn_logout:
 
                 //Logic for logout

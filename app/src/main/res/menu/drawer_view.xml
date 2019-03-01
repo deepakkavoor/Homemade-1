@@ -26,6 +26,9 @@
             android:id="@+id/user_button"
             android:title="User Details" />
         <item
+            android:id="@+id/user_feedback"
+            android:title="Send Feedback" />
+        <item
             android:id="@+id/main_btn_logout"
             android:title="Logout" />
     </group>
