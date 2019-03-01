@@ -225,9 +225,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 fragmentClass = ConsumerDetailsFragment.class;
                 break;
             case R.id.cancel_order:
-                Intent intent = new Intent(context,CancelOrder.class);
-                startActivity(intent);
-                fragmentClass = MassOrderFragment.class;
+                fragmentClass = CancelOrderFragment.class;
                 break;
             case R.id.main_btn_logout:
 
