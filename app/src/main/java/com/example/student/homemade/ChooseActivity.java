@@ -25,10 +25,11 @@ public class ChooseActivity extends AppCompatActivity {
     CardView lunch;
     CardView snacks;
     CardView dinner;
+
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("guh","ss");
+        Log.d("guh", "ss");
     }
 
     @Override
@@ -45,14 +46,14 @@ public class ChooseActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
 
-                intent.putExtra("type","Breakfast");
+                intent.putExtra("type", "Breakfast");
                 startActivity(intent);
             }
         });
 
 
         lunch = findViewById(R.id.button_lunch);
-        lunch.setOnClickListener(new View.OnClickListener(){
+        lunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
@@ -62,7 +63,7 @@ public class ChooseActivity extends AppCompatActivity {
         });
 
         dinner = findViewById(R.id.button_dinner);
-        dinner.setOnClickListener(new View.OnClickListener(){
+        dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
@@ -72,7 +73,7 @@ public class ChooseActivity extends AppCompatActivity {
         });
 
         snacks = findViewById(R.id.button_snacks);
-        snacks.setOnClickListener(new View.OnClickListener(){
+        snacks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
@@ -86,7 +87,13 @@ public class ChooseActivity extends AppCompatActivity {
 //        update.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
+//                Intent intent = new Intent(ChooseActivity.this,UploadActivity.class);
+////                intent.putExtra(type);
+//                startActivity(intent);
+//            }
+//        });
+
+        //
 //                Intent val = getIntent();
 //                val.getStringExtra("type");
 //                //Get menu type and

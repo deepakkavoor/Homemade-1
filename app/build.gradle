@@ -21,6 +21,7 @@ android {
 }
 
 dependencies {
+    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.5.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.facebook.android:facebook-android-sdk:4.+'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -60,5 +61,7 @@ dependencies {
     implementation 'com.github.linger1216:labelview:v1.1.2'
 
 
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.1'
 }
 apply plugin: 'com.google.gms.google-services'
