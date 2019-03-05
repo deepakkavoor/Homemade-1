@@ -31,6 +31,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -49,27 +54,38 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
         context = context;
     }
 
+    private HashMap<String,Long> map;
     private Context context;
     private ArrayList<MenuItem> items;
+    private HashMap<String,String> itemPictures;
+    public FirebaseFirestore firebaseFirestore;
+    public String type;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public CircleImageView photo;
         public EditText price;
+        public ImageView cancel;
+
+
 
         public MyViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.item_name);
             photo = view.findViewById(R.id.item_image);
             price = view.findViewById(R.id.item_price);
-
+            cancel = view.findViewById(R.id.cancel);
         }
     }
 
 
-    public MenuItemAdapter(Context context, ArrayList<MenuItem> items) {
+    public MenuItemAdapter(Context context, ArrayList<MenuItem> items, HashMap<String,String> itemPictures, String type) {
         this.context = context;
         this.items = items;
+        this.itemPictures = itemPictures;
+        this.firebaseFirestore = FirebaseFirestore.getInstance();
+        this.type = type;
+
     }
 
 
@@ -80,6 +96,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.menu_item, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
+
         return myViewHolder;
     }
 
@@ -119,17 +136,36 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
 
             }
         });
-//
-//        MenuItem uploadCurrent = items.get(position);
-//        Picasso.with(context)
-//                .load(uploadCurrent.getImageUrl())
-//                .placeholder(R.mipmap.ic_launcher)
-//                .fit()
-//                .centerCrop()
-//                .into(holder.photo);
-//
+        if(itemPictures.containsKey(item.getName()))
+            Glide.with(context).load(itemPictures.get(item.getName())).into(holder.photo);
+        else
+            Glide.with(context).load(android.R.drawable.ic_menu_report_image).into(holder.photo);
 
+        holder.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remove(item);
+                map.remove(item.getName());
+                HashMap<String,Object> m = new HashMap<>();
+                m.put("items",map);
+                firebaseFirestore.collection("Provider").document(FirebaseAuth.getInstance().getUid())
+                        .collection("menu").document(type)
+                        .set(m,SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("LOWDE", "SUCCESS");
 
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("MACHSAAAADASAS", e.toString());
+                            }
+                        });
+            }
+        });
 
     }
 
@@ -156,6 +192,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
 
     public ArrayList<MenuItem> getItems() {
         return items;
+    }
+
+    public void setMap(HashMap<String,Long> map){
+        this.map = map;
     }
 
 }

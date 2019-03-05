@@ -50,7 +50,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation "com.google.android.gms:play-services-gcm:16.0.0"
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'id.zelory:compressor:2.1.0'
 
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'

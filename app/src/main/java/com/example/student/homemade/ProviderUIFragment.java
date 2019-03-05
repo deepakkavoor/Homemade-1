@@ -23,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,8 @@ public class ProviderUIFragment extends Fragment {
     CardView orders_history;
     CardView reviews;
     private FirebaseFirestore firebaseFirestore;
+
+    private HashMap<String, String> itemPictures = new HashMap<>();
 
     private FirebaseAuth mAuth;
     public String sellerID = FirebaseAuth.getInstance().getUid();
@@ -104,6 +108,8 @@ public class ProviderUIFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("DOCSNAP", "DocumentSnapshot data: " + document.get("username"));
+                        itemPictures = (HashMap<String, String>) document.get("itemPictures");
+                        Log.d("SIZE",itemPictures.size()+"");
                         Sellername.setText("Hello " + document.get("username").toString());
                     } else {
                         Log.d("NOOE", "No such document");
@@ -124,7 +130,7 @@ public class ProviderUIFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getActivity(), ChooseActivity.class);
-
+                intent.putExtra("itemPictures",itemPictures);
                 startActivity(intent);
             }
         });

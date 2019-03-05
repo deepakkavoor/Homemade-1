@@ -47,7 +47,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
             android:name=".SliderActivity"
             android:label="SliderIntro" />
@@ -116,6 +116,10 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".ReviewDisplayActivity" />
         <activity android:name=".UploadActivity"></activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
     </application>
 
 </manifest>
