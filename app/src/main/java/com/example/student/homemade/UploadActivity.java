@@ -47,6 +47,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -63,6 +64,7 @@ public class UploadActivity extends AppCompatActivity {
     private TextView mTextViewShowUploads;
     private Spinner mEditTextFileName;
     private Uri mainImageURI = null;
+
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private FirebaseFirestore firebaseFirestore;
@@ -120,6 +122,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void openFileChooser() {
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
             if(ContextCompat.checkSelfPermission(UploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -179,6 +182,9 @@ public class UploadActivity extends AppCompatActivity {
 //
 //            Picasso.with(this).load(mImageUri).into(mImageView);
 //        }
+
+
+
     }
 
     private String getFileExtension(Uri uri) {
@@ -188,12 +194,13 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     private void uploadFile() {
-
+        File newImageFile;
 //        progressBar.setVisibility(View.VISIBLE);
-            itemName = mEditTextFileName.getSelectedItem().toString().trim();
+        itemName = mEditTextFileName.getSelectedItem().toString().trim();
 //            userId = firebaseAuth.getCurrentUser().getUid();
+        if (mainImageURI != null) {
+            newImageFile = new File(mainImageURI.getPath());
 
-            File newImageFile = new File(mainImageURI.getPath());
             try {
 
                 compressedImageFile = new Compressor(UploadActivity.this)
@@ -218,7 +225,7 @@ public class UploadActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
 
-                        mStorageRef.child(itemName+".jpg").getDownloadUrl()
+                        mStorageRef.child(itemName + ".jpg").getDownloadUrl()
                                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
@@ -241,8 +248,11 @@ public class UploadActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
+        }
+else{
+            Toast.makeText(UploadActivity.this,"Please Upload image", Toast.LENGTH_SHORT).show();
+        }
+    }
         /*else {
                         //GeoPoint location = loc
                         storeFirestore(null, user_name,phone, lo);
@@ -297,12 +307,13 @@ public class UploadActivity extends AppCompatActivity {
 //        } else {
 //            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
 //        }
-    }
+
 
     private void storeFirestore(Uri uri){
         HashMap<String, Object> map = new HashMap<>();
         HashMap<String, String> item = new HashMap<>();
         item.put(itemName,uri.toString());
+        itemPictures.put(itemName,uri.toString());
         map.put("itemPictures",item);
         firebaseFirestore.collection("Provider").document(FirebaseAuth.getInstance().getUid()).set(map,SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -331,6 +342,54 @@ public class UploadActivity extends AppCompatActivity {
 
     }
 
+
+//=======
+//        if (mImageUri != null) {
+//            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+//                    + "." + getFileExtension(mImageUri));
+//
+//            mUploadTask = fileReference.putFile(mImageUri)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Handler handler = new Handler();
+//                            handler.postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mProgressBar.setProgress(0);
+//                                }
+//                            }, 500);
+//
+//                            Toast.makeText(UploadActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+//                            String itemName = mEditTextFileName.getSelectedItem().toString().trim();
+//                            String myproviderID = FirebaseAuth.getInstance().getUid();
+//
+//                            Long price = new Long(0);
+//                            MenuItem upload = new MenuItem(mEditTextFileName.getSelectedItem().toString().trim(),price,
+//                                    taskSnapshot.getStorage().getDownloadUrl().toString());
+//                            Log.d("DUDE",mStorageRef.toString());
+//                            Uri file = mImageUri;
+//                            String uploadId = mDatabaseRef.push().getKey();
+//                            mDatabaseRef.child(uploadId).setValue(upload);
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(UploadActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+//                            mProgressBar.setProgress((int) progress);
+//                        }
+//                    });
+//        } else {
+//            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private void openImagesActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
