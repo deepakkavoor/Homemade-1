@@ -3,6 +3,7 @@ package com.example.student.homemade.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student.homemade.ConsumerDetailsClass;
+import com.example.student.homemade.EditConsumerDetails;
 import com.example.student.homemade.R;
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -86,8 +88,17 @@ public class ConsumerDetailsFragment extends Fragment {
         setDetails();
         setProfilePic();
 
+        editUserDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), EditConsumerDetails.class));
+            }
+        });
+
 
         return v;
+
+
     }
 
     ////CODE TO FETCH AND SHOW DETAILS USING CLASS ConsumerDetailsClass
