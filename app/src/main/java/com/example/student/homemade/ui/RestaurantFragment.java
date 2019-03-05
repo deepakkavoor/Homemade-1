@@ -57,7 +57,7 @@ public class RestaurantFragment extends Fragment {
     RestaurantAdapter myAdapter;
     ProgressBar progressBar;
     EditText editText, minratingEditText;
-    TextView minRatingText;
+    TextView minRatingText,emptyTextView;
     Spinner filterSpinner;
 
 
@@ -87,6 +87,7 @@ public class RestaurantFragment extends Fragment {
         swipeRefreshLayout = v.findViewById(R.id.swipeToRefresh);
         editText = v.findViewById(R.id.inputSearch);
         minratingEditText = v.findViewById(R.id.min_rating_edit_text);
+        emptyTextView = v.findViewById(R.id.Empty_text_view);
         minRatingText = v.findViewById(R.id.min_rating_text);
         getActivity().setTitle("Restaurants Available");
         progressBar = v.findViewById(R.id.progress_circular);
@@ -238,6 +239,7 @@ public class RestaurantFragment extends Fragment {
         mRecyclerView.setVisibility(View.GONE);
         minRatingText.setVisibility(View.GONE);
         minratingEditText.setVisibility(View.GONE);
+        emptyTextView.setVisibility(View.GONE);
     }
 
     public void setfinVis() {
@@ -247,6 +249,17 @@ public class RestaurantFragment extends Fragment {
         mRecyclerView.setVisibility(View.VISIBLE);
         minRatingText.setVisibility(View.VISIBLE);
         minratingEditText.setVisibility(View.VISIBLE);
+        emptyTextView.setVisibility(View.GONE);
+    }
+
+    public void setVisIfNoResult() {
+        progressBar.setVisibility(View.GONE);
+        filterSpinner.setVisibility(View.VISIBLE);
+        editText.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        minRatingText.setVisibility(View.VISIBLE);
+        minratingEditText.setVisibility(View.VISIBLE);
+        emptyTextView.setVisibility(View.VISIBLE);
     }
 
     //Attaches adapter and makes a list when activity is created
@@ -433,7 +446,7 @@ public class RestaurantFragment extends Fragment {
 
 
 //
-                                                setfinVis();
+
 
                                                 RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0));
                                                 counter[0] = counter[0] + 1;
@@ -442,7 +455,13 @@ public class RestaurantFragment extends Fragment {
                                                 restaurantList.add(restaurantModel);
                                                 dupRestaurantList.add(restaurantModel);
 
+
                                                 myAdapter.notifyDataSetChanged();
+                                                if(restaurantList.isEmpty()){
+                                                    setVisIfNoResult();
+                                                } else{
+                                                    setfinVis();
+                                                }
 
                                                 reviews.clear();
                                                 ratings.clear();
@@ -479,6 +498,12 @@ public class RestaurantFragment extends Fragment {
     public void updateList(ArrayList<RestaurantModel> list) {
         restaurantList.clear();
         restaurantList.addAll(list);
+        if(list.isEmpty()){
+            setVisIfNoResult();
+        }
+        else{
+            setfinVis();
+        }
         myAdapter.notifyDataSetChanged();
     }
     public void filterbyrating(double rating) {
@@ -506,6 +531,7 @@ public class RestaurantFragment extends Fragment {
 
         updateList(temp);
     }
+
 
 
 }
