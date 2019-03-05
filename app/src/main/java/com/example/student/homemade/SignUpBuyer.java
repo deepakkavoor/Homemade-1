@@ -347,7 +347,7 @@ public class SignUpBuyer extends AppCompatActivity {
                                             Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
                                             loadingProgress.setVisibility(View.INVISIBLE);
                                             signUpBuyerBtn.setVisibility(View.VISIBLE);
-                                            
+
                                             Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(mainActivity);
                                             finish();

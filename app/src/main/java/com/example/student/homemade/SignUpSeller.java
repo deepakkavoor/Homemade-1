@@ -15,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,15 +50,14 @@ public class SignUpSeller extends AppCompatActivity {
             "$");
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public EditText textInputEmail;
     public EditText textInputRestaurantName;
     public EditText textInputRestaurantDetails;
     public EditText textInputUsername;
     public EditText textInputPassword;
     public EditText textInputPhoneNumber;
-    public EditText textInputProfilePicture;
-    //public EditText ;
-    public ImageView imageUserPhoto;;
+    public ImageView imageUserPhoto;
     public ImageView imageRestaurantPhoto;
     public static int PReqCode = 1;
     public static int REQUESCODE = 1;
@@ -61,6 +65,9 @@ public class SignUpSeller extends AppCompatActivity {
     public Uri pickedImgRestaurantUri;
     private Typeface myFont;
     private TextView headText;
+    private StorageReference mStorage;
+    private ProgressBar loadingProgress;
+    private Button signUpSellerBtn;
 
 
     @Override
@@ -72,17 +79,30 @@ public class SignUpSeller extends AppCompatActivity {
         headText = findViewById(R.id.head_text);
         headText.setTypeface(myFont);
 
-        textInputEmail = findViewById(R.id.text_input_email);
-        textInputUsername = findViewById(R.id.text_input_username);
-        textInputPassword = findViewById(R.id.text_input_password);
-        textInputRestaurantName = findViewById(R.id.text_input_restaurant_name);
-        textInputRestaurantDetails = findViewById(R.id.text_input_restaurant_details);
-        textInputPhoneNumber = findViewById(R.id.text_input_phone_number);
-        //textInputImageResourceId = findViewById(R.id.text_input_image_resource_id);
-        //textInputProfilePicture = findViewById(R.id.text_input_profile_picture_id);
+        textInputEmail = findViewById(R.id.text_input_email_seller);
+        textInputUsername = findViewById(R.id.text_input_username_seller);
+        textInputPassword = findViewById(R.id.text_input_password_seller);
+        textInputRestaurantName = findViewById(R.id.text_input_restaurant_name_seller);
+        textInputRestaurantDetails = findViewById(R.id.text_input_restaurant_details_seller);
+        textInputPhoneNumber = findViewById(R.id.text_input_phone_number_seller);
+        signUpSellerBtn = findViewById(R.id.signup_seller_button);
+        loadingProgress = findViewById(R.id.progress_bar_signup_seller);
+
+        loadingProgress.setVisibility(View.INVISIBLE);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        signUpSellerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signUpSellerBtn.setVisibility(View.INVISIBLE);
+                loadingProgress.setVisibility(View.VISIBLE);
+                confirmInput();
+            }
+        });
 
         //User Image
-        imageUserPhoto = findViewById(R.id.profile_picture);
+        imageUserPhoto = findViewById(R.id.profile_picture_seller);
 
         imageUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,18 +121,18 @@ public class SignUpSeller extends AppCompatActivity {
 
 
         //Restaurant Image
-        imageRestaurantPhoto = findViewById(R.id.restaurant_picture);
+        imageRestaurantPhoto = findViewById(R.id.restaurant_picture_seller);
 
         imageRestaurantPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(Build.VERSION.SDK_INT >= 28) {
-                    checkAndRequestforPermission();
+                    checkAndRequestforPermission1();
                 }
 
                 else {
-                    openGallery();
+                    openGallery1();
                 }
 
             }
@@ -126,6 +146,17 @@ public class SignUpSeller extends AppCompatActivity {
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, REQUESCODE);
+        finish();
+
+    }
+
+    private void openGallery1() {
+        //open gallery intent and wait for user to pick an image!
+
+        Intent galleryIntent1 = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent1.setType("image/*");
+        startActivityForResult(galleryIntent1, REQUESCODE);
+        finish();
 
     }
 
@@ -149,6 +180,28 @@ public class SignUpSeller extends AppCompatActivity {
 
         else
             openGallery();
+
+    }
+
+
+    private void checkAndRequestforPermission1() {
+
+        if(ContextCompat.checkSelfPermission(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if(ActivityCompat.shouldShowRequestPermissionRationale(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(SignUpSeller.this, "Please accept required permission", Toast.LENGTH_SHORT).show();
+            }
+
+            else {
+                ActivityCompat.requestPermissions(SignUpSeller.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PReqCode);
+            }
+        }
+
+        else
+            openGallery1();
 
     }
 
@@ -243,11 +296,15 @@ public class SignUpSeller extends AppCompatActivity {
     }
 
 
-    public void confirmInput(View v) {
+    public void confirmInput() {
         // validate password has been removed because of regex problems
         if(!validateEmail() || !validateUsername() || !validateRestaurantName() || !validatePassword()) {
+            loadingProgress.setVisibility(View.INVISIBLE);
+            signUpSellerBtn.setVisibility(View.VISIBLE);
             return;
         }
+
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         String input = "Email: " + textInputEmail.getText().toString();
         input += "\n";
@@ -263,79 +320,108 @@ public class SignUpSeller extends AppCompatActivity {
 
         Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(textInputEmail.getText().toString(), textInputPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isComplete()) {
-                    String input = "Email: " + textInputEmail.getText().toString();
-                    input += "\n";
-                    input += "Username: " + textInputUsername.getText().toString();
-                    input += "\n";
-                    input += "Password: " + textInputPassword.getText().toString();
-                    input += "\n";
-                    input += "Restaurant Name: " + textInputRestaurantName.getText().toString();
-                    input += "\n";
-                    input += "Restaurant Details: " + textInputRestaurantDetails.getText().toString();
-                    input += "\n";
+                    mAuth.signInWithEmailAndPassword(textInputEmail.getText().toString(), textInputPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            String input = "Email: " + textInputEmail.getText().toString();
+                            input += "\n";
+                            input += "Username: " + textInputUsername.getText().toString();
+                            input += "\n";
+                            input += "Password: " + textInputPassword.getText().toString();
+                            input += "\n";
+                            input += "Restaurant Name: " + textInputRestaurantName.getText().toString();
+                            input += "\n";
+                            input += "Restaurant Details: " + textInputRestaurantDetails.getText().toString();
+                            input += "\n";
 
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("active",true);
-                    user.put("address",null);
-                    user.put("description", textInputRestaurantDetails.getText().toString());
-                    user.put("email", textInputEmail.getText().toString());
-                    //user.put("imageResourceId", textInputImageResourceId.getText().toString());
-                    //user.menu("menu",)
-                    user.put("phone",textInputPhoneNumber.getText().toString());
-                    //user.put("profilepictures",textInputProfilePicture.getText().toString());
-                    user.put("restaurantname", textInputRestaurantName.getText().toString());
-                    //user.put("userid", )
-                    user.put("username", textInputUsername.getText().toString());
-                    user.put("wallet", 100);
-                    user.put("password", textInputPassword.getText().toString());
-                    user.put("typeOfUser", "Provider");
-//                    user.put("username", textInputUsername.getText().toString());
-//                    user.put("email", textInputEmail.getText().toString());
-//                    user.put("password", textInputPassword.getText().toString());
-//                    user.put("restaurant name", textInputRestaurantName.getText().toString());
-//                    user.put("restaurant details", textInputRestaurantDetails.getText().toString());
-//                    user.put("restaurant phone number", textInputPhoneNumber.getText().toString());
-//                    user.put("restaurant image resource id", textInputImageResourceId.getText().toString());
-//                    user.put("restaurant person profile image id", textInputProfilePicture.getText().toString());
-//                    user.put("typeOfUser", "Provider");
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("active",true);
+                            user.put("address",null);
+                            user.put("description", textInputRestaurantDetails.getText().toString());
+                            user.put("email", textInputEmail.getText().toString());
+                            //user.put("imageResourceId", textInputImageResourceId.getText().toString());
+                            //user.menu("menu",)
+                            user.put("phone",textInputPhoneNumber.getText().toString());
+                            //user.put("profilepictures",textInputProfilePicture.getText().toString());
+                            user.put("restaurantname", textInputRestaurantName.getText().toString());
+                            user.put("userid", mAuth.getCurrentUser().getUid().toString());
+                            user.put("username", textInputUsername.getText().toString());
+                            user.put("wallet", 100);
+                            user.put("password", textInputPassword.getText().toString());
+                            user.put("typeOfUser", "Provider");
 
-                    db.collection("user").document(textInputEmail.getText().toString()).set(user)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            db.collection("user").document(mAuth.getCurrentUser().getUid()).set(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("user SignUP", "Signup of " + textInputEmail.getText().toString() + " to user document successful.");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("user SignUP", "Signup of " + textInputEmail.getText().toString() + " to user document failure.");
+                                        }
+                                    });
+
+
+                            db.collection("Provider").document(mAuth.getCurrentUser().getUid()).set(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("Provider SignUP", "Signup of " + textInputEmail.getText().toString() + " to Provider document successful.");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Provider SignUP", "Signup of " + textInputEmail.getText().toString() + " to Provider document failure.");
+                                        }
+                                    });
+
+                            //Toast.makeText(getApplicationContext(), "Successfull Sign Up. Please go back and click Login to go to your Dashboard.", Toast.LENGTH_LONG).show();
+
+                            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("consumers_photos");
+                            final StorageReference imageFilePath1 = mStorage.child("profile_pictures").child(mAuth.getCurrentUser().getUid());
+                            imageFilePath1.putFile(pickedImgUserUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("user SignUP", "Signup of " + textInputEmail.getText().toString() + " to user document successful.");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("user SignUP", "Signup of " + textInputEmail.getText().toString() + " to user document failure.");
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    imageFilePath1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
+                                            loadingProgress.setVisibility(View.INVISIBLE);
+                                            signUpSellerBtn.setVisibility(View.VISIBLE);
+                                        }
+                                    });
                                 }
                             });
 
+                            final StorageReference imageFilePath2 = mStorage.child("restaurant_pictures").child(mAuth.getCurrentUser().getUid());
+                            imageFilePath2.putFile(pickedImgRestaurantUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    imageFilePath2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
+                                            loadingProgress.setVisibility(View.INVISIBLE);
+                                            signUpSellerBtn.setVisibility(View.VISIBLE);
 
-                    db.collection("Provider").document(textInputRestaurantName.getText().toString()).set(user)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("Provider SignUP", "Signup of " + textInputEmail.getText().toString() + " to Provider document successful.");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("Provider SignUP", "Signup of " + textInputEmail.getText().toString() + " to Provider document failure.");
+                                            Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(mainActivity);
+                                            finish();
+                                        }
+                                    });
                                 }
                             });
 
-                    Toast.makeText(getApplicationContext(), "Successfull Sign Up. Please go back and click Login to go to your Dashboard.", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(SignUpSeller.this, LoginActivity.class);
-                    startActivity(intent);
+                        }
+                    });
                 }
             }
         });
