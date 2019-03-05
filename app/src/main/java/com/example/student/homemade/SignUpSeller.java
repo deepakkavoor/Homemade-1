@@ -118,25 +118,6 @@ public class SignUpSeller extends AppCompatActivity {
 
             }
         });
-
-
-        //Restaurant Image
-        imageRestaurantPhoto = findViewById(R.id.restaurant_picture_seller);
-
-        imageRestaurantPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(Build.VERSION.SDK_INT >= 28) {
-                    checkAndRequestforPermission1();
-                }
-
-                else {
-                    openGallery1();
-                }
-
-            }
-        });
     }
 
 
@@ -146,20 +127,7 @@ public class SignUpSeller extends AppCompatActivity {
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, REQUESCODE);
-        finish();
-
     }
-
-    private void openGallery1() {
-        //open gallery intent and wait for user to pick an image!
-
-        Intent galleryIntent1 = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent1.setType("image/*");
-        startActivityForResult(galleryIntent1, REQUESCODE);
-        finish();
-
-    }
-
 
 
     private void checkAndRequestforPermission() {
@@ -184,28 +152,6 @@ public class SignUpSeller extends AppCompatActivity {
     }
 
 
-    private void checkAndRequestforPermission1() {
-
-        if(ContextCompat.checkSelfPermission(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if(ActivityCompat.shouldShowRequestPermissionRationale(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(SignUpSeller.this, "Please accept required permission", Toast.LENGTH_SHORT).show();
-            }
-
-            else {
-                ActivityCompat.requestPermissions(SignUpSeller.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PReqCode);
-            }
-        }
-
-        else
-            openGallery1();
-
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -216,9 +162,6 @@ public class SignUpSeller extends AppCompatActivity {
 
             pickedImgUserUri = data.getData();
             imageUserPhoto.setImageURI(pickedImgUserUri);
-
-            pickedImgRestaurantUri = data.getData();
-            imageRestaurantPhoto.setImageURI(pickedImgRestaurantUri);
         }
 
     }
@@ -383,10 +326,10 @@ public class SignUpSeller extends AppCompatActivity {
                                         }
                                     });
 
-                            //Toast.makeText(getApplicationContext(), "Successfull Sign Up. Please go back and click Login to go to your Dashboard.", Toast.LENGTH_LONG).show();
 
-                            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("consumers_photos");
+                            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("providers_photos");
                             final StorageReference imageFilePath1 = mStorage.child("profile_pictures").child(mAuth.getCurrentUser().getUid());
+
                             imageFilePath1.putFile(pickedImgUserUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -396,30 +339,16 @@ public class SignUpSeller extends AppCompatActivity {
                                             Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
                                             loadingProgress.setVisibility(View.INVISIBLE);
                                             signUpSellerBtn.setVisibility(View.VISIBLE);
-                                        }
-                                    });
-                                }
-                            });
 
-                            final StorageReference imageFilePath2 = mStorage.child("restaurant_pictures").child(mAuth.getCurrentUser().getUid());
-                            imageFilePath2.putFile(pickedImgRestaurantUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    imageFilePath2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            Log.d("Storage successful.", "Storage of " + textInputEmail.getText().toString() + " Successful");
-                                            loadingProgress.setVisibility(View.INVISIBLE);
-                                            signUpSellerBtn.setVisibility(View.VISIBLE);
+                                            Toast.makeText(getApplicationContext(), "Successfull Sign Up. Now add Restaurant Images.", Toast.LENGTH_LONG).show();
 
-                                            Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                                            startActivity(mainActivity);
+                                            Intent part2Activity = new Intent(getApplicationContext(), SignUpSeller2.class);
+                                            startActivity(part2Activity);
                                             finish();
                                         }
                                     });
                                 }
                             });
-
                         }
                     });
                 }
