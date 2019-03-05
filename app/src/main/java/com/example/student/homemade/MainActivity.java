@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.student.homemade.ui.ConsumerDetailsFragment;
 import com.example.student.homemade.ui.ConsumerUIFragment;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView navigationView;
     String mActivityTitle;
+    String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         //-----------------added here
 
         SharedPreferences settings = getSharedPreferences("ProviderOrConsumerPreference", 0);
+        Log.v(TAG,settings.getString("email","homemade"));
         c = settings.getInt("ProviderOrConsumerFlag", 0);
         navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
             FragmentManager fragmentManager = getSupportFragmentManager();
             try {
 
-                fragment = (Fragment) fragmentClass.newInstance();
+                 fragment = (Fragment) fragmentClass.newInstance();
 
             } catch (Exception e) {
 
