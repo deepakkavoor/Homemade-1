@@ -47,7 +47,7 @@ public class ConsumerDetailsFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     String currentUserUID = firebaseAuth.getUid();
-    DocumentReference notebookRef  = db.collection("Consumer").document("saharsh1999@nitk.ac.in");
+    DocumentReference notebookRef  = db.collection("Consumer").document("nigga@99.com");
     StorageReference storageReference = FirebaseStorage.getInstance().getReference("consumers_photos").child("sample");
 
 
@@ -75,6 +75,7 @@ public class ConsumerDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         v =  inflater.inflate(R.layout.activity_consumer_details_layout, container, false);
         context=getActivity();
         userName = v.findViewById(R.id.tvProfileName);
