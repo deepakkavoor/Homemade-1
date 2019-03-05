@@ -44,18 +44,18 @@ public class MenuActivity extends AppCompatActivity {
     private TextView title;
     private DatabaseReference mDatabaseRef;
     private ArrayList<MenuItem> mUploads;
-
+    private HashMap<String, String> itemPictures = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+        itemPictures = (HashMap<String,String>)getIntent().getExtras().get("itemPictures");
         type = (String) getIntent().getExtras().get("type");
         recyclerView = findViewById(R.id.rv);
         fab = findViewById(R.id.add_item);
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        menuAdapter = new MenuItemAdapter(this, new ArrayList<MenuItem>());
+        menuAdapter = new MenuItemAdapter(this, new ArrayList<MenuItem>(), itemPictures);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(menuAdapter);
@@ -68,11 +68,12 @@ public class MenuActivity extends AppCompatActivity {
 
 
         fetch();
-        mUploads = new ArrayList<>();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
-        Log.d("DBREF",mDatabaseRef.toString());
 
-
+//        mUploads = new ArrayList<>();
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+//        Log.d("DBREF",mDatabaseRef.toString());
+//
+//
 //        mDatabaseRef.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,6 +102,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this,UploadActivity.class);
+                intent.putExtra("itemPictures",itemPictures);
                 intent.putExtra("type",type);
                 startActivity(intent);
             }

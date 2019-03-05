@@ -25,7 +25,7 @@ public class ChooseActivity extends AppCompatActivity {
     CardView lunch;
     CardView snacks;
     CardView dinner;
-
+    private HashMap<String, String> itemPictures = new HashMap<>();
     @Override
     protected void onStart() {
         super.onStart();
@@ -37,7 +37,7 @@ public class ChooseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
 
-
+itemPictures = (HashMap<String,String>)getIntent().getExtras().get("itemPictures");
         breakfast = findViewById(R.id.button_breakfast);
 
         breakfast.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +45,7 @@ public class ChooseActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
-
+                intent.putExtra("itemPictures",itemPictures);
                 intent.putExtra("type", "Breakfast");
                 startActivity(intent);
             }
@@ -57,6 +57,7 @@ public class ChooseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
+                intent.putExtra("itemPictures",itemPictures);
                 intent.putExtra("type", "Lunch");
                 startActivity(intent);
             }
@@ -67,6 +68,7 @@ public class ChooseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
+                intent.putExtra("itemPictures",itemPictures);
                 intent.putExtra("type", "Dinner");
                 startActivity(intent);
             }
@@ -77,6 +79,7 @@ public class ChooseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChooseActivity.this, MenuActivity.class);
+                intent.putExtra("itemPictures",itemPictures);
                 intent.putExtra("type", "Snacks");
                 startActivity(intent);
             }

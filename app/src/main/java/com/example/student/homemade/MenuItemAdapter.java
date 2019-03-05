@@ -51,6 +51,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
 
     private Context context;
     private ArrayList<MenuItem> items;
+    private HashMap<String,String> itemPictures;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
@@ -67,9 +68,11 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
     }
 
 
-    public MenuItemAdapter(Context context, ArrayList<MenuItem> items) {
+    public MenuItemAdapter(Context context, ArrayList<MenuItem> items, HashMap<String,String> itemPictures) {
         this.context = context;
         this.items = items;
+        this.itemPictures = itemPictures;
+
     }
 
 
@@ -119,16 +122,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MyView
 
             }
         });
-//
-//        MenuItem uploadCurrent = items.get(position);
-//        Picasso.with(context)
-//                .load(uploadCurrent.getImageUrl())
-//                .placeholder(R.mipmap.ic_launcher)
-//                .fit()
-//                .centerCrop()
-//                .into(holder.photo);
-//
-
+        if(itemPictures.containsKey(item.getName()))
+            Glide.with(context).load(itemPictures.get(item.getName())).into(holder.photo);
+        else
+            Glide.with(context).load(android.R.drawable.ic_menu_report_image).into(holder.photo);
 
 
     }
