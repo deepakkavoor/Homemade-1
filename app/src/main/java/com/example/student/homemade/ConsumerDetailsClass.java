@@ -6,6 +6,12 @@ public class ConsumerDetailsClass {
     public ConsumerDetailsClass() {
     }
 
+    public ConsumerDetailsClass(String username,String address, String contactNo) {
+        this.username = username;
+        this.address = address;
+        this.contactNo = contactNo;
+    }
+
     public ConsumerDetailsClass(String username, String password, String address, String contactNo, String wallet, String email, String typeOfUser) {
         this.username = username;
         this.password = password;
