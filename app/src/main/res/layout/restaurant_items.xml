@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:padding="16dp"
                         android:textColor="@color/white"
-                        android:theme="@style/Title"
+                        android:theme="@style/subtext"
                          />
                 </LinearLayout>
             </FrameLayout>
@@ -61,7 +61,6 @@
 
             <TextView
                 android:id="@+id/distance"
-                android:theme="@style/subtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
