@@ -18,12 +18,12 @@
         android:text="@string/homemade_food_lovers"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/imageView"
+        app:layout_constraintBottom_toTopOf="@id/header_imageView"
         app:layout_constraintLeft_toLeftOf="parent"
 />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/header_imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:paddingTop="5dp"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
+        app:layout_constraintTop_toBottomOf="@id/header_imageView" />
 
 
 
