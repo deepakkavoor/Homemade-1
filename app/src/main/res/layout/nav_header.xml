@@ -22,11 +22,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
 />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/header_imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:paddingTop="5dp"
+        android:layout_gravity="center"
         android:src="@drawable/userphoto"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toTopOf="@id/username"
