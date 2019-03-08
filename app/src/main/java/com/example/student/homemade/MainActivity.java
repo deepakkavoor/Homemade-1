@@ -149,7 +149,9 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                progressBar.setVisibility(View.GONE);
+                imageView.setImageResource(R.drawable.userphoto);
+                imageView.setVisibility(View.VISIBLE);
             }
         });
         TextView headertextView = hView.findViewById(R.id.username_header);
