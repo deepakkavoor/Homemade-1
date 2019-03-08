@@ -64,7 +64,7 @@
         <item name="android:layout_height">2dp</item>
         <item name="android:background">@color/white</item>
     </style>
-    
+    <!--                                     This is for making our app uniform please use it                               -->
     <style name="Title">
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">30sp</item>
@@ -78,8 +78,26 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="normalHeading">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <style name="normaltext">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+
 
 </resources>
