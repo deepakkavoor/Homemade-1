@@ -30,6 +30,7 @@
         <ProgressBar
             android:id="@+id/progress_circular"
             style="?android:attr/progressBarStyleLarge"
+            android:background="@color/loadingcolor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

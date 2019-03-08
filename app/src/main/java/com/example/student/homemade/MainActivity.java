@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.student.homemade.ui.ConsumerDetailsFragment;
@@ -37,6 +38,10 @@ import com.example.student.homemade.ui.MassOrderFragment;
 import com.example.student.homemade.ui.RestaurantFragment;
 import com.example.student.homemade.ui.TrendingItemsFragment;
 import com.facebook.login.LoginManager;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -120,8 +125,13 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         setupDrawerContent(navigationView);
         View hView = navigationView.inflateHeaderView(R.layout.nav_header);
         final ImageView imageView = hView.findViewById(R.id.header_imageView);
+        imageView.setVisibility(View.INVISIBLE);
+        final ProgressBar progressBar = hView.findViewById(R.id.progress_bar_header);
+        Sprite wave = new Wave();
+        progressBar.setIndeterminateDrawable(wave);
+        Log.i(TAG,"ID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
         StorageReference mImageRef =
-                FirebaseStorage.getInstance().getReference("consumers_photos/image:48110");
+                FirebaseStorage.getInstance().getReference("consumers_photos/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         final long ONE_MEGABYTE = 1024 * 1024;
         mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -133,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 imageView.setMinimumHeight(dm.heightPixels);
                 imageView.setMinimumWidth(dm.widthPixels);
                 imageView.setImageBitmap(bm);
+                progressBar.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
