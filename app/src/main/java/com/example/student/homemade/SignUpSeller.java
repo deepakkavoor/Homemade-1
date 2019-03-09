@@ -4,11 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +34,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,6 +42,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class SignUpSeller extends AppCompatActivity {
 
@@ -68,7 +76,11 @@ public class SignUpSeller extends AppCompatActivity {
     private StorageReference mStorage;
     private ProgressBar loadingProgress;
     private Button signUpSellerBtn;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private String sellerLocation;
+    private GeoPoint geoPoint;
 
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +99,8 @@ public class SignUpSeller extends AppCompatActivity {
         textInputPhoneNumber = findViewById(R.id.text_input_phone_number_seller);
         signUpSellerBtn = findViewById(R.id.signup_seller_button);
         loadingProgress = findViewById(R.id.progress_bar_signup_seller);
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         loadingProgress.setVisibility(View.INVISIBLE);
 
@@ -108,16 +122,15 @@ public class SignUpSeller extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(Build.VERSION.SDK_INT >= 28) {
+                if (Build.VERSION.SDK_INT >= 28) {
                     checkAndRequestforPermission();
-                }
-
-                else {
+                } else {
                     openGallery();
                 }
 
             }
         });
+
     }
 
 
@@ -132,21 +145,17 @@ public class SignUpSeller extends AppCompatActivity {
 
     private void checkAndRequestforPermission() {
 
-        if(ContextCompat.checkSelfPermission(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            if(ActivityCompat.shouldShowRequestPermissionRationale(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(SignUpSeller.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 Toast.makeText(SignUpSeller.this, "Please accept required permission", Toast.LENGTH_SHORT).show();
-            }
-
-            else {
+            } else {
                 ActivityCompat.requestPermissions(SignUpSeller.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PReqCode);
             }
-        }
-
-        else
+        } else
             openGallery();
 
     }
@@ -156,7 +165,7 @@ public class SignUpSeller extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == REQUESCODE && data != null) {
+        if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null) {
             //the user has successfully picked an image
             // we need to save the reference to a uri variable
 
@@ -167,23 +176,20 @@ public class SignUpSeller extends AppCompatActivity {
     }
 
 
-
     private boolean validateEmail() {
         String emailInput = textInputEmail.getText().toString().trim();
 
-        if(emailInput.isEmpty()) {
+        if (emailInput.isEmpty()) {
             textInputEmail.setError("Field can't be empty");
             return false;
         }
 
         //Given below is a predefined pattern that validates email address; emailInput string should be passed into matcher; returns true if they match
         //Keep the cursor on EMAIL_ADDRESS below and click on "ctrl + b" to get declaration.
-        else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+        else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             textInputEmail.setError("Invalid email address. Pls enter a valid one.");
             return false;
-        }
-
-        else {
+        } else {
             textInputEmail.setError(null);
             return true;
         }
@@ -192,12 +198,10 @@ public class SignUpSeller extends AppCompatActivity {
     private boolean validateUsername() {
         String usernameInput = textInputUsername.getText().toString().trim();
 
-        if(usernameInput.isEmpty()) {
+        if (usernameInput.isEmpty()) {
             textInputUsername.setError("Field cannot be empty");
             return false;
-        }
-
-        else {
+        } else {
             textInputUsername.setError(null);
             return true;
         }
@@ -206,12 +210,10 @@ public class SignUpSeller extends AppCompatActivity {
     private boolean validateRestaurantName() {
         String restaurantInput = textInputRestaurantName.getText().toString().trim();
 
-        if(restaurantInput.isEmpty()) {
+        if (restaurantInput.isEmpty()) {
             textInputRestaurantName.setError("Field cannot be empty");
             return false;
-        }
-
-        else {
+        } else {
             textInputRestaurantName.setError(null);
             return true;
         }
@@ -220,11 +222,10 @@ public class SignUpSeller extends AppCompatActivity {
     private boolean validatePassword() {
         String passwordInput = textInputPassword.getText().toString().trim();
 
-        if(passwordInput.isEmpty()) {
+        if (passwordInput.isEmpty()) {
             textInputPassword.setError("Field cannot be empty");
             return false;
-        }
-        else if(passwordInput.length() < 8) {
+        } else if (passwordInput.length() < 8) {
             textInputPassword.setError("Field cannot have less than 8 characters");
             return false;
         }
@@ -239,6 +240,32 @@ public class SignUpSeller extends AppCompatActivity {
     }
 
 
+    public void requestLocationPermission() {
+        ActivityCompat.requestPermissions(SignUpSeller.this, new String[] {ACCESS_FINE_LOCATION}, 1);
+    }
+
+    public void getSellerLocation() {
+
+        requestLocationPermission();
+
+        if (ActivityCompat.checkSelfPermission(SignUpSeller.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return ;
+        }
+        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(SignUpSeller.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null) {
+                    sellerLocation = location.toString();
+                    int lat = (int) (location.getLatitude());
+                    int lng = (int) (location.getLongitude());
+
+                    geoPoint = new GeoPoint(lat, lng);
+                    Toast.makeText(getApplicationContext(), geoPoint.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     public void confirmInput() {
         // validate password has been removed because of regex problems
         if(!validateEmail() || !validateUsername() || !validateRestaurantName() || !validatePassword()) {
@@ -246,6 +273,8 @@ public class SignUpSeller extends AppCompatActivity {
             signUpSellerBtn.setVisibility(View.VISIBLE);
             return;
         }
+
+        getSellerLocation();
 
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -283,7 +312,7 @@ public class SignUpSeller extends AppCompatActivity {
 
                             Map<String, Object> user = new HashMap<>();
                             user.put("active",true);
-                            user.put("address",null);
+                            user.put("address",geoPoint);
                             user.put("description", textInputRestaurantDetails.getText().toString());
                             user.put("email", textInputEmail.getText().toString());
                             //user.put("imageResourceId", textInputImageResourceId.getText().toString());

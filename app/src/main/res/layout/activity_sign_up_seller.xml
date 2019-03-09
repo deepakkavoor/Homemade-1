@@ -6,6 +6,7 @@
     tools:context=".SignUpSeller"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/back"
     >
     <LinearLayout
 
@@ -59,8 +60,8 @@
                         android:id="@+id/profile_picture_seller"
                         android:src="@drawable/userphoto"
                         android:padding="25dp"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp" />
+                        android:layout_width="150dp"
+                        android:layout_height="150dp" />
 
                 </LinearLayout>
 
