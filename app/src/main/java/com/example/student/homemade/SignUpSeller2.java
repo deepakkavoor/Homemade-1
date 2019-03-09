@@ -143,7 +143,9 @@ public class SignUpSeller2 extends AppCompatActivity {
                         loadingProgress.setVisibility(View.INVISIBLE);
                         signUpSellerBtn2.setVisibility(View.VISIBLE);
 
-                        Toast.makeText(getApplicationContext(), "Good Job Now Enjoy", Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(getApplicationContext(), "Restaurant Registered Successfully, Welcome to our Platform!", Toast.LENGTH_LONG).show();
+
                         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(mainActivity);
                         finish();

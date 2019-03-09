@@ -34,7 +34,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.google.firebase.firestore.GeoPoint;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -76,9 +78,11 @@ public class SignUpSeller extends AppCompatActivity {
     private StorageReference mStorage;
     private ProgressBar loadingProgress;
     private Button signUpSellerBtn;
+
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private String sellerLocation;
     private GeoPoint geoPoint;
+
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
 
@@ -100,7 +104,9 @@ public class SignUpSeller extends AppCompatActivity {
         signUpSellerBtn = findViewById(R.id.signup_seller_button);
         loadingProgress = findViewById(R.id.progress_bar_signup_seller);
 
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
 
         loadingProgress.setVisibility(View.INVISIBLE);
 
@@ -240,6 +246,7 @@ public class SignUpSeller extends AppCompatActivity {
     }
 
 
+
     public void requestLocationPermission() {
         ActivityCompat.requestPermissions(SignUpSeller.this, new String[] {ACCESS_FINE_LOCATION}, 1);
     }
@@ -266,6 +273,7 @@ public class SignUpSeller extends AppCompatActivity {
         });
     }
 
+
     public void confirmInput() {
         // validate password has been removed because of regex problems
         if(!validateEmail() || !validateUsername() || !validateRestaurantName() || !validatePassword()) {
@@ -274,7 +282,9 @@ public class SignUpSeller extends AppCompatActivity {
             return;
         }
 
+
         getSellerLocation();
+
 
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -312,7 +322,11 @@ public class SignUpSeller extends AppCompatActivity {
 
                             Map<String, Object> user = new HashMap<>();
                             user.put("active",true);
+
                             user.put("address",geoPoint);
+
+                            user.put("address",null);
+
                             user.put("description", textInputRestaurantDetails.getText().toString());
                             user.put("email", textInputEmail.getText().toString());
                             //user.put("imageResourceId", textInputImageResourceId.getText().toString());

@@ -62,6 +62,8 @@
                         android:padding="25dp"
                         android:layout_width="150dp"
                         android:layout_height="150dp" />
+                        android:layout_width="125dp"
+                        android:layout_height="125dp" />
 
                 </LinearLayout>
 
