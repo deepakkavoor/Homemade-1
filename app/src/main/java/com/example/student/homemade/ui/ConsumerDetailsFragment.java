@@ -35,10 +35,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 public class ConsumerDetailsFragment extends Fragment {
-
 
     ////VARIABLE INITIALIZATION
     TextView userName,userAddress,userContact,userWallet,userEmail;
@@ -150,9 +148,8 @@ public class ConsumerDetailsFragment extends Fragment {
                 }
             });
 
-
     }
-    
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -164,49 +161,4 @@ public class ConsumerDetailsFragment extends Fragment {
     }
 
 
-
-    //something for round image
-    public class ImageTrans_CircleTransform implements Transformation {
-        @Override
-        public Bitmap transform(Bitmap source) {
-            if (source == null || source.isRecycled()) {
-                return null;
-            }
-            int borderwidth = userProfilePic.getWidth();
-            int bordercolor = userProfilePic.getSolidColor();
-
-            final int width = source.getWidth() + borderwidth;
-            final int height = source.getHeight() + borderwidth;
-
-            Bitmap canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            BitmapShader shader = new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setShader(shader);
-
-            Canvas canvas = new Canvas(canvasBitmap);
-            float radius = width > height ? ((float) height) / 2f : ((float) width) / 2f;
-            canvas.drawCircle(width / 2, height / 2, radius, paint);
-
-            //border code
-            paint.setShader(null);
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(bordercolor);
-            paint.setStrokeWidth(borderwidth);
-            canvas.drawCircle(width / 2, height / 2, radius - borderwidth / 2, paint);
-            //--------------------------------------
-
-            if (canvasBitmap != source) {
-                source.recycle();
-            }
-
-            return canvasBitmap;
-        }
-        @Override
-        public String key() {
-            return "circle";
-        }
-    }
-
-    //something for round image
 }
