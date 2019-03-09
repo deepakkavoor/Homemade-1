@@ -15,37 +15,47 @@
         android:background="#fafafa"
         android:minHeight="10dp"
         android:orientation="vertical"
-       >
+        >
 
         <RelativeLayout
             android:layout_width="421dp"
-            android:layout_height="268dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="266dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
                 android:background="#66AF4C"
                 android:orientation="vertical">
 
-                <ImageView
+                <!--<ImageView-->
+                <!--android:id="@+id/ivEditPic"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="150dp"-->
+                <!--android:layout_gravity="center_horizontal"-->
+
+                <!--android:layout_marginTop="45dp"-->
+                <!--android:layout_marginRight="30dp"-->
+                <!--android:src="@drawable/group_12" />-->
+
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivEditPic"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="45dp"
                     android:layout_marginRight="30dp"
                     android:src="@drawable/group_12" />
 
                 <EditText
                     android:id="@+id/tvEditName"
-                    android:layout_width="279dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp"
-                    android:gravity="center"
-                    android:text="William Snow"
+                    android:text="Name"
                     android:textColor="#fff"
                     android:textSize="21sp"
                     android:textStyle="bold" />
@@ -111,7 +121,8 @@
         <LinearLayout
             android:layout_width="430dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp">
+            android:layout_marginTop="20dp">
+
 
             <Button
                 android:id="@+id/saveDetails"

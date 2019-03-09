@@ -4,6 +4,12 @@ package com.example.student.homemade.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -35,8 +41,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 public class ConsumerDetailsFragment extends Fragment {
+
 
     ////VARIABLE INITIALIZATION
     TextView userName,userAddress,userContact,userWallet,userEmail;
@@ -47,10 +55,9 @@ public class ConsumerDetailsFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     String currentUserUID = firebaseAuth.getUid();
-    DocumentReference notebookRef  = db.collection("Consumer").document("saharsh1999@nitk.ac.in");
-    StorageReference storageReference = FirebaseStorage.getInstance().getReference("consumers_photos").child("sample");
-
-
+    DocumentReference notebookRef  = db.collection("Consumer").document("nigga@99.com");
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference("consumers_photos").child("somerandompic");
+    ProgressDialog progressDialog;
 
 
 
@@ -78,8 +85,6 @@ public class ConsumerDetailsFragment extends Fragment {
 
         v =  inflater.inflate(R.layout.activity_consumer_details_layout, container, false);
         context=getActivity();
-        notebookRef  = db.collection("Consumer").document("nigga@99.com");
-
         userName = v.findViewById(R.id.tvProfileName);
         userAddress = v.findViewById(R.id.tvProfileAddress);
         userContact = v.findViewById(R.id.tvProfileContact);
@@ -88,13 +93,16 @@ public class ConsumerDetailsFragment extends Fragment {
         changeUserPassword = v.findViewById(R.id.btnChangePassword);
         editUserDetails = v.findViewById(R.id.btnEditDetails);
         userProfilePic = v.findViewById(R.id.ivProfilePic);
+        progressDialog= new ProgressDialog(getActivity());
+        progressDialog.setMessage("LOADING!! PLEASE WAIT...");
+        progressDialog.show();
         setDetails();
         setProfilePic();
 
         editUserDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), EditConsumerDetails.class));
+                startActivity(new Intent(getActivity(), EditConsumerDetails.class));
             }
         });
 
@@ -131,22 +139,30 @@ public class ConsumerDetailsFragment extends Fragment {
 
     public void setProfilePic(){
 
-            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // profilePic.setImageURI(uri);             THIS WON'T WORK AS IT'S RETURNING A URL RATHER THAN A IMAGE
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // profilePic.setImageURI(uri);             THIS WON'T WORK AS IT'S RETURNING A URL RATHER THAN A IMAGE
+//                    Picasso.get()
+//                            .load(uri)
+//                            .error(R.drawable.ic_phone_android_black_24dp)
+//                            .placeholder(R.drawable.com_facebook_button_icon_white)
+//                            .resize(200, 200)
+//                            .transform(new ImageTrans_CircleTransform())
+//                            .into(userProfilePic);
 
-                        Picasso.get().load(uri).fit().centerCrop().into(userProfilePic);//GET THIS FROM SQUARE PICASSO ,DON'T FORGET ITS DEPENDENCY
+                Picasso.get().load(uri).fit().centerCrop().into(userProfilePic);//GET THIS FROM SQUARE PICASSO ,DON'T FORGET ITS DEPENDENCY
+                progressDialog.dismiss();
 
-                    }
+            }
 
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "CANNOT LOAD IMAGE", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "CANNOT LOAD IMAGE", Toast.LENGTH_SHORT).show();
 
-                }
-            });
+            }
+        });
 
     }
 
@@ -161,4 +177,49 @@ public class ConsumerDetailsFragment extends Fragment {
     }
 
 
+
+    //something for round image
+    public class ImageTrans_CircleTransform implements Transformation {
+        @Override
+        public Bitmap transform(Bitmap source) {
+            if (source == null || source.isRecycled()) {
+                return null;
+            }
+            int borderwidth = userProfilePic.getWidth();
+            int bordercolor = userProfilePic.getSolidColor();
+
+            final int width = source.getWidth() + borderwidth;
+            final int height = source.getHeight() + borderwidth;
+
+            Bitmap canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            BitmapShader shader = new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setShader(shader);
+
+            Canvas canvas = new Canvas(canvasBitmap);
+            float radius = width > height ? ((float) height) / 2f : ((float) width) / 2f;
+            canvas.drawCircle(width / 2, height / 2, radius, paint);
+
+            //border code
+            paint.setShader(null);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setColor(bordercolor);
+            paint.setStrokeWidth(borderwidth);
+            canvas.drawCircle(width / 2, height / 2, radius - borderwidth / 2, paint);
+            //--------------------------------------
+
+            if (canvasBitmap != source) {
+                source.recycle();
+            }
+
+            return canvasBitmap;
+        }
+        @Override
+        public String key() {
+            return "circle";
+        }
+    }
+
+    //something for round image
 }
