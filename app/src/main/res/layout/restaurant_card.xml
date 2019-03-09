@@ -19,6 +19,7 @@
             android:id="@+id/Empty_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/Title"
             android:text="@string/no_restaurants_found"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
