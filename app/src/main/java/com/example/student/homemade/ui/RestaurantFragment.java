@@ -26,6 +26,9 @@ import android.widget.Toast;
 import com.example.student.homemade.R;
 import com.example.student.homemade.RestaurantAdapter;
 import com.example.student.homemade.RestaurantModel;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -91,6 +94,8 @@ public class RestaurantFragment extends Fragment {
         minRatingText = v.findViewById(R.id.min_rating_text);
         getActivity().setTitle("Restaurants Available");
         progressBar = v.findViewById(R.id.progress_circular);
+        Sprite cubeGrid = new CubeGrid();
+        progressBar.setIndeterminateDrawable(cubeGrid);
         filterSpinner = v.findViewById(R.id.filter_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.filter_array, android.R.layout.simple_spinner_item);

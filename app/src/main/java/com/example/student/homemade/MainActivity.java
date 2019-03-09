@@ -5,9 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,10 +38,18 @@ import com.example.student.homemade.ui.MassOrderFragment;
 import com.example.student.homemade.ui.RestaurantFragment;
 import com.example.student.homemade.ui.TrendingItemsFragment;
 import com.facebook.login.LoginManager;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.ChasingDots;
+import com.github.ybq.android.spinkit.style.CubeGrid;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity implements ProviderUIFragment.OnFragmentInteractionListener, ConsumerUIFragment.OnFragmentInteractionListener{
     private static int c;
@@ -66,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         Log.v(TAG,settings.getString("email","homemade"));
         c = settings.getInt("ProviderOrConsumerFlag", 0);
         navigationView = findViewById(R.id.nav_view);
+
         Menu menu = navigationView.getMenu();
         menu.add(0, 0, 0, "Dashboard");
 
@@ -109,8 +122,40 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawer.setDrawerListener(mDrawerToggle);
-        navigationView = findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
+        View hView = navigationView.inflateHeaderView(R.layout.nav_header);
+        final ImageView imageView = hView.findViewById(R.id.header_imageView);
+        imageView.setVisibility(View.INVISIBLE);
+        final ProgressBar progressBar = hView.findViewById(R.id.progress_bar_header);
+        Sprite wave = new Wave();
+        progressBar.setIndeterminateDrawable(wave);
+        Log.i(TAG,"ID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        StorageReference mImageRef =
+                FirebaseStorage.getInstance().getReference("consumers_photos/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        final long ONE_MEGABYTE = 1024 * 1024;
+        mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+                imageView.setMinimumHeight(dm.heightPixels);
+                imageView.setMinimumWidth(dm.widthPixels);
+                imageView.setImageBitmap(bm);
+                progressBar.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressBar.setVisibility(View.GONE);
+                imageView.setImageResource(R.drawable.userphoto);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        });
+        TextView headertextView = hView.findViewById(R.id.username_header);
+        headertextView.setText(settings.getString("email","homemade"));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -190,9 +235,6 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    private void setupDrawer() {
-
-    }
     private void setupDrawerContent(NavigationView navigationView) {
 
 
