@@ -195,7 +195,7 @@ public class MassOrderFragment extends Fragment {
 
     void loadSellerSpinner(){
         final ArrayList<String>  sellerList = new ArrayList<String>();
-sellerList.add("something");
+        sellerList.add("something");
 //        providerIds.get()
 //                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 //                    @Override

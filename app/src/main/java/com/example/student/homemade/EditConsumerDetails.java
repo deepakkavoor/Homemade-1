@@ -44,6 +44,8 @@ public class EditConsumerDetails extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     Button editDetailsbtn;
     ProgressDialog progressDialog;
+    boolean flagImage = false;
+    ConsumerDetailsClass detailsOld;
 
 
 
@@ -75,6 +77,7 @@ public class EditConsumerDetails extends AppCompatActivity {
         editPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                flagImage = true;
                 Intent intent = new Intent();
                 intent.setType("image/*");//image IS FOR IMAGE, WE CAN USE APPLICATION/*,AUDIO/*
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -88,8 +91,7 @@ public class EditConsumerDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setDetails();
-                setimage();
-
+                if(flagImage == true) setimage();
             }
         });
 
@@ -101,14 +103,16 @@ public class EditConsumerDetails extends AppCompatActivity {
     void setDetails(){
         if(!validate()) return;
 
+
         DocumentReference noteRef = db.collection("Consumer").document("nigga@99.com");
         String name,address,contact;
         name = editName.getText().toString();
         address = editAddress.getText().toString();
         contact = editcontact.getText().toString();
-        ConsumerDetailsClass details = new ConsumerDetailsClass(name,address,contact);
+        ConsumerDetailsClass details = new ConsumerDetailsClass(name,detailsOld.getPassword(),address,contact,detailsOld.getWallet(),detailsOld.getEmail(),detailsOld.getTypeOfUser());
 
         noteRef.set(details);
+        Toast.makeText(this, "Details Saved Successfully", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -154,7 +158,7 @@ public class EditConsumerDetails extends AppCompatActivity {
 
         /////////LOADING IMAGE FROM FIREBASE AND DISPLAYING DONE
         storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("consumers_photos/sample").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {          /////do change here
+        storageReference.child("consumers_photos/somerandompic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {          /////do change here
             @Override
             public void onSuccess(Uri uri) {
                 // profilePic.setImageURI(uri);             THIS WON'T WORK AS IT'S RETURNING A URL RATHER THAN A IMAGE
@@ -173,18 +177,18 @@ public class EditConsumerDetails extends AppCompatActivity {
     }
 
     void showOldDetails(){
-         DocumentReference myref =  db.collection("Consumer").document("nigga@99.com");
+        DocumentReference myref =  db.collection("Consumer").document("nigga@99.com");
 
-         myref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-             @Override
-             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                 ConsumerDetailsClass details = documentSnapshot.toObject(ConsumerDetailsClass.class);
-                 editName.setText(details.getUsername());
-                 editAddress.setText(details.getAddress());
-                 editcontact.setText(details.getContactNo());
+        myref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                detailsOld = documentSnapshot.toObject(ConsumerDetailsClass.class);
+                editName.setText(detailsOld.getUsername());
+                editAddress.setText(detailsOld.getAddress());
+                editcontact.setText(detailsOld.getContactNo());
 
-                 }
-         });
+            }
+        });
     }
 
     ////////LOADING IMAGE FROM GALARY
