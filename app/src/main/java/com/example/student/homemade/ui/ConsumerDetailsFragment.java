@@ -149,18 +149,6 @@ public class ConsumerDetailsFragment extends Fragment {
 
                 }
             });
-        
-                        Picasso.get().load(uri).fit().centerCrop().into(userProfilePic);//GET THIS FROM SQUARE PICASSO ,DON'T FORGET ITS DEPENDENCY
-
-                    }
-
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "CANNOT LOAD IMAGE", Toast.LENGTH_SHORT).show();
-
-                }
-            });
 
 
     }
