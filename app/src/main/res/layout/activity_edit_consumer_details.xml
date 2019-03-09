@@ -32,11 +32,13 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
+
                     android:layout_marginTop="55dp"
                     android:layout_marginRight="30dp"
                     android:src="@drawable/group_12" />
 
                 <EditText
+                    android:id="@+id/tvEditName"
                     android:layout_width="279dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -56,9 +58,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
+            android:layout_marginTop="30dp">
 
-            android:layout_marginTop="55dp"
-            >
 
             <LinearLayout
                 android:paddingTop="20dp"

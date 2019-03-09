@@ -51,7 +51,6 @@ public class EditConsumerDetails extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -89,7 +88,7 @@ public class EditConsumerDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setDetails();
-               setimage();
+                setimage();
 
             }
         });
@@ -101,8 +100,6 @@ public class EditConsumerDetails extends AppCompatActivity {
 
     void setDetails(){
         if(!validate()) return;
-
-
 
         DocumentReference noteRef = db.collection("Consumer").document("nigga@99.com");
         String name,address,contact;
