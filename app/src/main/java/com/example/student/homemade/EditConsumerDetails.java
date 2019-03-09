@@ -92,6 +92,8 @@ public class EditConsumerDetails extends AppCompatActivity {
             public void onClick(View v) {
                 setDetails();
                 if(flagImage == true) setimage();
+
+                setimage();
             }
         });
 
@@ -103,16 +105,18 @@ public class EditConsumerDetails extends AppCompatActivity {
     void setDetails(){
         if(!validate()) return;
 
-
         DocumentReference noteRef = db.collection("Consumer").document("nigga@99.com");
         String name,address,contact;
         name = editName.getText().toString();
         address = editAddress.getText().toString();
         contact = editcontact.getText().toString();
+
         ConsumerDetailsClass details = new ConsumerDetailsClass(name,detailsOld.getPassword(),address,contact,detailsOld.getWallet(),detailsOld.getEmail(),detailsOld.getTypeOfUser());
 
         noteRef.set(details);
         Toast.makeText(this, "Details Saved Successfully", Toast.LENGTH_SHORT).show();
+
+    
     }
 
 
@@ -159,6 +163,7 @@ public class EditConsumerDetails extends AppCompatActivity {
         /////////LOADING IMAGE FROM FIREBASE AND DISPLAYING DONE
         storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("consumers_photos/somerandompic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {          /////do change here
+
             @Override
             public void onSuccess(Uri uri) {
                 // profilePic.setImageURI(uri);             THIS WON'T WORK AS IT'S RETURNING A URL RATHER THAN A IMAGE

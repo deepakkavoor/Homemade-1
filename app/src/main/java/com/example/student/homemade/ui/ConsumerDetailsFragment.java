@@ -61,6 +61,7 @@ public class ConsumerDetailsFragment extends Fragment {
 
 
 
+
     public ConsumerDetailsFragment(){
         //Required empty constructor
     }
@@ -84,7 +85,6 @@ public class ConsumerDetailsFragment extends Fragment {
 
         v =  inflater.inflate(R.layout.activity_consumer_details_layout, container, false);
         context=getActivity();
-
         userName = v.findViewById(R.id.tvProfileName);
         userAddress = v.findViewById(R.id.tvProfileAddress);
         userContact = v.findViewById(R.id.tvProfileContact);
