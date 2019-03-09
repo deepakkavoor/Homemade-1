@@ -4,12 +4,6 @@ package com.example.student.homemade.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Shader;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -55,9 +49,11 @@ public class ConsumerDetailsFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     String currentUserUID = firebaseAuth.getUid();
-    DocumentReference notebookRef  = db.collection("Consumer").document("nigga@99.com");
-    StorageReference storageReference = FirebaseStorage.getInstance().getReference("consumers_photos").child("somerandompic");
-    ProgressDialog progressDialog;
+    DocumentReference notebookRef  = db.collection("Consumer").document("saharsh1999@nitk.ac.in");
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference("consumers_photos").child("sample");
+
+
+
 
 
 
@@ -84,7 +80,7 @@ public class ConsumerDetailsFragment extends Fragment {
 
         v =  inflater.inflate(R.layout.activity_consumer_details_layout, container, false);
         context=getActivity();
-
+        notebookRef  = db.collection("Consumer").document("nigga@99.com");
         userName = v.findViewById(R.id.tvProfileName);
         userAddress = v.findViewById(R.id.tvProfileAddress);
         userContact = v.findViewById(R.id.tvProfileContact);
@@ -93,9 +89,6 @@ public class ConsumerDetailsFragment extends Fragment {
         changeUserPassword = v.findViewById(R.id.btnChangePassword);
         editUserDetails = v.findViewById(R.id.btnEditDetails);
         userProfilePic = v.findViewById(R.id.ivProfilePic);
-        progressDialog= new ProgressDialog(getActivity());
-        progressDialog.setMessage("LOADING!! PLEASE WAIT...");
-        progressDialog.show();
         setDetails();
         setProfilePic();
 
@@ -143,16 +136,8 @@ public class ConsumerDetailsFragment extends Fragment {
                 @Override
                 public void onSuccess(Uri uri) {
                     // profilePic.setImageURI(uri);             THIS WON'T WORK AS IT'S RETURNING A URL RATHER THAN A IMAGE
-//                    Picasso.get()
-//                            .load(uri)
-//                            .error(R.drawable.ic_phone_android_black_24dp)
-//                            .placeholder(R.drawable.com_facebook_button_icon_white)
-//                            .resize(200, 200)
-//                            .transform(new ImageTrans_CircleTransform())
-//                            .into(userProfilePic);
 
-                        Picasso.get().load(uri).fit().centerCrop().into(userProfilePic);//GET THIS FROM SQUARE PICASSO ,DON'T FORGET ITS DEPENDENCY
-                        progressDialog.dismiss();
+                    Picasso.get().load(uri).fit().centerCrop().into(userProfilePic);//GET THIS FROM SQUARE PICASSO ,DON'T FORGET ITS DEPENDENCY
 
                 }
 
