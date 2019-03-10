@@ -195,12 +195,16 @@ public class MenuActivity extends AppCompatActivity {
                                         Log.d("MACHSAAAADASAS", e.toString());
                                     }
                                 });
+                        Toast.makeText(MenuActivity.this,"Menu uploaded",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MenuActivity.this,MainActivity.class);
+                        startActivity(intent);
                     }
 
                 }
-                Toast.makeText(MenuActivity.this,"Menu uploaded",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MenuActivity.this,MainActivity.class);
-                startActivity(intent);
+                else{
+                    Toast.makeText(MenuActivity.this,"Enter Price",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
