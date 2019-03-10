@@ -133,9 +133,7 @@ public class UploadActivity extends AppCompatActivity {
             } else {
 
                 BringImagePicker();
-
             }
-
         } else {
             BringImagePicker();
         }
