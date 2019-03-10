@@ -50,7 +50,7 @@
 
                 <EditText
                     android:id="@+id/tvEditName"
-                    android:layout_width="280dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="30dp"
@@ -122,8 +122,7 @@
         <LinearLayout
             android:layout_width="430dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp">
-
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/saveDetails"

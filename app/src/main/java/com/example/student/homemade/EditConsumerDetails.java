@@ -92,6 +92,7 @@ public class EditConsumerDetails extends AppCompatActivity {
                 setDetails();
                 if(flagImage == true) setimage();
                 flagImage = false;
+
             }
         });
 
@@ -104,6 +105,7 @@ public class EditConsumerDetails extends AppCompatActivity {
         if(!validate()) return;
 
         DocumentReference noteRef = db.collection("Consumer").document(currentUID);
+
         String name,address,contact;
         name = editName.getText().toString();
         address = editAddress.getText().toString();
@@ -160,6 +162,7 @@ public class EditConsumerDetails extends AppCompatActivity {
 
         /////////LOADING IMAGE FROM FIREBASE AND DISPLAYING DONE
         storageReference = FirebaseStorage.getInstance().getReference();
+
         storageReference.child("consumers_photos").child(currentUID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {          /////do change here
 
             @Override
@@ -180,7 +183,9 @@ public class EditConsumerDetails extends AppCompatActivity {
     }
 
     void showOldDetails(){
+
         DocumentReference myref =  db.collection("Consumer").document(currentUID);
+        
 
         myref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

@@ -69,9 +69,6 @@ public class ConsumerDetailsFragment extends Fragment {
     ProgressDialog progressDialog;
 
 
-
-
-
     public ConsumerDetailsFragment(){
         //Required empty constructor
     }
