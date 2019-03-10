@@ -10,12 +10,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -107,6 +110,29 @@ public class ProviderUIFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sellers_dashboard, container, false);
         Sellername = view.findViewById(R.id.restaurant_name);
+        final SwitchCompat switchButton = view.findViewById(R.id.switchButton);
+
+        firebaseFirestore.collection("Provider").document(sellerID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if(document.exists()){
+                    Map<String, Object> map = document.getData();
+                    switchButton.setChecked((Boolean)map.get("availability"));
+                }else{
+                    Log.d("fuck","this bitch is not working");
+                }
+
+            }
+        });
+
+        switchButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+//                switchButton.toggle();
+                firebaseFirestore.collection("Provider").document(sellerID).update("availability",switchButton.isChecked());
+            }
+        });
 
 //        String S = "L9DYxJQza3OVeWIxlZiE";
         firebaseFirestore.collection("Provider").document(sellerID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

@@ -238,7 +238,7 @@
         android:layout_gravity="bottom|right|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_black_24dp"
-        app:backgroundTint="@color/colorSecondaryDark"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:elevation="5dp"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_constraintBottom_toBottomOf="parent"
