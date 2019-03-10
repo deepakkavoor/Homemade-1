@@ -129,9 +129,10 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         final ProgressBar progressBar = hView.findViewById(R.id.progress_bar_header);
         Sprite wave = new Wave();
         progressBar.setIndeterminateDrawable(wave);
-        Log.i(TAG,"ID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        StringBuilder url = (c==2) ? new StringBuilder("providers_photos/profile_pictures/") : new StringBuilder("consumers_photos/");
+        url.append(FirebaseAuth.getInstance().getCurrentUser().getUid());
         StorageReference mImageRef =
-                FirebaseStorage.getInstance().getReference("consumers_photos/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+                FirebaseStorage.getInstance().getReference(url.toString().trim());
         final long ONE_MEGABYTE = 1024 * 1024;
         mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
