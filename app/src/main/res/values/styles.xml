@@ -37,9 +37,14 @@
     <item name="colorAccent">@color/colorAccent</item>
     </style>
        <style name="BrandedSwitch" parent="AppTheme">
-            <item name="colorAccent">#39ac39</item>
+            <item name="colorAccent">#003d00</item>
         </style>
+    <style name="myDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
 
+        <item name="android:colorAccent">@color/colorSecondaryDark</item>
+        <item name="android:colorPrimary">@color/colorSecondaryLight</item>
+
+    </style>
 
     <style name="CancelOrder" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
