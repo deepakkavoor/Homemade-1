@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         menu.add(0, 0, 0, "Dashboard");
 
 
+
+
         if(c==1){
             //Provider
 

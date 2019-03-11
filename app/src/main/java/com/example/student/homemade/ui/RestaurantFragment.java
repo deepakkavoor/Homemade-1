@@ -1,11 +1,21 @@
 package com.example.student.homemade.ui;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,11 +57,11 @@ import java.util.Map;
 
 
 //Fragment displays restaurant list
-public class RestaurantFragment extends Fragment {
+public class RestaurantFragment extends Fragment implements LocationListener {
 
 
-    final double latitude = 12.9807;
-    final double longitude = 74.8031;
+    double latitude;
+    double longitude;
     View v;
     SwipeRefreshLayout swipeRefreshLayout;
     String TAG = "RestaurantFragment";
@@ -60,8 +70,11 @@ public class RestaurantFragment extends Fragment {
     RestaurantAdapter myAdapter;
     ProgressBar progressBar;
     EditText editText, minratingEditText;
-    TextView minRatingText,emptyTextView;
+    TextView minRatingText, emptyTextView;
     Spinner filterSpinner;
+    LocationManager locationManager;
+    String provider;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
 
     //Sets up the database
@@ -85,7 +98,16 @@ public class RestaurantFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            checkLocationPermission();
+            provider = locationManager.getBestProvider(new Criteria(), false);
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        Log.i(TAG,"Latitude:"+latitude +"Longitude"+longitude);
         v = inflater.inflate(R.layout.restaurant_card, container, false);
+
         mRecyclerView = v.findViewById(R.id.cardView);
         swipeRefreshLayout = v.findViewById(R.id.swipeToRefresh);
         editText = v.findViewById(R.id.inputSearch);
@@ -538,5 +560,100 @@ public class RestaurantFragment extends Fragment {
     }
 
 
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude=location.getLatitude();
+        longitude=location.getLongitude();
+        Log.i(TAG,"Latitude:"+latitude +"Longitude"+longitude);
+        Toast.makeText(getActivity(),"Latitude:"+latitude +"Longitude"+longitude,Toast.LENGTH_LONG);
+    }
 
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Location Permission")
+                        .setMessage("Please give location permission as it is need to determine distance")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            provider = locationManager.getBestProvider(new Criteria(), false);
+            latitude=locationManager.getLastKnownLocation(provider).getLatitude();
+            longitude=locationManager.getLastKnownLocation(provider).getLongitude();
+            Log.i(TAG,"Latitude:"+latitude +"Longitude"+longitude);
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    provider = locationManager.getBestProvider(new Criteria(), false);
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        //Request location updates:
+                        locationManager.requestLocationUpdates(provider, 400, 1, this);
+
+                    }
+
+                } else {
+                   Log.i(TAG,"No idea what this is doing");
+                   latitude = 12.9807;
+                   longitude = 74.8031;
+
+                }
+                return;
+            }
+
+        }
+    }
 }
