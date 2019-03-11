@@ -1,6 +1,7 @@
 package com.example.student.homemade;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,18 +13,47 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+class Order {
+    String provider;
+    String consumer;
+    boolean completed;
+    boolean delivered;
+    boolean paid;
+    String orderTime;
+    double orderTotal;
+    ArrayList<FoodItem> itemsOrdered;
+    String deliveryPerson;
+    boolean isMassOrder;
+
+    public Order(String provider, String consumer, boolean completed, boolean delivered, boolean paid, String orderTime, double orderTotal, ArrayList<FoodItem> itemsOrdered, String deliveryPerson,boolean isMassOrder) {
+        this.provider = provider;
+        this.consumer = consumer;
+        this.completed = completed;
+        this.delivered = delivered;
+        this.paid = paid;
+        this.orderTime = orderTime;
+        this.orderTotal = orderTotal;
+        this.itemsOrdered = itemsOrdered;
+        this.deliveryPerson = deliveryPerson;
+        this.isMassOrder = isMassOrder;
+    }
+}
 
 class FoodItem {
 
@@ -36,6 +66,7 @@ class FoodItem {
         this.itemCost = itemCost;
         this.itemNumber = itemNumber;
     }
+
 }
 
 class Provider {
@@ -96,7 +127,7 @@ class Item {
 public class OrderPageActivity extends AppCompatActivity {
 
     private static final String TAG = OrderPageActivity.class.getName();
-    ArrayList<FoodItem> foodItems = new ArrayList<>();
+    ArrayList<FoodItem> foodItems = new ArrayList<FoodItem>();
     ListAdapter itemAdapter;
     ListView itemListView;
 
@@ -109,10 +140,11 @@ public class OrderPageActivity extends AppCompatActivity {
 
         itemListView = (ListView) findViewById(R.id.itemList);
 //        FirebaseApp.initializeApp(this);
-        final String providerID = "789";
+        final String providerID = "vMR09oO90SbUtCapURrudg5QMlw2";
         final String type = "Breakfast";
         final String consumerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Log.d("consumerid",consumerID);
         db.collection("Provider")
                 .whereEqualTo("id", providerID)
                 .get()
@@ -121,8 +153,9 @@ public class OrderPageActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for(QueryDocumentSnapshot document : task.getResult()){
+                                Log.d("newone","entered the arena");
                                 db.collection("Provider").document(document.getId())
-                                        .collection("Menu").document(type).get()
+                                        .collection("menu").document(type).get()
                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -158,15 +191,42 @@ public class OrderPageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 TextView totalCost = findViewById(R.id.totalCost);
                 double orderTotal = Double.parseDouble(totalCost.getText().toString());
-                HashMap<String,Object> intentHash = new HashMap<String,Object>();
-                intentHash.put("foodItems",foodItems);
-                intentHash.put("providerID",providerID);
-                intentHash.put("type",type);
-                intentHash.put("consumerID",consumerID);
-                intentHash.put("orderTotal",orderTotal);
-                Intent intent = new Intent(OrderPageActivity.this,CustomerConfirmActivity.class);
-                intent.putExtra("intentHash",intentHash);
-                startActivity(intent);
+                Order order = new Order(providerID,consumerID,false,false,false,"",orderTotal,foodItems,"",false);
+                DocumentReference docRef = db.collection("Orders").document();
+                docRef.set(order);
+                String doc = docRef.getId();
+//                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                            @Override
+//                            public void onSuccess(DocumentReference documentReference) {
+//                                Log.d("newone","SuCCESS");
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.d("newone","Failure");
+//                            }
+//                        });
+                //                HashMap<String,Object> intentHash = new HashMap<String,Object>();
+////                intentHash.put("foodItems",foodItems);
+//                Log.d("newone",foodItems.toString());
+//                Log.d("newone",foodItems.get(0).toString());
+//                intentHash.put("providerID",providerID);
+//                intentHash.put("type",type);
+//                intentHash.put("consumerID",consumerID);
+//                intentHash.put("orderTotal",orderTotal);
+//                Log.d("newone",foodItems.get(0).itemName + " " +foodItems.get(0).itemNumber + " " + foodItems.get(0).itemCost);
+////                Log.d("newone",intentHash.get("foodItems").toString());
+                Intent intentNew = new Intent(OrderPageActivity.this,CustomerConfirmActivity.class);
+
+
+                intentNew.putExtra("docRef",doc);
+                //                intentNew.putExtra("intentHash",intentHash);
+//                Bundle args = new Bundle();
+//                args.putSerializable("ARRAYLIST",(Serializable)foodItems);
+//                intentNew.putExtra("BUNDLE",args);
+////                intentNew.putStringArrayListExtra("foodItems",foodItems);
+                 startActivity(intentNew);
             }
         });
     }
