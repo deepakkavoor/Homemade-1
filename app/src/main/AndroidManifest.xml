@@ -32,10 +32,11 @@
         android:supportsRtl="true"
 
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpSeller2"></activity>
 
+        <activity android:name=".MassOrderItems"></activity>
+        <activity android:name=".SignUpSeller2" />
+        <activity android:name=".EditConsumerDetails" />
 
-        <activity android:name=".EditConsumerDetails"></activity>
 
         <activity android:name=".ForgotActivity" />
         <!--
