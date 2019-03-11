@@ -304,7 +304,7 @@ public class SignUpBuyer extends AppCompatActivity {
                             userdata.put("password", textInputPassword.getText().toString());
                             userdata.put("contactNumber", textInputPhoneNumber.getText().toString());
                             userdata.put("address", textInputAddress.getText().toString());
-                            userdata.put("wallet", "1000");
+                            userdata.put("wallet", 1000);
 //                            userdata.put("profile_picture", pickedImgUri);
                             userdata.put("typeOfUser", "Consumer");
 
