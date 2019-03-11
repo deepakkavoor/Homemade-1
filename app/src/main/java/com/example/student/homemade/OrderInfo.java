@@ -14,9 +14,10 @@ public class OrderInfo {
     boolean paid;
     ArrayList<String> things_ordered;
     String time_and_date;
+    int timeBeforeCancel;
     float total_cost;
 
-    public OrderInfo(int Provider, int client, boolean completed, boolean delivered, int delivery_person, int orderID, boolean paid, ArrayList<String> things_ordered, String time_and_date, float total_cost){
+    public OrderInfo(int Provider, int client, boolean completed, boolean delivered, int delivery_person, int orderID, boolean paid, ArrayList<String> things_ordered, String time_and_date, int timeBeforeCancel, float total_cost){
         this.Provider = Provider;
         this.client =  client;
         this.completed = completed;
@@ -26,6 +27,7 @@ public class OrderInfo {
         this.paid = paid;
         this.things_ordered = things_ordered;
         this.time_and_date = time_and_date;
+        this.timeBeforeCancel = timeBeforeCancel;
         this.total_cost = total_cost;
     }
 
@@ -55,8 +57,14 @@ public class OrderInfo {
         return paid;
     }
 
-    public ArrayList<String> getThings_ordered() {
-        return things_ordered;
+    public String getThings_ordered() {
+        String result = "";
+        for(int i=0; i<things_ordered.size() - 1; i++){
+            result = result + things_ordered.get(i) + ", ";
+        }
+        result = result + things_ordered.get(things_ordered.size() - 1);
+
+        return result;
     }
 
     public String getTime_and_date() {
