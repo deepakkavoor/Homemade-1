@@ -483,7 +483,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     
     //----------------Opens the splash activity page which goes to slider and then to start page.
-    public void openStartPageActivity() {
+    public void openSplashPageActivity() {
         Intent startIntent = new Intent(this, SplashActivity.class);
         startActivity(startIntent);
     }
