@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openStartPageActivity();
+                //openStartPageActivity();
+                openSplashPageActivity();
             }
         });
 
@@ -366,9 +367,14 @@ public class LoginActivity extends AppCompatActivity {
     private void postLoginWithIntent(final String email){
 
         Log.d("LoginActivity", "string is "+email);
+        SharedPreferences settings = getSharedPreferences("ProviderOrConsumerPreference", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("email",email);
+        editor.apply();
 
 
-        db.collection("user").whereEqualTo("email", email).whereEqualTo("type_of_user", "Provider").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        db.collection("user").whereEqualTo("email", email).whereEqualTo("typeOfUser", "Provider").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -473,6 +479,12 @@ public class LoginActivity extends AppCompatActivity {
     //----------------Opens the start activity page i.e Signup pages and intro's
     public void openStartPageActivity() {
         Intent startIntent = new Intent(this, StartPage.class);
+        startActivity(startIntent);
+    }
+    
+    //----------------Opens the splash activity page which goes to slider and then to start page.
+    public void openSplashPageActivity() {
+        Intent startIntent = new Intent(this, SplashActivity.class);
         startActivity(startIntent);
     }
 }

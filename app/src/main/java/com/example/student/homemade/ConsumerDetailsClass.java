@@ -1,7 +1,7 @@
 package com.example.student.homemade;
 
 public class ConsumerDetailsClass {
-    String username, password, address, contactNo, wallet, email,typeOfUser;
+    String username, password, address, contactNumber, wallet, email,typeOfUser;
 
     public ConsumerDetailsClass() {
     }
@@ -10,7 +10,7 @@ public class ConsumerDetailsClass {
         this.username = username;
         this.password = password;
         this.address = address;
-        this.contactNo = contactNo;
+        this.contactNumber = contactNo;
         this.wallet = wallet;
         this.email = email;
         this.typeOfUser = typeOfUser;
@@ -40,12 +40,12 @@ public class ConsumerDetailsClass {
         this.address = address;
     }
 
-    public String getContactNo() {
-        return contactNo;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setContactNo(String contactNo) {
-        this.contactNo = contactNo;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public String getWallet() {

@@ -1,5 +1,6 @@
 package com.example.student.homemade;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,20 +19,36 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+=======
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+>>>>>>> master
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+=======
+import java.util.HashMap;
+>>>>>>> master
 
 public class CustomerConfirmActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+<<<<<<< HEAD
 //    final String consumerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //    double orderTotal = 456.05;
@@ -45,11 +62,17 @@ public class CustomerConfirmActivity extends AppCompatActivity {
 //    final double discountMassOrder = 23.4;
 //    double discountLongTerm = 46.7;
     final double deliveryCharges = 75;
+=======
+    String myConsumerID = "456";
+    double orderTotal = 456.0;
+    private static final String TAG = "CUSTOMERCONFIRMACTIVITY";
+>>>>>>> master
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_confirm);
+<<<<<<< HEAD
         FirebaseApp.initializeApp(this);
 
         Intent intent = getIntent();
@@ -197,4 +220,33 @@ public class CustomerConfirmActivity extends AppCompatActivity {
                     }
                 });
     }
+=======
+
+         Button lastButton = findViewById(R.id.btnlast);
+
+         db.collection("Consumer").whereEqualTo("id", myConsumerID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                OrderInfo orderInfo;
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+
+         lastButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+             }
+         });
+
+    }
+
+>>>>>>> master
 }
