@@ -34,6 +34,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SignUpSeller2"></activity>
 
+
         <activity android:name=".MassOrderItems"></activity>
         <activity android:name=".EditConsumerDetails" />
 
@@ -111,6 +112,12 @@
         <activity
             android:name=".OrdersHistoryActivity"
             android:label="Lunch"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".CustomerConfirmActivity"
+            android:label="Confirm Order"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".OrderPageActivity"
+            android:label="Choose Items"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".CurrentOrdersActivity"
