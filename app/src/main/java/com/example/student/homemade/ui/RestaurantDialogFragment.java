@@ -15,10 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-<<<<<<< HEAD
-=======
 import android.widget.ImageButton;
->>>>>>> master
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;

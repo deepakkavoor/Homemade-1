@@ -15,11 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
-=======
 import android.widget.EditText;
 import android.widget.NumberPicker;
->>>>>>> master
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
