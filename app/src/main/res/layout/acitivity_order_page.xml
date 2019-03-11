@@ -11,7 +11,7 @@
         android:layout_height="670dp"
         android:id="@+id/scrollItems"
         app:layout_constraintBottom_toTopOf="@id/bottomPage"
-        android:background="@color/colorPrimary"
+        android:background="@android:color/transparent"
         android:fillViewport="true">
 
     <ListView
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp"
-        android:divider="@android:color/transparent"
+        android:divider="@android:color/black"
         android:dividerHeight="10.0sp"/>
     </ScrollView>
 

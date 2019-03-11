@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -98,14 +100,17 @@ public class CustomerConfirmActivity extends AppCompatActivity {
                                         public void onClick(View view) {
                                             Log.d(TAG,"working till here for more case");
                                             docRef.update("paid",true);
-                                            Date currentTime = Calendar.getInstance().getTime();
-                                            docRef.update("orderTime",currentTime.toString());
+                                            String currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + Calendar.getInstance().get(Calendar.MINUTE);
+                                            docRef.update("orderTime",currentTime);
                                             db.collection("Consumer").document(consumerID).update("wallet", Double.parseDouble(map.get("wallet").toString()) - orderTotal);
                                             db.collection("Provider").document(providerID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                     db.collection("Provider").document(providerID).update("wallet",Double.parseDouble(documentSnapshot.get("wallet").toString()) + orderTotal);
                                                     Log.d(TAG,"provider updated successfully");
+                                                    Toast.makeText(getApplicationContext(),"Ordered placed successfully",Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(CustomerConfirmActivity.this,MainActivity.class);
+                                                    startActivity(intent);
                                                 }
                                             });
 
@@ -117,6 +122,9 @@ public class CustomerConfirmActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(View view) {
                                             Log.d(TAG, "Working properly for the less amount case add the code later");
+                                            Toast.makeText(getApplicationContext(),"Canceling Order",Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(CustomerConfirmActivity.this,MainActivity.class);
+                                            startActivity(intent);
                                         }
                                     });
                                 }
@@ -188,7 +196,5 @@ public class CustomerConfirmActivity extends AppCompatActivity {
                         Log.d("newnew","FAILURE");
                     }
                 });
-
-
     }
 }
