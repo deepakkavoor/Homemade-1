@@ -410,6 +410,7 @@ else{
 
     private void openImagesActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
+        
         Log.d("KJSFKJSDHFKJSDHFKJSDHF",type);
         intent.putExtra("type", type);
         intent.putExtra("seller", seller);
