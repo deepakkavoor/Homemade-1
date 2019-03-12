@@ -56,6 +56,7 @@ public class ProviderUIFragment extends Fragment {
     TextView discount_subs;
     TextView discount_mass;
     TextView no_of_mass_orders;
+
     CardView sub_discount;
     private FirebaseFirestore firebaseFirestore;
     private HashMap<String, String> itemPictures = new HashMap<>();
@@ -130,6 +131,7 @@ public class ProviderUIFragment extends Fragment {
                     switchButton.setChecked((Boolean) map.get("availability"));
                 } else {
                     Log.d("fuck", "this bitch is not working");
+
                 }
 
             }
@@ -174,6 +176,7 @@ public class ProviderUIFragment extends Fragment {
         discount_mass = view.findViewById(R.id.discount_mass);
         no_of_mass_orders = view.findViewById(R.id.no_of_mass_orders);
         discount_subs = view.findViewById(R.id.discount_subs);
+
         add_menu = view.findViewById(R.id.add_menu);
 
         add_menu.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +262,7 @@ public class ProviderUIFragment extends Fragment {
         noOfOrders.setMaxValue(100);
         noOfOrders.setMinValue(1);
         noOfOrders.setValue(20);
+
         dicountRate.setMaxValue(100);
         dicountRate.setMinValue(0);
         dicountRate.setValue(50);
@@ -326,6 +330,7 @@ public class ProviderUIFragment extends Fragment {
                             }
                         });
 
+
             }
         });
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -336,7 +341,6 @@ public class ProviderUIFragment extends Fragment {
         AlertDialog b = dialogBuilder.create();
         b.show();
     }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
