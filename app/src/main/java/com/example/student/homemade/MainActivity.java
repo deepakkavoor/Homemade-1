@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
 
         Fragment fragment = null;
 
-        Class fragmentClass;
+        Class fragmentClass=null;
 
         switch (menuItem.getItemId()) {
             case 0:
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
             case 1:
 //                Intent intent1 = new Intent(context, ConsumerDetailsFragment.class);
 //                startActivity(intent1);
-                fragmentClass = ConsumerDetailsFragment.class;
+                //fragmentClass = ConsumerDetailsFragment.class;
                 break;
             case 8:
                 fragmentClass = CancelOrderFragment.class;
