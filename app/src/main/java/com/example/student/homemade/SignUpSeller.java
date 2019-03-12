@@ -327,6 +327,7 @@ public class SignUpSeller extends AppCompatActivity {
                             user.put("email", textInputEmail.getText().toString());
                             //user.put("imageResourceId", textInputImageResourceId.getText().toString());
                             //user.menu("menu",)
+
                             user.put("phone",textInputPhoneNumber.getText().toString());
                             //user.put("profilepictures",textInputProfilePicture.getText().toString());
                             user.put("restaurantname", textInputRestaurantName.getText().toString());

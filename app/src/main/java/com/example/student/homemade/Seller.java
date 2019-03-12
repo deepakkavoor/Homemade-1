@@ -1,13 +1,15 @@
 package com.example.student.homemade;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Seller implements Serializable {
-    boolean active;
+public class Seller implements Parcelable {
     GeoPoint geoPoint;
     boolean availability;
     ArrayList<String> customItems;
@@ -27,7 +29,6 @@ public class Seller implements Serializable {
     @Override
     public String toString() {
         return "Seller{" +
-                "active=" + active +
                 ", geoPoint=" + geoPoint +
                 ", availability=" + availability +
                 ", customItems=" + customItems +
@@ -54,14 +55,6 @@ public class Seller implements Serializable {
 
     public void setWallet(Long wallet) {
         this.wallet = wallet;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public GeoPoint getGeoPoint() {
@@ -162,5 +155,15 @@ public class Seller implements Serializable {
 
     public Long getWallet() {
         return wallet;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }
