@@ -54,6 +54,7 @@ public class OrdersHistoryActivity extends AppCompatActivity {
                         orderInfo = new OrderInfo(map.get("provider").toString(), map.get("consumer").toString(), (Boolean)map.get("completed"), (Boolean)map.get("delivered"), map.get("deliveryPerson").toString(),(Boolean)map.get("isMassOrder"), (Boolean)map.get("paid"), (ArrayList<HashMap<String,Object>>) map.get("itemsOrdered"), (double)map.get("orderTotal"),map.get("orderTime").toString(), map.get("orderDate").toString());
 //                        orderInfo = document.toObject(OrderInfo.class);
 //                        Log.d("ORDERINFO",orderInfo.toString());
+
                         ordersHistoryRecyclerViewAdapter.added(orderInfo);
                     }
                 } else {

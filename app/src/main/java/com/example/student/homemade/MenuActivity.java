@@ -287,6 +287,7 @@ public class MenuActivity extends AppCompatActivity {
             Log.d("stringA",stringA[i]);
 
         final ArrayList<Integer> selectedList = new ArrayList<>();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.myDialog);
         builder.setTitle("Select Items");
 

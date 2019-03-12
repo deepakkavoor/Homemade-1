@@ -25,6 +25,7 @@ public class OrderInfo{
     public OrderInfo(String provider, String consumer, boolean completed, boolean delivered, String deliveryPerson, boolean isMassOrder, boolean paid, ArrayList<HashMap<String,Object>> itemsOrdered, double orderTotal, String orderTime, String orderDate) {
         this.provider = provider;
         this.consumer = consumer;
+
         this.completed = completed;
         this.delivered = delivered;
         this.deliveryPerson = deliveryPerson;
@@ -125,3 +126,4 @@ public class OrderInfo{
     }
     public int getNoOrders(){ return itemsOrdered.size();}
 }
+
