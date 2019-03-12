@@ -41,6 +41,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -355,12 +356,20 @@ public class SignUpSeller extends AppCompatActivity {
 
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+                            ArrayList<String> customItems = new ArrayList<>();
+                            HashMap<String, String> itemPictures = new HashMap<>();
                             Map<String, Object> provider = new HashMap<>();
+
                             provider.put("availability",true);
                             provider.put("address", geoPoint);
                             provider.put("description", textInputRestaurantDetails.getText().toString());
                             provider.put("email", textInputEmail.getText().toString());
+                            provider.put("itemPictures", itemPictures);
+                            provider.put("customItems", customItems);
+                            provider.put("longTermSubscriptionDiscount", 0);
+                            provider.put("massOrderDiscount", 0);
+                            provider.put("noOfMassOrders", 0);
+                            provider.put("timeBeforeCancel", 0);
                             //user.put("imageResourceId", textInputImageResourceId.getText().toString());
                             //user.menu("menu",)
                             provider.put("phone",textInputPhoneNumber.getText().toString());
