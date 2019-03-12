@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,8 +42,9 @@ class Order {
     ArrayList<FoodItem> itemsOrdered;
     String deliveryPerson;
     boolean isMassOrder;
+    String orderDate;
 
-    public Order(String provider, String consumer, boolean completed, boolean delivered, boolean paid, String orderTime, double orderTotal, ArrayList<FoodItem> itemsOrdered, String deliveryPerson,boolean isMassOrder) {
+    public Order(String provider, String consumer, boolean completed, boolean delivered, boolean paid, String orderTime, double orderTotal, ArrayList<FoodItem> itemsOrdered, String deliveryPerson, boolean isMassOrder, String orderDate) {
         this.provider = provider;
         this.consumer = consumer;
         this.completed = completed;
@@ -52,6 +55,7 @@ class Order {
         this.itemsOrdered = itemsOrdered;
         this.deliveryPerson = deliveryPerson;
         this.isMassOrder = isMassOrder;
+        this.orderDate = orderDate;
     }
 }
 
@@ -138,6 +142,9 @@ public class OrderPageActivity extends AppCompatActivity {
 
         Button orderButton = findViewById(R.id.orderButton);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Menu");
+
         itemListView = (ListView) findViewById(R.id.itemList);
 //        FirebaseApp.initializeApp(this);
         final String providerID = "vMR09oO90SbUtCapURrudg5QMlw2";
@@ -191,7 +198,8 @@ public class OrderPageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 TextView totalCost = findViewById(R.id.totalCost);
                 double orderTotal = Double.parseDouble(totalCost.getText().toString());
-                Order order = new Order(providerID,consumerID,false,false,false,"",orderTotal,foodItems,"",false);
+                String orderDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"/"+Calendar.getInstance().get(Calendar.MONTH)+"/"+Calendar.getInstance().get(Calendar.YEAR);
+                Order order = new Order(providerID,consumerID,false,false,false,"",orderTotal,foodItems,"",false,orderDate);
                 DocumentReference docRef = db.collection("Orders").document();
                 docRef.set(order);
                 String doc = docRef.getId();
