@@ -182,6 +182,7 @@ public class MenuActivity extends AppCompatActivity {
                 for(int i=0;i<absent.size();i++)
                     Log.d("stringA",stringA[i]);
 
+
                 Intent intent = new Intent(MenuActivity.this,UploadActivity.class);
                 intent.putExtra("itemPictures",itemPictures);
                 intent.putExtra("seller", seller);

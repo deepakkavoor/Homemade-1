@@ -416,6 +416,7 @@ else{
         intent.putExtra("seller", seller);
         intent.putExtra("present",present);
         intent.putExtra("absent",absent);
+
         intent.putExtra("menuItems",menuItems);
         intent.putExtra("itemPictures",itemPictures);
         startActivity(intent);
