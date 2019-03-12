@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
             case 1:
 //                Intent intent1 = new Intent(context, ConsumerDetailsFragment.class);
 //                startActivity(intent1);
-                fragmentClass = ConsumerDetailsFragment.class;
+                //fragmentClass = ConsumerDetailsFragment.class;
                 break;
             case 8:
                 fragmentClass = CancelOrderFragment.class;
@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
 
         try {
 
-            fragment = (Fragment) fragmentClass.newInstance();
+//            fragment = (Fragment) fragmentClass.newInstance();
 
         } catch (Exception e) {
 
