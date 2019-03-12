@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Seller implements Parcelable {
-    GeoPoint geoPoint;
+public class Seller implements Serializable {
+    GeoPoint address;
     boolean availability;
     ArrayList<String> customItems;
     String description;
@@ -24,16 +24,17 @@ public class Seller implements Parcelable {
     int timeBeforeCancel;
     String username;
     Long wallet;
-
+    String id;
 
     @Override
     public String toString() {
         return "Seller{" +
-                ", geoPoint=" + geoPoint +
+                "address=" + address +
                 ", availability=" + availability +
                 ", customItems=" + customItems +
                 ", description='" + description + '\'' +
                 ", email='" + email + '\'' +
+                ", id='" + id + '\'' +
                 ", itemPictures=" + itemPictures +
                 ", longTermSubscriptionDiscount=" + longTermSubscriptionDiscount +
                 ", massOrderDiscount=" + massOrderDiscount +
@@ -57,12 +58,28 @@ public class Seller implements Parcelable {
         this.wallet = wallet;
     }
 
-    public GeoPoint getGeoPoint() {
-        return geoPoint;
+    public String getId() {
+        return id;
     }
 
-    public void setGeoPoint(GeoPoint geoPoint) {
-        this.geoPoint = geoPoint;
+    public void setId(String id) {
+        this.id = id;
+    }
+//    public boolean isActive() {
+//        return active;
+//    }
+//
+//    public void setActive(boolean active) {
+//        this.active = active;
+//    }
+
+
+    public GeoPoint getAddress() {
+        return address;
+    }
+
+    public void setAddress(GeoPoint address) {
+        this.address = address;
     }
 
     public boolean isAvailability() {
@@ -157,13 +174,5 @@ public class Seller implements Parcelable {
         return wallet;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
 }
