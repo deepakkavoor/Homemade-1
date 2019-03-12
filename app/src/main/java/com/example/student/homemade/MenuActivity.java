@@ -156,6 +156,31 @@ public class MenuActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String[] list = getResources().getStringArray(R.array.food_array);
+                List<String> l = Arrays.<String>asList(list);
+                Log.d("THIS IS l ARRAY",l.toString());
+                ArrayList<String> al = new ArrayList<String>(l);
+                Log.d("THIS IS al ARRAY before",al.toString());
+                al.addAll(seller.getCustomItems());
+
+                Log.d("THIS IS al ARRAY",al.toString());
+                Log.d("menuadapter",menuAdapter.getItemNames().toString());
+                for(String s:al){
+
+                    if(menuAdapter.getItemNames().contains(s) && !present.contains(s))
+                    {
+                        present.add(s);
+                    }
+                    else if(!absent.contains(s) && !present.contains(s)){
+                        absent.add(s);
+                    }
+                }
+                Log.d("THIS IS present ARRAY",present.toString());
+                Log.d("THIS IS absent ARRAY",absent.toString());
+                stringA = new String[absent.size()];
+                absent.toArray(stringA);
+                for(int i=0;i<absent.size();i++)
+                    Log.d("stringA",stringA[i]);
 
                 Intent intent = new Intent(MenuActivity.this,UploadActivity.class);
                 intent.putExtra("itemPictures",itemPictures);
@@ -304,6 +329,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void fetch() {
+
         Log.d("TYPEBRO",type);
         firebaseFirestore.collection("Provider").document(FirebaseAuth.getInstance().getUid())
                 .collection("menu").document(type)
