@@ -412,6 +412,9 @@ else{
         Intent intent = new Intent(this, MenuActivity.class);
         Log.d("KJSFKJSDHFKJSDHFKJSDHF",type);
         intent.putExtra("type", type);
+        intent.putExtra("seller", seller);
+        intent.putExtra("present",present);
+        intent.putExtra("absent",absent);
         intent.putExtra("menuItems",menuItems);
         intent.putExtra("itemPictures",itemPictures);
         startActivity(intent);
