@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         menu.add(0, 3, 0, "Logout");
 
         //----------------ended here
+        mDrawer.setScrimColor(getResources().getColor(R.color.white));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer,
                 R.string.drawer_open, R.string.drawer_close) {
 
@@ -131,8 +132,10 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         final ProgressBar progressBar = hView.findViewById(R.id.progress_bar_header);
         Sprite wave = new Wave();
         progressBar.setIndeterminateDrawable(wave);
-        StringBuilder url = (c==2) ? new StringBuilder("providers_photos/profile_pictures/") : new StringBuilder("consumers_photos/");
+        Log.v(TAG+"c:",String.valueOf(c));
+        StringBuilder url = (c!=2) ? new StringBuilder("providers_photos/profile_pictures/") : new StringBuilder("consumers_photos/");
         url.append(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Log.v(TAG+"url:",url.toString());
         StorageReference mImageRef =
                 FirebaseStorage.getInstance().getReference(url.toString().trim());
         final long ONE_MEGABYTE = 1024 * 1024;
@@ -142,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 DisplayMetrics dm = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(dm);
-
+                Log.v(TAG,"Got image");
                 imageView.setMinimumHeight(dm.heightPixels);
                 imageView.setMinimumWidth(dm.widthPixels);
                 imageView.setImageBitmap(bm);
