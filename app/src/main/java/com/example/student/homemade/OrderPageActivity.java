@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,6 +47,7 @@ class Order {
     String orderDate;
 
     public Order(String provider, String consumer, boolean completed, boolean delivered, boolean paid, String orderTime, double orderTotal, ArrayList<FoodItem> itemsOrdered, String deliveryPerson, boolean isMassOrder, String orderDate) {
+
         this.provider = provider;
         this.consumer = consumer;
         this.completed = completed;
@@ -200,6 +203,7 @@ public class OrderPageActivity extends AppCompatActivity {
                 double orderTotal = Double.parseDouble(totalCost.getText().toString());
                 String orderDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"/"+Calendar.getInstance().get(Calendar.MONTH)+"/"+Calendar.getInstance().get(Calendar.YEAR);
                 Order order = new Order(providerID,consumerID,false,false,false,"",orderTotal,foodItems,"",false,orderDate);
+
                 DocumentReference docRef = db.collection("Orders").document();
                 docRef.set(order);
                 String doc = docRef.getId();

@@ -35,6 +35,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.HashMap;
+
 
 
 public class CustomerConfirmActivity extends AppCompatActivity {
@@ -64,7 +67,6 @@ public class CustomerConfirmActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Confirm Order");
-
         Intent intent = getIntent();
         final String doc = intent.getStringExtra("docRef");
         Log.d("docRef",doc);

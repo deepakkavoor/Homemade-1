@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<<<<<<< HEAD
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,6 +33,11 @@
 
     <ScrollView android:layout_width="match_parent"
         android:layout_height="620dp"
+=======
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="670dp"
+>>>>>>> master
         android:id="@+id/scrollItems"
         app:layout_constraintBottom_toTopOf="@id/bottomPage"
         android:background="@android:color/transparent"
@@ -65,9 +71,13 @@
 
         <Button
             android:id="@+id/orderButton"
+<<<<<<< HEAD
             android:background="@drawable/buttonstyle"
             android:layout_width="match_parent"
             android:textColor="@color/white"
+=======
+            android:layout_width="match_parent"
+>>>>>>> master
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Order"
