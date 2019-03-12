@@ -470,7 +470,7 @@ public class RestaurantFragment extends Fragment {
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference provider = db.collection("Provider");
-        provider.get()
+        provider.whereEqualTo("active",true).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -495,8 +495,11 @@ public class RestaurantFragment extends Fragment {
 
                                 if (map.get("restaurantname") == null) {
                                     restaurantNames.add("NITK NC");
+                                    userID[0]="NITK NC";
+
                                 } else {
                                     restaurantNames.add(map.get("restaurantname").toString());
+                                    userID[0]=map.get("restaurantname").toString();
                                 }
                                 if (map.get("imageResourceId") == null) {
                                     imageResourceIds.add("null");
@@ -510,7 +513,9 @@ public class RestaurantFragment extends Fragment {
                                 } else {
                                     descriptions.add(map.get("description").toString());
                                 }
-                                Log.d(TAG,"Location calc correc :Latitudeis:"+latitude+"Longitudeis"+longitude);
+
+//                                Log.d(TAG,"Location calc correc :Latitudeis:"+latitude+"Longitudeis"+longitude);
+
                                 if (map.get("address") == null) {
                                     Location crntLocation = new Location(restaurantNames.get(i));
                                     crntLocation.setLatitude(latitude);
@@ -536,7 +541,7 @@ public class RestaurantFragment extends Fragment {
 //                                Log.d(TAG, restaurantNames.get(0)+ imageResourceIds.get(0) + descriptions.get(0));
 
 
-//                                Log.d(TAG, userID[0]);
+                                Log.d(TAG, userID[0]);
 
                                 final CollectionReference ratingsAndReviews = db.collection("Reviews and Ratings");
                                 OnCompleteListener<QuerySnapshot> completeListener;
@@ -589,16 +594,16 @@ public class RestaurantFragment extends Fragment {
                                                     reviewsToBeCopied.add(x);
                                                 }
 
-//                                                Log.d(TAG,String.valueOf(restaurantNames.size()) );
-//                                                Log.d(TAG,String.valueOf(imageResourceIds.size()) );
-//                                                Log.d(TAG,String.valueOf(descriptions.size()) );
-//                                                Log.d(TAG,String.valueOf(descriptions.get(counter[0])));
-//                                                Log.d(TAG,String.valueOf(ratings.size()) );
-//                                                Log.d(TAG,String.valueOf(reviews.size()) );
+//                                                Log.d(TAG,restaurantNames.get(0) );
+//                                                Log.d(TAG,imageResourceId.get(0) );
+//                                                Log.d(TAG,descriptions.get(0) );
+//                                                Log.d(TAG,String.valueOf(distances.get(0)));
+//                                                Log.d(TAG,String.valueOf(ratings );
+//                                                Log.d(TAG,reviews.toString());
 
 //                                                Log.d(TAG, String.valueOf(counter[0]));
                                                 if (reviews.size() == 0) {
-                                                    reviews.add("None");
+                                                    reviewsToBeCopied.add("None");
                                                 }
                                                 if (ratings.size() == 0) {
                                                     ratings.add(4.0);
@@ -608,12 +613,13 @@ public class RestaurantFragment extends Fragment {
 //
 
 
-                                                RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0));
+                                                    RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0));
+                                                    restaurantList.add(restaurantModel);
+                                                    dupRestaurantList.add(restaurantModel);
+
                                                 counter[0] = counter[0] + 1;
 
 //                                                Log.d(TAG,String.valueOf(counter[0]));
-                                                restaurantList.add(restaurantModel);
-                                                dupRestaurantList.add(restaurantModel);
 
 
                                                 myAdapter.notifyDataSetChanged();

@@ -118,7 +118,7 @@ public class ProviderUIFragment extends Fragment {
                 DocumentSnapshot document = task.getResult();
                 if(document.exists()){
                     Map<String, Object> map = document.getData();
-                    switchButton.setChecked((Boolean)map.get("availability"));
+//                    switchButton.setChecked((Boolean)map.get("availability"));
                 }else{
                     Log.d("fuck","this bitch is not working");
                 }
@@ -143,7 +143,7 @@ public class ProviderUIFragment extends Fragment {
                     if (document.exists()) {
                         Log.d("DOCSNAP", "DocumentSnapshot data: " + document.get("username"));
                         itemPictures = (HashMap<String, String>) document.get("itemPictures");
-                        Log.d("SIZE",itemPictures.size()+"");
+//                        Log.d("SIZE",itemPictures.size()+"");
                         Sellername.setText("Hello " + document.get("username").toString());
                     } else {
                         Log.d("NOOE", "No such document");
