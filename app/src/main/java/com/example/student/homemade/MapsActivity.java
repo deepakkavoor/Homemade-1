@@ -8,7 +8,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +21,12 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.gcm.Task;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,12 +34,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -55,31 +60,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //widgets
     private EditText mSearchText;
     private ImageView mGps;
+    private ProgressBar mSearchProgressBar;
 
     //vars
     private Boolean mLocationPermissionsGranted;
     private FusedLocationProviderClient mFusedLoactionProviderClient;
+    private FirebaseFirestore mDb;
 
     private GoogleMap mMap;
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        mDb = FirebaseFirestore.getInstance();
 
         mSearchText = findViewById(R.id.input_search_maps);
         mGps = findViewById(R.id.ic_gps);
+        mSearchProgressBar = findViewById(R.id.mapsSearchProgressBar);
 
+        mSearchProgressBar.setVisibility(View.INVISIBLE);
 
         if (isServicesOK()) {
             getLocationPermission();
@@ -102,6 +102,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     //execute our method for search
                     geoLocate();
+                    hideSoftKeyBoard();
                 }
                 return false;
             }
@@ -110,12 +111,76 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "GPS button clicked.");
-                getDeviceLocation();
+                mGps.setVisibility(View.INVISIBLE);
+                mSearchProgressBar.setVisibility(View.VISIBLE);
+                Log.e(TAG, "Find text search button clicked.");
+                //getDeviceLocation();
+                findLocationFromText();
+                mSearchText.getText().clear();
             }
         });
 
+        setAllRestaurantsLocations();
+
         hideSoftKeyBoard();
+    }
+
+    private void setAllRestaurantsLocations() {
+        mDb.collection("Provider")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                GeoPoint geoPoint;
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+                                geoPoint = (GeoPoint) map.get("address");
+                                Log.d(TAG, "findLocationFromText: Found " + (GeoPoint)map.get("address"));
+                                if((String) map.get("restaurantname") != null)
+                                    moveCamera(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()), DEFAULT_ZOOM, (String) map.get("restaurantname"));
+                                getDeviceLocation();
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+
+    private void findLocationFromText() {
+
+        final String searchString = mSearchText.getText().toString().trim();
+
+
+        mDb.collection("Provider")
+                .whereEqualTo("restaurantname", searchString)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, "findLocationFromText: found a restaurant");
+                                GeoPoint geoPoint;
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+                                geoPoint = (GeoPoint) map.get("address");
+                                Log.d(TAG, "findLocationFromText: Found " + (GeoPoint)map.get("address"));
+                                moveCamera(new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude()), DEFAULT_ZOOM, searchString);
+                                mGps.setVisibility(View.VISIBLE);
+                                mSearchProgressBar.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
+                        else {
+                            Log.e(TAG, "findLocationFromText: unable to find restaurant");
+                            Toast.makeText(MapsActivity.this, "Unable to find "+ searchString +" Does not exist on Database" , Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     private void geoLocate() {

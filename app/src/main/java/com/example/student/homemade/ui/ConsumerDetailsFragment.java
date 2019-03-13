@@ -133,7 +133,7 @@ public class ConsumerDetailsFragment extends Fragment {
                 userAddress.setText(details.getAddress());
                 userContact.setText(details.getContactNumber());
                 userEmail.setText(details.getEmail());
-                userWallet.setText(details.getWallet());
+                userWallet.setText(Float.toString(details.getWallet()));
 
             }
         })
