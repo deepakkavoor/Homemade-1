@@ -1,12 +1,13 @@
 package com.example.student.homemade;
 
 public class ConsumerDetailsClass {
-    String username, password, address, contactNumber, wallet, email,typeOfUser;
+    String username, password, address, contactNumber, email,typeOfUser;
+    float wallet;
 
     public ConsumerDetailsClass() {
     }
 
-    public ConsumerDetailsClass(String username, String password, String address, String contactNo, String wallet, String email, String typeOfUser) {
+    public ConsumerDetailsClass(String username, String password, String address, String contactNo, float wallet, String email, String typeOfUser) {
         this.username = username;
         this.password = password;
         this.address = address;
@@ -48,11 +49,11 @@ public class ConsumerDetailsClass {
         this.contactNumber = contactNumber;
     }
 
-    public String getWallet() {
+    public float getWallet() {
         return wallet;
     }
 
-    public void setWallet(String wallet) {
+    public void setWallet(float wallet) {
         this.wallet = wallet;
     }
 
