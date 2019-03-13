@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
 //                        .requestIdToken("853704140115-a7gjo5s8uvvsfig7ij7s1t6cg9ejh1ld.apps.googleusercontent.com")
 //                        .requestEmail()
 //                        .build();
-//                FirebaseAuth.getInstance().signOut();
+//                FirebaseAuth.ggetInstance().signOut();
 //                GoogleSignIn.getClient(getApplicationContext(), gso).signOut();
 //                LoginManager.getInstance().logOut();
 //
