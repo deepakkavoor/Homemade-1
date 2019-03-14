@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -24,12 +26,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.student.homemade.GeocodingLocation;
 import com.example.student.homemade.GpsUtils;
 import com.example.student.homemade.R;
 import com.example.student.homemade.RestaurantAdapter;
@@ -98,6 +103,7 @@ public class RestaurantFragment extends Fragment {
 
         context = getActivity();
         v = inflater.inflate(R.layout.restaurant_card, container, false);
+        Toast.makeText(context,"Please select a way to find Location before continuing",Toast.LENGTH_LONG).show();
         mRecyclerView = v.findViewById(R.id.cardView);
         swipeRefreshLayout = v.findViewById(R.id.swipeToRefresh);
         editText = v.findViewById(R.id.inputSearch);
@@ -117,6 +123,57 @@ public class RestaurantFragment extends Fragment {
         filterSpinner.setAdapter(adapter);
 //        setinitVis();
         Log.d(TAG, "Stop2");
+        RadioButton gpsRadioButton = v.findViewById(R.id.GPSbutton);
+        RadioButton addressRadioButton = v.findViewById(R.id.addressButton);
+        EditText address = v.findViewById(R.id.Inputaddress);
+        gpsRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(addressRadioButton.isChecked()) {
+                    addressRadioButton.setChecked(false);
+                }
+            gpsRadioButton.setChecked(true);
+            }
+        });
+        addressRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gpsRadioButton.isChecked()) {
+                    gpsRadioButton.setChecked(false);
+                }
+                addressRadioButton.setSelected(true);
+
+            }
+        });
+        Button findLocation = v.findViewById(R.id.LocationDecider);
+        findLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gpsRadioButton.isChecked()){
+                    restaurantList.clear();
+                    dupRestaurantList.clear();
+                    adapter.notifyDataSetChanged();
+                    gpsLocationChosen();
+                    getLocation();
+                } else if (addressRadioButton.isChecked()){
+                    if(address.getText()==null){
+                        Toast.makeText(context,"Please enter address",Toast.LENGTH_LONG).show();
+
+                    }
+                    else{
+                        restaurantList.clear();
+                        dupRestaurantList.clear();
+                        adapter.notifyDataSetChanged();
+                        Log.d(TAG,address.getText().toString());
+                        addressLocationChosen(address.getText().toString());
+                    }
+
+                }
+                else {
+                    Toast.makeText(context,"Please choose either find by GPS or by address",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -194,16 +251,7 @@ public class RestaurantFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                restaurantList.clear();
-//                restaurantList.addAll(dupRestaurantList);
-//                if (!(s.toString().isEmpty())) {
-//                    double rating = Double.parseDouble(s.toString());
-//                    if (rating > 5.0 || rating < 0) {
-//                        Toast.makeText(getContext(), "Please input a rating between 0 and 5", Toast.LENGTH_LONG).show();
-//                    } else {
-//                        filterbyrating(Double.parseDouble(s.toString()));
-//                    }
-//                }
+
 
             }
         });
@@ -248,6 +296,7 @@ public class RestaurantFragment extends Fragment {
     }
 
     private void gpsLocationChosen(){
+        setinitVis();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -283,6 +332,44 @@ public class RestaurantFragment extends Fragment {
 
         }
 
+    }
+
+    public void addressLocationChosen(String address) {
+        setinitVis();
+        Log.d(TAG,"Yep Here");
+        GeocodingLocation locationAddress = new GeocodingLocation();
+        locationAddress.getAddressFromLocation(address,
+                context, new GeocoderHandler());
+
+    }
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+
+                    latitude = bundle.getDouble("latitude");
+                    longitude = bundle.getDouble("longitude");
+                    locationAddress = String.valueOf(latitude)+String.valueOf(longitude);
+                    Log.d(TAG,"Yessss");
+
+                    if(longitude!=0&&latitude!=0){
+                        initializeList();
+                    }
+                    else{
+                        Toast.makeText(context,"Cannot find Location try GPS?",Toast.LENGTH_LONG).show();
+                    }
+
+
+                    break;
+                default:
+                    locationAddress = null;
+                    Toast.makeText(context,"Cannot find Location of Given Address try GPS?",Toast.LENGTH_LONG).show();
+            }
+//            latLongTV.setText(locationAddress);
+        }
     }
 
     private void getLocation() {
@@ -368,11 +455,11 @@ public class RestaurantFragment extends Fragment {
 
     public void setinitVis() {
         progressBar.setVisibility(View.VISIBLE);
-        filterSpinner.setVisibility(View.GONE);
-        editText.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.GONE);
-        minRatingText.setVisibility(View.GONE);
-        minratingEditText.setVisibility(View.GONE);
+//        filterSpinner.setVisibility(View.GONE);
+//        editText.setVisibility(View.GONE);
+//        mRecyclerView.setVisibility(View.GONE);
+//        minRatingText.setVisibility(View.GONE);
+//        minratingEditText.setVisibility(View.GONE);
         emptyTextView.setVisibility(View.GONE);
     }
 
