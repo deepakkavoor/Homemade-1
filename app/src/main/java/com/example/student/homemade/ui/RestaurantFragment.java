@@ -97,45 +97,6 @@ public class RestaurantFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         context = getActivity();
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(10 * 1000); // 10 seconds
-        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
-
-        if (context != null) {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-            new GpsUtils(context).turnGPSOn(isGPSEnable -> {
-                // turn on GPS
-                isGPS = isGPSEnable;
-            });
-
-        }
-
-
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    Log.d(TAG,"Stop16");
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    if (location != null) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        if (!isContinue && mFusedLocationClient != null) {
-                            mFusedLocationClient.removeLocationUpdates(locationCallback);
-                        }
-                        Log.d(TAG,"Stop17");
-                        getLocation();
-                    }
-                }
-            }
-        };
-
-
         v = inflater.inflate(R.layout.restaurant_card, container, false);
         mRecyclerView = v.findViewById(R.id.cardView);
         swipeRefreshLayout = v.findViewById(R.id.swipeToRefresh);
@@ -154,7 +115,7 @@ public class RestaurantFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         filterSpinner.setAdapter(adapter);
-        setinitVis();
+//        setinitVis();
         Log.d(TAG, "Stop2");
 
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -283,6 +244,44 @@ public class RestaurantFragment extends Fragment {
 
 
         return v;
+
+    }
+
+    private void gpsLocationChosen(){
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000); // 10 seconds
+        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
+
+        if (context != null) {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+            new GpsUtils(context).turnGPSOn(isGPSEnable -> {
+                // turn on GPS
+                isGPS = isGPSEnable;
+            });
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    if (locationResult == null) {
+                        Log.d(TAG,"Stop16");
+                        return;
+                    }
+                    for (Location location : locationResult.getLocations()) {
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            if (!isContinue && mFusedLocationClient != null) {
+                                mFusedLocationClient.removeLocationUpdates(locationCallback);
+                            }
+                            Log.d(TAG,"Stop17");
+                            getLocation();
+                        }
+                    }
+                }
+            };
+
+        }
 
     }
 
@@ -415,7 +414,7 @@ public class RestaurantFragment extends Fragment {
         myAdapter = new RestaurantAdapter(getContext(), restaurantList);
         mRecyclerView.setAdapter(myAdapter);
         Log.d(TAG, "Stop10");
-        getLocation();
+//        getLocation();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
