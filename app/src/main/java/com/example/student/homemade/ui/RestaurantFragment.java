@@ -153,6 +153,7 @@ public class RestaurantFragment extends Fragment {
                     restaurantList.clear();
                     dupRestaurantList.clear();
                     adapter.notifyDataSetChanged();
+                    Toast.makeText(context,"At most 20km radius Homemade food providers will be shown",Toast.LENGTH_LONG).show();
                     gpsLocationChosen();
                     getLocation();
                 } else if (addressRadioButton.isChecked()){
@@ -165,6 +166,7 @@ public class RestaurantFragment extends Fragment {
                         dupRestaurantList.clear();
                         adapter.notifyDataSetChanged();
                         Log.d(TAG,address.getText().toString());
+                        Toast.makeText(context,"At most 20km radius Homemade food providers will be shown",Toast.LENGTH_LONG).show();
                         addressLocationChosen(address.getText().toString());
                     }
 
@@ -685,8 +687,11 @@ public class RestaurantFragment extends Fragment {
 
 
                                                 RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0),userIDs.get(counter[0]));
-                                                restaurantList.add(restaurantModel);
-                                                dupRestaurantList.add(restaurantModel);
+                                                if(restaurantModel.getDistance()<=20){
+                                                    restaurantList.add(restaurantModel);
+                                                    dupRestaurantList.add(restaurantModel);
+                                                }
+
 
                                                 counter[0] = counter[0] + 1;
 

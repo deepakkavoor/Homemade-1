@@ -1,5 +1,7 @@
 package com.example.student.homemade;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 //Class that has all the features of a restaurant
@@ -9,6 +11,7 @@ public class RestaurantModel {
     private float distance;
     private double rating;
     private String userID;
+    Bitmap restaurantImage;
 
     public RestaurantModel(String restaurantName, String description, ArrayList<String> review,  float distance, String imageResourceId,double rating, String userID) {
         this.restaurantName = restaurantName;
@@ -20,6 +23,13 @@ public class RestaurantModel {
         this.userID=userID;
     }
 
+    public Bitmap getRestaurantImage() {
+        return restaurantImage;
+    }
+
+    public void setRestaurantImage(Bitmap restaurantImage) {
+        this.restaurantImage = restaurantImage;
+    }
 
     public String getUserID() {
         return userID;
