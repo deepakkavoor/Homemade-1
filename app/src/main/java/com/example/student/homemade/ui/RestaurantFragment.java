@@ -524,20 +524,21 @@ public class RestaurantFragment extends Fragment {
     public void initializeList() {
         dupRestaurantList.clear();
         restaurantList.clear();
-        final ArrayList<String> restaurantName = new ArrayList<>();
+        ArrayList<String> restaurantName = new ArrayList<>();
         ArrayList<String> description = new ArrayList<>();
         ArrayList<String> review = new ArrayList<>();
         ArrayList<Float> distance = new ArrayList<>();
         ArrayList<String> imageResourceId = new ArrayList<>();
         ArrayList<Float> rating = new ArrayList<>();
+        ArrayList<String> userID = new ArrayList<>();
 //        Log.d(TAG,"Latitudeis:"+latitude+"Longitudeis"+longitude);
         Log.d(TAG, "Stop11");
 
-        final Object[] restaurantModels = {restaurantName, description, review, distance, imageResourceId, rating};
+        final Object[] restaurantModels = {restaurantName, description, review, distance, imageResourceId, rating, userID};
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference provider = db.collection("Provider");
-        provider.whereEqualTo("active", true).get()
+        provider.whereEqualTo("availability", true).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -547,11 +548,11 @@ public class RestaurantFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
 
-                                final String[] userID = {"1234"};
+//                                final String[] userID = {document.getId()};
 
 
                                 Map map = document.getData();
-                                userID[0] = (String) map.get("userid");
+//                                userID[0] = (String) do;
 
 
 //                                Log.d(TAG, document.getId() + " => " + map);
@@ -559,14 +560,18 @@ public class RestaurantFragment extends Fragment {
                                 ArrayList<String> imageResourceIds = (ArrayList<String>) restaurantModels[4];
                                 ArrayList<String> descriptions = (ArrayList<String>) restaurantModels[1];
                                 ArrayList<Float> distances = (ArrayList<Float>) restaurantModels[3];
+                                ArrayList<String>userIDs = (ArrayList<String>)restaurantModels[6];
+
+                                userIDs.add(document.getId().toString());
+                                Log.d(TAG,document.getId());
 
                                 if (map.get("restaurantName") == null) {
                                     restaurantNames.add("NITK NC");
-                                    userID[0] = "NITK NC";
+//                                    userID[0] = "NITK NC";
 
                                 } else {
                                     restaurantNames.add(map.get("restaurantName").toString());
-                                    userID[0] = map.get("restaurantName").toString();
+//                                    userID[0] = map.get("restaurantName").toString();
                                 }
                                 if (map.get("imageResourceId") == null) {
                                     imageResourceIds.add("null");
@@ -606,11 +611,11 @@ public class RestaurantFragment extends Fragment {
 //                                Log.d(TAG, restaurantNames.get(0)+ imageResourceIds.get(0) + descriptions.get(0));
 
 
-                                Log.d(TAG, userID[0]);
+                                Log.d(TAG, userIDs.get(0));
 
                                 final CollectionReference ratingsAndReviews = db.collection("Reviews and Ratings");
                                 OnCompleteListener<QuerySnapshot> completeListener;
-                                ratingsAndReviews.whereEqualTo("reviewee", userID[0])
+                                ratingsAndReviews.whereEqualTo("reviewee", userID.get(0))
                                         .get()
                                         .addOnCompleteListener(completeListener = new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -654,6 +659,7 @@ public class RestaurantFragment extends Fragment {
                                                 ArrayList<Float> distances = (ArrayList<Float>) restaurantModels[3];
                                                 ArrayList<Double> ratings = (ArrayList<Double>) restaurantModels[5];
                                                 ArrayList<String> reviews = (ArrayList<String>) restaurantModels[2];
+                                                ArrayList<String> userIDs = (ArrayList<String>)restaurantModels[6];
                                                 ArrayList<String> reviewsToBeCopied = new ArrayList<>(reviews.size());
                                                 for (String x : reviews) {
                                                     reviewsToBeCopied.add(x);
@@ -678,7 +684,7 @@ public class RestaurantFragment extends Fragment {
 //
 
 
-                                                RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0));
+                                                RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0),userIDs.get(counter[0]));
                                                 restaurantList.add(restaurantModel);
                                                 dupRestaurantList.add(restaurantModel);
 
