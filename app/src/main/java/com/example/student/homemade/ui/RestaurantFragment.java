@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -24,12 +26,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.student.homemade.GeocodingLocation;
 import com.example.student.homemade.GpsUtils;
 import com.example.student.homemade.R;
 import com.example.student.homemade.RestaurantAdapter;
@@ -97,46 +102,8 @@ public class RestaurantFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         context = getActivity();
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(10 * 1000); // 10 seconds
-        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
-
-        if (context != null) {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-            new GpsUtils(context).turnGPSOn(isGPSEnable -> {
-                // turn on GPS
-                isGPS = isGPSEnable;
-            });
-
-        }
-
-
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    Log.d(TAG,"Stop16");
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    if (location != null) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        if (!isContinue && mFusedLocationClient != null) {
-                            mFusedLocationClient.removeLocationUpdates(locationCallback);
-                        }
-                        Log.d(TAG,"Stop17");
-                        getLocation();
-                    }
-                }
-            }
-        };
-
-
         v = inflater.inflate(R.layout.restaurant_card, container, false);
+        Toast.makeText(context,"Please select a way to find Location before continuing",Toast.LENGTH_LONG).show();
         mRecyclerView = v.findViewById(R.id.cardView);
         swipeRefreshLayout = v.findViewById(R.id.swipeToRefresh);
         editText = v.findViewById(R.id.inputSearch);
@@ -154,8 +121,61 @@ public class RestaurantFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         filterSpinner.setAdapter(adapter);
-        setinitVis();
+//        setinitVis();
         Log.d(TAG, "Stop2");
+        RadioButton gpsRadioButton = v.findViewById(R.id.GPSbutton);
+        RadioButton addressRadioButton = v.findViewById(R.id.addressButton);
+        EditText address = v.findViewById(R.id.Inputaddress);
+        gpsRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(addressRadioButton.isChecked()) {
+                    addressRadioButton.setChecked(false);
+                }
+            gpsRadioButton.setChecked(true);
+            }
+        });
+        addressRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gpsRadioButton.isChecked()) {
+                    gpsRadioButton.setChecked(false);
+                }
+                addressRadioButton.setSelected(true);
+
+            }
+        });
+        Button findLocation = v.findViewById(R.id.LocationDecider);
+        findLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gpsRadioButton.isChecked()){
+                    restaurantList.clear();
+                    dupRestaurantList.clear();
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(context,"At most 20km radius Homemade food providers will be shown",Toast.LENGTH_LONG).show();
+                    gpsLocationChosen();
+                    getLocation();
+                } else if (addressRadioButton.isChecked()){
+                    if(address.getText()==null){
+                        Toast.makeText(context,"Please enter address",Toast.LENGTH_LONG).show();
+
+                    }
+                    else{
+                        restaurantList.clear();
+                        dupRestaurantList.clear();
+                        adapter.notifyDataSetChanged();
+                        Log.d(TAG,address.getText().toString());
+                        Toast.makeText(context,"At most 20km radius Homemade food providers will be shown",Toast.LENGTH_LONG).show();
+                        addressLocationChosen(address.getText().toString());
+                    }
+
+                }
+                else {
+                    Toast.makeText(context,"Please choose either find by GPS or by address",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -233,16 +253,7 @@ public class RestaurantFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                restaurantList.clear();
-//                restaurantList.addAll(dupRestaurantList);
-//                if (!(s.toString().isEmpty())) {
-//                    double rating = Double.parseDouble(s.toString());
-//                    if (rating > 5.0 || rating < 0) {
-//                        Toast.makeText(getContext(), "Please input a rating between 0 and 5", Toast.LENGTH_LONG).show();
-//                    } else {
-//                        filterbyrating(Double.parseDouble(s.toString()));
-//                    }
-//                }
+
 
             }
         });
@@ -284,6 +295,83 @@ public class RestaurantFragment extends Fragment {
 
         return v;
 
+    }
+
+    private void gpsLocationChosen(){
+        setinitVis();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10 * 1000); // 10 seconds
+        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
+
+        if (context != null) {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+            new GpsUtils(context).turnGPSOn(isGPSEnable -> {
+                // turn on GPS
+                isGPS = isGPSEnable;
+            });
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    if (locationResult == null) {
+                        Log.d(TAG,"Stop16");
+                        return;
+                    }
+                    for (Location location : locationResult.getLocations()) {
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            if (!isContinue && mFusedLocationClient != null) {
+                                mFusedLocationClient.removeLocationUpdates(locationCallback);
+                            }
+                            Log.d(TAG,"Stop17");
+                            getLocation();
+                        }
+                    }
+                }
+            };
+
+        }
+
+    }
+
+    public void addressLocationChosen(String address) {
+        setinitVis();
+        Log.d(TAG,"Yep Here");
+        GeocodingLocation locationAddress = new GeocodingLocation();
+        locationAddress.getAddressFromLocation(address,
+                context, new GeocoderHandler());
+
+    }
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+
+                    latitude = bundle.getDouble("latitude");
+                    longitude = bundle.getDouble("longitude");
+                    locationAddress = String.valueOf(latitude)+String.valueOf(longitude);
+                    Log.d(TAG,"Yessss");
+
+                    if(longitude!=0&&latitude!=0){
+                        initializeList();
+                    }
+                    else{
+                        Toast.makeText(context,"Cannot find Location try GPS?",Toast.LENGTH_LONG).show();
+                    }
+
+
+                    break;
+                default:
+                    locationAddress = null;
+                    Toast.makeText(context,"Cannot find Location of Given Address try GPS?",Toast.LENGTH_LONG).show();
+            }
+//            latLongTV.setText(locationAddress);
+        }
     }
 
     private void getLocation() {
@@ -369,11 +457,11 @@ public class RestaurantFragment extends Fragment {
 
     public void setinitVis() {
         progressBar.setVisibility(View.VISIBLE);
-        filterSpinner.setVisibility(View.GONE);
-        editText.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.GONE);
-        minRatingText.setVisibility(View.GONE);
-        minratingEditText.setVisibility(View.GONE);
+//        filterSpinner.setVisibility(View.GONE);
+//        editText.setVisibility(View.GONE);
+//        mRecyclerView.setVisibility(View.GONE);
+//        minRatingText.setVisibility(View.GONE);
+//        minratingEditText.setVisibility(View.GONE);
         emptyTextView.setVisibility(View.GONE);
     }
 
@@ -415,7 +503,7 @@ public class RestaurantFragment extends Fragment {
         myAdapter = new RestaurantAdapter(getContext(), restaurantList);
         mRecyclerView.setAdapter(myAdapter);
         Log.d(TAG, "Stop10");
-        getLocation();
+//        getLocation();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -438,20 +526,21 @@ public class RestaurantFragment extends Fragment {
     public void initializeList() {
         dupRestaurantList.clear();
         restaurantList.clear();
-        final ArrayList<String> restaurantName = new ArrayList<>();
+        ArrayList<String> restaurantName = new ArrayList<>();
         ArrayList<String> description = new ArrayList<>();
         ArrayList<String> review = new ArrayList<>();
         ArrayList<Float> distance = new ArrayList<>();
         ArrayList<String> imageResourceId = new ArrayList<>();
         ArrayList<Float> rating = new ArrayList<>();
+        ArrayList<String> userID = new ArrayList<>();
 //        Log.d(TAG,"Latitudeis:"+latitude+"Longitudeis"+longitude);
         Log.d(TAG, "Stop11");
 
-        final Object[] restaurantModels = {restaurantName, description, review, distance, imageResourceId, rating};
+        final Object[] restaurantModels = {restaurantName, description, review, distance, imageResourceId, rating, userID};
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference provider = db.collection("Provider");
-        provider.whereEqualTo("active", true).get()
+        provider.whereEqualTo("availability", true).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -461,11 +550,11 @@ public class RestaurantFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
 
-                                final String[] userID = {"1234"};
+//                                final String[] userID = {document.getId()};
 
 
                                 Map map = document.getData();
-                                userID[0] = (String) map.get("userid");
+//                                userID[0] = (String) do;
 
 
 //                                Log.d(TAG, document.getId() + " => " + map);
@@ -473,14 +562,18 @@ public class RestaurantFragment extends Fragment {
                                 ArrayList<String> imageResourceIds = (ArrayList<String>) restaurantModels[4];
                                 ArrayList<String> descriptions = (ArrayList<String>) restaurantModels[1];
                                 ArrayList<Float> distances = (ArrayList<Float>) restaurantModels[3];
+                                ArrayList<String>userIDs = (ArrayList<String>)restaurantModels[6];
+
+                                userIDs.add(document.getId().toString());
+                                Log.d(TAG,document.getId());
 
                                 if (map.get("restaurantName") == null) {
                                     restaurantNames.add("NITK NC");
-                                    userID[0] = "NITK NC";
+//                                    userID[0] = "NITK NC";
 
                                 } else {
                                     restaurantNames.add(map.get("restaurantName").toString());
-                                    userID[0] = map.get("restaurantName").toString();
+//                                    userID[0] = map.get("restaurantName").toString();
                                 }
                                 if (map.get("imageResourceId") == null) {
                                     imageResourceIds.add("null");
@@ -520,11 +613,11 @@ public class RestaurantFragment extends Fragment {
 //                                Log.d(TAG, restaurantNames.get(0)+ imageResourceIds.get(0) + descriptions.get(0));
 
 
-                                Log.d(TAG, userID[0]);
+                                Log.d(TAG, userIDs.get(0));
 
                                 final CollectionReference ratingsAndReviews = db.collection("Reviews and Ratings");
                                 OnCompleteListener<QuerySnapshot> completeListener;
-                                ratingsAndReviews.whereEqualTo("reviewee", userID[0])
+                                ratingsAndReviews.whereEqualTo("reviewee", userID.get(0))
                                         .get()
                                         .addOnCompleteListener(completeListener = new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -568,6 +661,7 @@ public class RestaurantFragment extends Fragment {
                                                 ArrayList<Float> distances = (ArrayList<Float>) restaurantModels[3];
                                                 ArrayList<Double> ratings = (ArrayList<Double>) restaurantModels[5];
                                                 ArrayList<String> reviews = (ArrayList<String>) restaurantModels[2];
+                                                ArrayList<String> userIDs = (ArrayList<String>)restaurantModels[6];
                                                 ArrayList<String> reviewsToBeCopied = new ArrayList<>(reviews.size());
                                                 for (String x : reviews) {
                                                     reviewsToBeCopied.add(x);
@@ -592,9 +686,12 @@ public class RestaurantFragment extends Fragment {
 //
 
 
-                                                RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0));
-                                                restaurantList.add(restaurantModel);
-                                                dupRestaurantList.add(restaurantModel);
+                                                RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0),userIDs.get(counter[0]));
+                                                if(restaurantModel.getDistance()<=20){
+                                                    restaurantList.add(restaurantModel);
+                                                    dupRestaurantList.add(restaurantModel);
+                                                }
+
 
                                                 counter[0] = counter[0] + 1;
 
