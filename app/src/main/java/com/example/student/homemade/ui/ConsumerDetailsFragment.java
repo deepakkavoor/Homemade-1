@@ -106,7 +106,10 @@ public class ConsumerDetailsFragment extends Fragment {
         setDetails();
         setProfilePic();
 
-        editUserDetails.setOnClickListener(new View.OnClickListener() {
+        editUserDetails.setOnClickListener(new View.OnClickListener() {<<<<<<< saharshNewBranch
+54
+ 
+
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), EditConsumerDetails.class));
@@ -134,6 +137,7 @@ public class ConsumerDetailsFragment extends Fragment {
                 userContact.setText(details.getContactNumber());
                 userEmail.setText(details.getEmail());
                 userWallet.setText(Double.toString(details.getWallet()));
+
 
             }
         })

@@ -45,6 +45,7 @@ public class MassOrderItems extends AppCompatActivity implements Serializable {
     int amount1,amount2,amount3,amount4;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

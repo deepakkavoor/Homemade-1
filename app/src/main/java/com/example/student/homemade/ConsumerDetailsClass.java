@@ -7,6 +7,7 @@ public class ConsumerDetailsClass {
     }
 
     public ConsumerDetailsClass(String username, String password, String address, String contactNo, Double wallet, String email, String typeOfUser) {
+
         this.username = username;
         this.password = password;
         this.address = address;
@@ -53,6 +54,7 @@ public class ConsumerDetailsClass {
     }
 
     public void setWallet(Double wallet) {
+
         this.wallet = wallet;
     }
 
