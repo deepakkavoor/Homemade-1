@@ -116,6 +116,7 @@ public class ReviewDisplayActivity extends AppCompatActivity {
                     reviewInfo = new ReviewInfo(Integer.parseInt(map.get("ratings").toString()), map.get("review").toString(), map.get("reviewID").toString(), map.get("reviewee").toString(), username, map.get("timeAndDate").toString());
                     reviewDisplayAdapter.added(reviewInfo);
 ////                         username[0] = document2.get("username").toString();
+
 //                                        HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
 
                 } else {
