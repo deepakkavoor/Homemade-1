@@ -1,6 +1,8 @@
 package com.example.student.homemade;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -23,8 +26,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.reactivestreams.Subscription;
+
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 
 //Adapter that displays restaurant cards
@@ -37,6 +44,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     public RestaurantAdapter(@NonNull Context context, List<RestaurantModel> list) {
         this.mContext = context;
         this.myList = list;
+
     }
 
     @Override
@@ -47,6 +55,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         // myViewHolder.rating.setText("Rating:" + String.valueOf(5));
         myViewHolder.restaurantName.setText(restaurantModel.getRestaurantName());
         myViewHolder.rating.setRating((float)restaurantModel.getRating());
+        myViewHolder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                        Intent intent = new Intent(mContext.getApplicationContext(),Subscription_time.class);
+                        // intent.putExtra("restaurantName",title);
+                        mContext.getApplicationContext().startActivity(intent);
+
+            }
+        });
 
 //Glide is a library used to put images in image view
         StringBuilder url = new StringBuilder("providers_photos/restaurant_pictures/");
@@ -116,7 +134,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.restaurant_items, viewGroup, false);
+
+
         return new MyViewHolder(itemView);
+
     }
 
     @Override
@@ -128,6 +149,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         TextView restaurantName, distanceFromCurrLoc;
         RatingBar rating;
         ImageView thumbnail;
+        Button btn;
 
         MyViewHolder(View view) {
             super(view);
@@ -135,9 +157,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             distanceFromCurrLoc = view.findViewById(R.id.distance);
             thumbnail = view.findViewById(R.id.coverImageView);
             rating=view.findViewById(R.id.rating_bar);
-
-
+            btn=view.findViewById(R.id.btn_sub);
         }
+
     }
 
 }
