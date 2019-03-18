@@ -687,7 +687,7 @@ public class RestaurantFragment extends Fragment {
 
 
                                                 RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(counter[0]), descriptions.get(counter[0]), reviewsToBeCopied, distances.get(counter[0]), imageResourceIds.get(counter[0]), ratings.get(0),userIDs.get(counter[0]));
-                                                if(restaurantModel.getDistance()<=20){
+                                                if(restaurantModel.getDistance()<=1000){
                                                     restaurantList.add(restaurantModel);
                                                     dupRestaurantList.add(restaurantModel);
                                                 }
