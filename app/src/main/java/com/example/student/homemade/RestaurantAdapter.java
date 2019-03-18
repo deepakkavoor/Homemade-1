@@ -60,7 +60,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             public void onClick(View v) {
 
                         Intent intent = new Intent(mContext.getApplicationContext(),Subscription_time.class);
-                        // intent.putExtra("restaurantName",title);
+                         intent.putExtra("restaurantName",restaurantModel.getRestaurantName());
+
                         mContext.getApplicationContext().startActivity(intent);
 
             }
@@ -153,6 +154,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
 
         MyViewHolder(View view) {
             super(view);
+
             restaurantName = view.findViewById(R.id.restaurantname);
             distanceFromCurrLoc = view.findViewById(R.id.distance);
             thumbnail = view.findViewById(R.id.coverImageView);
