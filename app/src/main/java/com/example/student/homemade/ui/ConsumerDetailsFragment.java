@@ -69,6 +69,7 @@ public class ConsumerDetailsFragment extends Fragment {
     ProgressDialog progressDialog;
 
 
+
     public ConsumerDetailsFragment(){
         //Required empty constructor
     }
@@ -107,13 +108,18 @@ public class ConsumerDetailsFragment extends Fragment {
         setProfilePic();
 
         editUserDetails.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), EditConsumerDetails.class));
             }
         });
 
+        changeUserPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ChangePassword.class));
+            }
+        });
 
         return v;
 
@@ -135,7 +141,6 @@ public class ConsumerDetailsFragment extends Fragment {
                 userContact.setText(details.getContactNumber());
                 userEmail.setText(details.getEmail());
                 userWallet.setText(Double.toString(details.getWallet()));
-
 
             }
         })
