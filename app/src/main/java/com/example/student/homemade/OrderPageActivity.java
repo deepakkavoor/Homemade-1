@@ -524,7 +524,7 @@ public class OrderPageActivity extends AppCompatActivity {
                                 }
                             });
 
-                         }
+                        }
                     }
                 });
 
