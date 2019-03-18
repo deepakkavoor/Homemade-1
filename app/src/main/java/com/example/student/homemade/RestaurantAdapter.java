@@ -55,16 +55,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         // myViewHolder.rating.setText("Rating:" + String.valueOf(5));
         myViewHolder.restaurantName.setText(restaurantModel.getRestaurantName());
         myViewHolder.rating.setRating((float)restaurantModel.getRating());
-        myViewHolder.btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                        Intent intent = new Intent(mContext.getApplicationContext(),Subscription_time.class);
-                        // intent.putExtra("restaurantName",title);
-                        mContext.getApplicationContext().startActivity(intent);
-
-            }
-        });
+//        myViewHolder.btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                        Intent intent = new Intent(mContext.getApplicationContext(),Subscription_time.class);
+//                        // intent.putExtra("restaurantName",title);
+//                        mContext.getApplicationContext().startActivity(intent);
+//
+//            }
+//        });
 
 //Glide is a library used to put images in image view
         StringBuilder url = new StringBuilder("providers_photos/restaurant_pictures/");
@@ -157,7 +157,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             distanceFromCurrLoc = view.findViewById(R.id.distance);
             thumbnail = view.findViewById(R.id.coverImageView);
             rating=view.findViewById(R.id.rating_bar);
-            btn=view.findViewById(R.id.btn_sub);
+//            btn=view.findViewById(R.id.btn_sub);
         }
 
     }

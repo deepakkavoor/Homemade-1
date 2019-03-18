@@ -106,9 +106,7 @@ public class ConsumerDetailsFragment extends Fragment {
         setDetails();
         setProfilePic();
 
-        editUserDetails.setOnClickListener(new View.OnClickListener() {<<<<<<< saharshNewBranch
-54
- 
+        editUserDetails.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

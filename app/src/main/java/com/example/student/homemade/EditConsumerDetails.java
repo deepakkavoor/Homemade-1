@@ -69,10 +69,7 @@ public class EditConsumerDetails extends AppCompatActivity {
         editPhoto = findViewById(R.id.ivEditPic);
         editDetailsbtn = findViewById(R.id.saveDetails);
         showOldPic();
-        progressDialog = new ProgressD<<<<<<< saharshNewBranch
-6
- 
-ialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("WAIT ,WE ARE WORKING ON IT");
 
 
