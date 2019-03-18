@@ -264,8 +264,8 @@ public class SignUpSeller extends AppCompatActivity {
             public void onSuccess(Location location) {
                 if(location != null) {
                     sellerLocation = location.toString();
-                    int lat = (int) (location.getLatitude());
-                    int lng = (int) (location.getLongitude());
+                    double lat = (double) (location.getLatitude());
+                    double lng = (double) (location.getLongitude());
 
                     geoPoint = new GeoPoint(lat, lng);
                     Toast.makeText(getApplicationContext(), geoPoint.toString(), Toast.LENGTH_LONG).show();
