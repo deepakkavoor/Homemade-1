@@ -1,42 +1,26 @@
 package com.example.student.homemade;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import java.util.ArrayList;
+
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.HashMap;
 
 
 
@@ -64,6 +48,7 @@ public class CustomerConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_confirm);
         FirebaseApp.initializeApp(this);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Confirm Order");
@@ -111,8 +96,6 @@ public class CustomerConfirmActivity extends AppCompatActivity {
                                     Log.d("mfuck",subscriptions.toString());
 
                                     if(subscriptions.containsKey(providerID)){
-                                        Log.d("mfuck",providerID);
-//                                        Log.d("mfucccccckkkkkkkerrrr", ((System.currentTimeMillis() /1000) <  Long.parseLong(subscriptions.get(providerID))) + "");
                                         long t = Long.parseLong(subscriptions.get(providerID).trim());
                                         long now = System.currentTimeMillis();
                                         if( now <  t * 1000){
@@ -123,7 +106,7 @@ public class CustomerConfirmActivity extends AppCompatActivity {
 
                                 final boolean isSubscriber = iss;
                                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                walletCost.setText(map.get("wallet").toString());
+                                walletCost.setText(Math.round(Double.parseDouble(map.get("wallet").toString())) + "");
                                 final Double orderTotal = orderTotal1 - (isSubscriber?discountLongTerm*orderTotal1*0.01:0) + deliveryCharges ;
                                 totalCost.setText(orderTotal + "");
                                 statusInfo.setText((isSubscriber?"Subscriber discount applied\n":"") + "Delivery : Rs 75\nPlease proceed to make the payment");
@@ -134,6 +117,7 @@ public class CustomerConfirmActivity extends AppCompatActivity {
                                         public void onClick(View view) {
                                             Log.d(TAG,"working till here for more case");
                                             docRef.update("paid",true);
+                                            docRef.update("orderTotal",orderTotal);
                                             String currentTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + Calendar.getInstance().get(Calendar.MINUTE);
                                             docRef.update("orderTime",currentTime);
                                             db.collection("Consumer").document(consumerID).update("wallet", Double.parseDouble(map.get("wallet").toString()) - orderTotal);
