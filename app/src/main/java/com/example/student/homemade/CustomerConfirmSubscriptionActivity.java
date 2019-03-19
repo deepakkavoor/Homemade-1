@@ -79,7 +79,10 @@ public class CustomerConfirmSubscriptionActivity extends AppCompatActivity {
                     TextView status = findViewById(R.id.statusInfoS);
                     status.setText("Please proceed to pay");
 
+
+
                     Button lastBtnS = findViewById(R.id.btnlastS);
+                    lastBtnS.setText("Pay");
 
                     lastBtnS.setOnClickListener(new View.OnClickListener() {
                         @Override
