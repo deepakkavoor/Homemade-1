@@ -1,57 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListOfMassOrderItems">
+    tools:context=".MassOrderItems">
 
-    <ListView
-        android:id="@+id/lvItemsAdded"
-        android:layout_width="390dp"
-        android:layout_height="380dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="132dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></ListView>
 
-    <ImageView
-        android:id="@+id/btnAddItems"
-        android:layout_width="77dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:src="@drawable/plusbutton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvItemsAdded"
-        app:layout_constraintVertical_bias="0.967" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvBreakfast"
+                android:text="BREAKFAST"
+                android:layout_marginLeft="30dp"
+                    />
+
+            <Spinner
+                android:id="@+id/spinnerBreakfast"
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+
+                />
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <EditText
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etBreakfast"
+                android:hint="Breakfast Amount"
+
+                android:inputType="number"
+                android:layout_marginLeft="140dp"
+                android:singleLine="true"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvLunch"
+                android:text="LUNCH"
+                android:layout_marginLeft="30dp"
+                />
+
+            <Spinner
+                android:id="@+id/spinnerLunch"
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="67dp"
+
+
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+
+            <EditText
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etLunch"
+                android:layout_marginLeft="140dp"
+
+                android:hint="Lunch Amount"
+
+                android:inputType="number"
+
+                android:singleLine="true"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+            <TextView
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvSnacks"
+                android:text="SNACKS"
+                android:layout_marginLeft="30dp"
+                />
+
+            <Spinner
+                android:id="@+id/spinnerSnacks"
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <EditText
+            style="@style/normaltext"
+            android:id="@+id/etSnacks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Snacks Amount"
+
+            android:inputType="number"
+            android:layout_marginLeft="140dp"
+
+            android:singleLine="true"
+            />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+
+            <TextView
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/tvDinner"
+                android:text="DINNER" />
+
+
+
+            <Spinner
+                android:id="@+id/spinnerDinner"
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+
+                />
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+
+
+
+            <EditText
+                style="@style/normaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etDinner"
+
+                android:hint="Dinner Amount"
+                android:inputType="number"
+                android:layout_marginLeft="140dp"
+
+                android:singleLine="true"
+                />
+
+
+        </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp">
     <Button
-        android:id="@+id/btnSubmitToSeller"
-        android:layout_width="202dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/green2"
-        android:text="SUBMIT ORDER"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddItems"
-        app:layout_constraintHorizontal_bias="0.395"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvItemsAdded"
-        app:layout_constraintVertical_bias="0.864" />
+        style="@style/normaltext"
+        android:textColor="@color/white"
+        android:id="@+id/btnAddItems"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="140dp"
+        android:background="@drawable/buttonstyle"
+        android:text="ADD ITEMS"
+       />
+    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>

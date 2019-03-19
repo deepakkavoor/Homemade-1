@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,7 @@ public class ConsumerUIFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_consumer_ui, container, false);
-        orderList =  v.findViewById(R.id.currentOrders);
+        orderList = v.findViewById(R.id.currentOrders);
         reviewButton = v.findViewById(R.id.reviewButton);
         loadCurrentOrders();
 
@@ -118,7 +119,7 @@ public class ConsumerUIFragment extends Fragment {
 
                             if((boolean)map.get("delivered") == false){         ///not delivered
                                 ArrayList<HashMap> orders = (ArrayList) map.get("itemsOrdered");
-                                                                                                //ITEM ARE STORED IN A MAP INSIDE A ARRAYLIST SO I'M RETRIEVING THEM USING HASHMAP
+                                //ITEM ARE STORED IN A MAP INSIDE A ARRAYLIST SO I'M RETRIEVING THEM USING HASHMAP
                                 for(int i=0 ;i<orders.size() ; i++) {
                                     nameArrayList.add(orders.get(i).get("itemName").toString());
                                     dateArrayList.add(currDate);
@@ -157,7 +158,7 @@ public class ConsumerUIFragment extends Fragment {
 
         @Override
         public int getCount() {
-           return nameArrayList.size();
+            return nameArrayList.size();
         }
 
         @Override

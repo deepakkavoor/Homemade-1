@@ -9,18 +9,17 @@
     <TextView
         android:id="@+id/foodItemsName"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:fontFamily="casual"
-        android:gravity="center"
+
         android:text="Names"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
+
+
+        style="@style/normaltext"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.07" />
@@ -28,19 +27,15 @@
 
     <TextView
         android:id="@+id/foodItemsAmount"
+        style="@style/normaltext"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:fontFamily="casual"
-        android:gravity="center"
         android:text="10"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.594"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.07" />

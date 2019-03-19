@@ -90,6 +90,7 @@ public class ListOfMassOrderItems extends AppCompatActivity implements Serializa
                 intentSend.putExtra("providerID", providerID);
 
                 startActivity(intentSend);
+                finish();
             }
         });
         ////////////GOING TO ADD ITEMS PAGE
@@ -99,14 +100,14 @@ public class ListOfMassOrderItems extends AppCompatActivity implements Serializa
             @Override
             public void onClick(View v) {
                 Map<String,Object> massOrder = new HashMap<>();
-                massOrder.put("date",date);
-                massOrder.put("time",time);
+                massOrder.put("orderDate",date);
+                massOrder.put("orderTime",time);
                 massOrder.put("address",address);
                 massOrder.put("resturantName",resturantName);
-                massOrder.put("ConsumerID", FirebaseAuth.getInstance().getUid());
-                massOrder.put("providerID",providerID);
-                massOrder.put("delivered","false");
-                massOrder.put("paid","false");
+                massOrder.put("Consumer", FirebaseAuth.getInstance().getUid());
+                massOrder.put("provider",providerID);
+                massOrder.put("delivered",false);
+                massOrder.put("paid",false);
                 Map<String,Integer> orderItemsMap = new HashMap<>();
                 for(int i=0 ;i < arrayOfItems.size() ; i++){
                     orderItemsMap.put(arrayOfItems.get(i) , arrayOfRespectiveAmountOfItemsChoosen.get(i));
@@ -117,15 +118,7 @@ public class ListOfMassOrderItems extends AppCompatActivity implements Serializa
                             @Override
                             public void onSuccess(Void aVoid) {
 
-                               try{
-                                   ConsumerUIFragment fragment = new ConsumerUIFragment();
-                                   getSupportFragmentManager().beginTransaction()
-                                           .replace(R.id.container, fragment)
-                                           .commit();
-                               }
-                                catch (Exception e){
-                                   Log.i("jump",e.toString());
-                                }
+
                                 Toast.makeText(ListOfMassOrderItems.this, "SUCCESSFULLY ORDER PLACED", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
@@ -154,7 +147,7 @@ public class ListOfMassOrderItems extends AppCompatActivity implements Serializa
 
 
     /////////////////////REMOVES SAME OCCURANCES OF ITEMS
-    void removeSameOccurancesOfItems(){
+    void removeSameOccurancesOfItems() {
 
         //Toast.makeText(this, Integer.toString(arrayOfItems.size()), Toast.LENGTH_SHORT).show();
         Map<String,Integer> map = new HashMap<String, Integer>();
