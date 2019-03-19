@@ -22,7 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuInflater;fH
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements ProviderUIFragmen
         else{
             //Consumer
             menu.add(0, 4, 0, "Restaurant List");
-            menu.add(0, 5, 0, "Historical Orders");
+            menu.add(0, 5, 0, "Order History");
             menu.add(0, 6, 0, "Mass Orders");
             menu.add(0, 7, 0, "Trending Items");
             menu.add(0, 8, 0, "Cancel Order");
