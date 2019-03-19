@@ -609,7 +609,7 @@ public class RestaurantFragment extends Fragment {
                                     distances.add((float) d);
                                 }
 
-
+git
 //                                Log.d(TAG, restaurantNames.get(0)+ imageResourceIds.get(0) + descriptions.get(0));
 
 
