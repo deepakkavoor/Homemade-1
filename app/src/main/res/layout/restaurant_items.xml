@@ -12,14 +12,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/card_height"
+        android:layout_height="270dp"
         android:orientation="vertical"
         android:weightSum="4">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="3.2"
+            android:layout_weight="3.7"
             android:orientation="vertical">
 
             <FrameLayout
@@ -60,7 +60,7 @@
             <LinearLayout
                 android:id="@+id/someLinearLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="46dp"
+                android:layout_height="match_parent"
                 android:layout_weight="0.8"
                 android:background="#fff"
                 android:orientation="vertical"
@@ -98,11 +98,12 @@
                 android:textColor="@color/white"
                 android:background="@drawable/buttonstyle"
                 android:text="Subscription"
+                android:textSize="12sp"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
