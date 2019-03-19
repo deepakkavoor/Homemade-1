@@ -50,7 +50,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         final RestaurantModel restaurantModel = myList.get(i);
-        String dis = mContext.getString(R.string.dist_from_curr_loc) + ": " + restaurantModel.getDistance();
+
+        Log.d(TAG,"Now it contains"+restaurantModel.getReview().get(0));
+        String dis = mContext.getString(R.string.dist_from_curr_loc) +": " + restaurantModel.getDistance();
+
         myViewHolder.distanceFromCurrLoc.setText(dis + " km");
         // myViewHolder.rating.setText("Rating:" + String.valueOf(5));
         myViewHolder.restaurantName.setText(restaurantModel.getRestaurantName());
