@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,8 +46,13 @@ public class HistoricalOrdersFragment extends Fragment {
     View v;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> nameArrayList,dateArrayList,timeArrayList,providerIDArrayList,providersNameArrayList;
+    ArrayList<String> nameArrayListFinal,dateArrayListFinal,timeArrayListFinal,providerIDArrayListFinal,providersNameArrayListFinal;
+
     ArrayList<Double> priceArrayList;
+    ArrayList<Double> priceArrayListFinal;
     ListView historyOfOrdersListView;
+    Button searchButton;
+    EditText nameOfItem;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     CollectionReference ordersRef  = db.collection("Orders");
 
@@ -98,13 +104,22 @@ public class HistoricalOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_historical_orders, container, false);
 
-
+        searchButton = v.findViewById(R.id.btnSearchForHistoryOfOrders);
+        nameOfItem = v.findViewById(R.id.etNameOfHistoryOfOrder);
         historyOfOrdersListView = (ListView) v.findViewById(R.id.lvHistory);
         loadHistoryOfOrders();
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                repopulateTheListView();
+
+            }
+        });
 
         return v;
     }
+
 
 
 
@@ -116,6 +131,14 @@ public class HistoricalOrdersFragment extends Fragment {
         nameArrayList = new ArrayList<>();
         providerIDArrayList = new ArrayList<>();
         providersNameArrayList = new ArrayList<>();
+
+        ///final array
+        dateArrayListFinal = new ArrayList<>();
+        timeArrayListFinal = new ArrayList<>();
+        priceArrayListFinal = new ArrayList<>();
+        nameArrayListFinal = new ArrayList<>();
+        providerIDArrayListFinal = new ArrayList<>();
+        providersNameArrayListFinal = new ArrayList<>();
 
 
         ordersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -158,6 +181,19 @@ public class HistoricalOrdersFragment extends Fragment {
                             }
                         }
                     }
+
+                    /////I'm not changing the originals just the finals to make the loading faster
+                    for(int i=0;i<nameArrayList.size() ; i++){
+
+                            nameArrayListFinal.add(nameArrayList.get(i));
+                            timeArrayListFinal.add(timeArrayList.get(i));
+                            dateArrayListFinal.add(dateArrayList.get(i));
+                            priceArrayListFinal.add(priceArrayList.get(i));
+                            providerIDArrayListFinal.add(providerIDArrayList.get(i));
+                            providersNameArrayListFinal.add(providersNameArrayList.get(i));
+
+                    }
+
                     HistoricalOrdersFragment.OrderAdapter customAdapter = new HistoricalOrdersFragment.OrderAdapter();
                     historyOfOrdersListView.setAdapter(customAdapter);
                 }
@@ -180,13 +216,69 @@ public class HistoricalOrdersFragment extends Fragment {
     }
 
 
+    void findProvidersName(){
+
+    }
+
+
+
+    void repopulateTheListView(){
+        dateArrayListFinal = new ArrayList<>();
+        timeArrayListFinal = new ArrayList<>();
+        priceArrayListFinal = new ArrayList<>();
+        nameArrayListFinal = new ArrayList<>();
+        providerIDArrayListFinal = new ArrayList<>();
+        providersNameArrayListFinal = new ArrayList<>();
+
+        if(nameOfItem.getText().toString().equals(""))
+        {
+
+            for(int i=0;i<nameArrayList.size() ; i++){
+                nameArrayListFinal.add(nameArrayList.get(i));
+                timeArrayListFinal.add(timeArrayList.get(i));
+                dateArrayListFinal.add(dateArrayList.get(i));
+                priceArrayListFinal.add(priceArrayList.get(i));
+                providerIDArrayListFinal.add(providerIDArrayList.get(i));
+                providersNameArrayListFinal.add(providersNameArrayList.get(i));
+
+            }
+
+            Toast.makeText(getActivity(), "Enter Something", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String searchedValue = nameOfItem.getText().toString();
+
+        boolean flag = false;
+        for(int i=0;i<nameArrayList.size() ; i++){
+            if(nameArrayList.get(i).equals(searchedValue)){
+                flag = true;
+                nameArrayListFinal.add(nameArrayList.get(i));
+                timeArrayListFinal.add(timeArrayList.get(i));
+                dateArrayListFinal.add(dateArrayList.get(i));
+                priceArrayListFinal.add(priceArrayList.get(i));
+                providerIDArrayListFinal.add(providerIDArrayList.get(i));
+                providersNameArrayListFinal.add(providersNameArrayList.get(i));
+            }
+        }
+
+        if(flag) {
+            HistoricalOrdersFragment.OrderAdapter customAdapter = new HistoricalOrdersFragment.OrderAdapter();
+            historyOfOrdersListView.setAdapter(customAdapter);
+        }
+        else{
+            Toast.makeText(getActivity(), "Cannot Find the Item", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+
     /////////////////CUSTOM ADADPTER FOR LIST OF CURRENT ITEMS
 
     class OrderAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return nameArrayList.size();
+            return providersNameArrayListFinal.size();
         }
 
         @Override
@@ -216,7 +308,7 @@ public class HistoricalOrdersFragment extends Fragment {
                 public void onClick(View v) {
                     try {
                         Intent intent = new Intent(getActivity(), RatingandReviewActivity.class);
-                        intent.putExtra("providerID", providerIDArrayList.get(i));
+                        intent.putExtra("providerID", providerIDArrayListFinal.get(i));
                         startActivity(intent);
                     }
                     catch (Exception e){
@@ -225,11 +317,11 @@ public class HistoricalOrdersFragment extends Fragment {
                     }
                 }
             });
-            name.setText(nameArrayList.get(i));
-            price.setText(priceArrayList.get(i).toString());
-            date.setText(dateArrayList.get(i));
-            time.setText(timeArrayList.get(i));
-            nameOfProvider.setText(providersNameArrayList.get(i));
+            name.setText(nameArrayListFinal.get(i));
+            price.setText(priceArrayListFinal.get(i).toString());
+            date.setText(dateArrayListFinal.get(i));
+            time.setText(timeArrayListFinal.get(i));
+            nameOfProvider.setText(providersNameArrayListFinal.get(i));
 
 
             return view;
