@@ -31,7 +31,8 @@
         android:roundIcon="@mipmap/ic_launcher_home_made_round2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ChangePassword"></activity>
+        <activity android:name=".ViewExistingMassOrders"></activity>
+        <activity android:name=".ui.ChangePassword" />
         <activity android:name=".ListOfMassOrderItems" />
         <activity android:name=".MassOrderItems" />
         <activity android:name=".SucessSub"></activity>
@@ -120,7 +121,6 @@
             android:name=".CustomerConfirmActivity"
             android:label="Confirm Order"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".CustomerConfirmSubscriptionActivity"
             android:label="Confirm Subscription"
             android:theme="@style/AppTheme" />
