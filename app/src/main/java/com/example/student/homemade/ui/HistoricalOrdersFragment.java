@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.net.Inet4Address;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +46,8 @@ public class HistoricalOrdersFragment extends Fragment {
 
     View v;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<String> nameArrayList,dateArrayList,timeArrayList,providerIDArrayList,providersNameArrayList;
-    ArrayList<String> nameArrayListFinal,dateArrayListFinal,timeArrayListFinal,providerIDArrayListFinal,providersNameArrayListFinal;
+    ArrayList<String> nameArrayList,dateArrayList,timeArrayList,providerIDArrayList;
+    ArrayList<String> nameArrayListFinal,dateArrayListFinal,timeArrayListFinal,providerIDArrayListFinal;
 
     ArrayList<Double> priceArrayList;
     ArrayList<Double> priceArrayListFinal;
@@ -130,7 +131,7 @@ public class HistoricalOrdersFragment extends Fragment {
         priceArrayList = new ArrayList<>();
         nameArrayList = new ArrayList<>();
         providerIDArrayList = new ArrayList<>();
-        providersNameArrayList = new ArrayList<>();
+       // providersNameArrayList = new ArrayList<>();
 
         ///final array
         dateArrayListFinal = new ArrayList<>();
@@ -138,7 +139,7 @@ public class HistoricalOrdersFragment extends Fragment {
         priceArrayListFinal = new ArrayList<>();
         nameArrayListFinal = new ArrayList<>();
         providerIDArrayListFinal = new ArrayList<>();
-        providersNameArrayListFinal = new ArrayList<>();
+      //  providersNameArrayListFinal = new ArrayList<>();
 
 
         ordersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -166,36 +167,26 @@ public class HistoricalOrdersFragment extends Fragment {
                                     priceArrayList.add( Double.valueOf(String.valueOf(orders.get(i).get("itemCost"))));
                                     if(map.get("provider")!= null){
                                         providerIDArrayList.add(map.get("provider").toString());
-                                    }
-                                    else providerIDArrayList.add("");
-                                    if(map.get("providerName") !=null)
-                                        providersNameArrayList.add(map.get("providerName").toString());
-                                    else
-                                        providersNameArrayList.add("The Yellow Chilli");
+                                        }
+                                    else {
+                                        providerIDArrayList.add("");
+                                       // providersNameArrayList.add("The Yellow Chilli");
 
-//                                    Log.i("items", nameArrayList.get(i) + "\t" + dateArrayList.get(i) + "\t" + timeArrayList.get(i) +"\t"
-//                                                        + statusArrayList.get(i) + "\t" + Double.toString(priceArrayList.get(i)));
+                                    }
+
+//
                                 }
                                 /////NOW EVERYORDER RELATED TO THE PARTICULAR LOGINED USER IS STORED IN LIST
                                 /////NEXT TASK IS TO PUT EVERYTHING IN LISTVIEW
                             }
                         }
                     }
+                    Log.i("something",Integer.toString(providerIDArrayList.size()));
+                    //findProvidersName();
+                    fillin();
 
-                    /////I'm not changing the originals just the finals to make the loading faster
-                    for(int i=0;i<nameArrayList.size() ; i++){
 
-                            nameArrayListFinal.add(nameArrayList.get(i));
-                            timeArrayListFinal.add(timeArrayList.get(i));
-                            dateArrayListFinal.add(dateArrayList.get(i));
-                            priceArrayListFinal.add(priceArrayList.get(i));
-                            providerIDArrayListFinal.add(providerIDArrayList.get(i));
-                            providersNameArrayListFinal.add(providersNameArrayList.get(i));
 
-                    }
-
-                    HistoricalOrdersFragment.OrderAdapter customAdapter = new HistoricalOrdersFragment.OrderAdapter();
-                    historyOfOrdersListView.setAdapter(customAdapter);
                 }
                 else{
                     Toast.makeText(getActivity(), "CANNOT DISPLAY ITEMS!", Toast.LENGTH_SHORT).show();
@@ -216,19 +207,103 @@ public class HistoricalOrdersFragment extends Fragment {
     }
 
 
-    void findProvidersName(){
+    ////////////////////////////////////////TO FIND THE PROVIDERS NAME BY QUERYING AS WE COULDN'T MAKE DATABASE CHANEGS AT THE LAST MOMENT
+//   void findProvidersName(){
+//
+//       final Integer[] count = {0};
+//
+//        CollectionReference providersCollection = db.collection("Provider");
+//
+//      // Log.i("FUCK",Integer.toString(providerIDArrayList.size()));
+//       //ProviderIDArrayList is ok
+//        for(String providerID : providerIDArrayList) {
+//            //THIS FOR LOOP IS WORKING FINE
+//
+//            providersCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        Boolean flag = false;
+//
+//                        for (QueryDocumentSnapshot allProviders : task.getResult()) {
+//                            Map m = allProviders.getData();
+//
+//                            //Toast.makeText(getActivity(),m.get("restaurantName").toString() , Toast.LENGTH_SHORT).show();
+//                            if (m.get("id") != null) {
+//                                if (m.get("id").toString().equals(providerID)) {
+//                                    //Toast.makeText(getActivity(), providerID + "\n" + m.get("id").toString() , Toast.LENGTH_SHORT).show();
+//                                    if (m.get("restaurantName") != null) {
+//
+//                                        Toast.makeText(getActivity(), m.get("restaurantName").toString(), Toast.LENGTH_SHORT).show();
+//                                        String temps =  m.get("restaurantName").toString();
+//
+//                                        providersNameArrayList.add(temps);
+//                                        count[0]++;
+//
+//                                        flag = true;
+//                                        break;
+//                                    }
+//                                }
+//
+//                            }
+//
+//                            Log.d("Hey","ID"+String.valueOf(providerIDArrayList.size()) + "count is"  + Integer.toString(count[0]));
+//                            Log.d("Hey","Name"+String.valueOf(providersNameArrayList.size()));
+//
+//
+//                        }
+//                        if (flag) {
+//                            Toast.makeText(getActivity(), "firstFirst", Toast.LENGTH_SHORT).show();
+//                            providersNameArrayList.add("The Yellow Chilli");
+//                            count[0]++;
+//
+//                        }
+//                    }
+//
+//                }
+//
+//
+//
+//            });
+//
+//        }
+//       if(count[0] >=providerIDArrayList.size())
+//       {
+//           Log.d("FUCK","ITS FILLED"+"Name"+String.valueOf(providersNameArrayList.size()));
+//           fillin();
+//       }
+//
+//
+//
+//
+//   }
 
+
+    void fillin(){
+        /////I'm not changing the originals just the finals to make the loading faster
+        for(int i=0;i<nameArrayList.size() ; i++){
+            Log.i("seeocn","some");
+            nameArrayListFinal.add(nameArrayList.get(i));
+            timeArrayListFinal.add(timeArrayList.get(i));
+            dateArrayListFinal.add(dateArrayList.get(i));
+            priceArrayListFinal.add(priceArrayList.get(i));
+            providerIDArrayListFinal.add(providerIDArrayList.get(i));
+           // providersNameArrayListFinal.add(providersNameArrayList.get(i));
+
+        }
+        OrderAdapter customAdapter = new OrderAdapter();
+        historyOfOrdersListView.setAdapter(customAdapter);
     }
 
-
-
+    /////////////////////////////////////THIS IS FOR SEARCH BAR
+    //////////////I WANTED IT TO LOAD QUICKLY SO I DIDN'T DO QUERY AGAIN AND AGAIN BUT JUST ONCE
     void repopulateTheListView(){
         dateArrayListFinal = new ArrayList<>();
         timeArrayListFinal = new ArrayList<>();
         priceArrayListFinal = new ArrayList<>();
         nameArrayListFinal = new ArrayList<>();
         providerIDArrayListFinal = new ArrayList<>();
-        providersNameArrayListFinal = new ArrayList<>();
+       // providersNameArrayListFinal = new ArrayList<>();
 
         if(nameOfItem.getText().toString().equals(""))
         {
@@ -239,13 +314,15 @@ public class HistoricalOrdersFragment extends Fragment {
                 dateArrayListFinal.add(dateArrayList.get(i));
                 priceArrayListFinal.add(priceArrayList.get(i));
                 providerIDArrayListFinal.add(providerIDArrayList.get(i));
-                providersNameArrayListFinal.add(providersNameArrayList.get(i));
+              //  providersNameArrayListFinal.add(providersNameArrayList.get(i));
 
             }
 
             Toast.makeText(getActivity(), "Enter Something", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
         String searchedValue = nameOfItem.getText().toString();
 
         boolean flag = false;
@@ -257,7 +334,7 @@ public class HistoricalOrdersFragment extends Fragment {
                 dateArrayListFinal.add(dateArrayList.get(i));
                 priceArrayListFinal.add(priceArrayList.get(i));
                 providerIDArrayListFinal.add(providerIDArrayList.get(i));
-                providersNameArrayListFinal.add(providersNameArrayList.get(i));
+           //     providersNameArrayListFinal.add(providersNameArrayList.get(i));
             }
         }
 
@@ -278,7 +355,7 @@ public class HistoricalOrdersFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return providersNameArrayListFinal.size();
+            return providerIDArrayListFinal.size();
         }
 
         @Override
@@ -300,7 +377,7 @@ public class HistoricalOrdersFragment extends Fragment {
             TextView price = view.findViewById(R.id.tvPriceOfFood);
             TextView date = view.findViewById(R.id.tvDateOfFood);
             TextView time = view.findViewById(R.id.tvTimeOfFood);
-            TextView nameOfProvider = view.findViewById(R.id.tvNameOfResturant);
+           // TextView nameOfProvider = view.findViewById(R.id.tvNameOfResturant);
             Button reviewButton = view.findViewById(R.id.btnToReviewsPage);
 
             reviewButton.setOnClickListener(new View.OnClickListener() {
@@ -321,7 +398,7 @@ public class HistoricalOrdersFragment extends Fragment {
             price.setText(priceArrayListFinal.get(i).toString());
             date.setText(dateArrayListFinal.get(i));
             time.setText(timeArrayListFinal.get(i));
-            nameOfProvider.setText(providersNameArrayListFinal.get(i));
+          //  nameOfProvider.setText("Yellow");
 
 
             return view;
