@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.student.homemade.ui.HistoricalOrdersFragment;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -274,44 +273,46 @@ public class CancelOrderFragment extends Fragment {
 
 //        Log.v("========", "order id is " + orderID);
 
-        db.collection("Orders").whereEqualTo("consumer", myconsumerID).whereEqualTo("delivered", false).whereEqualTo("paid", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                OrderInfo orderInfo;
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+//        db.collection("Orders").whereEqualTo("consumer", myconsumerID).whereEqualTo("delivered", false).whereEqualTo("paid", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+////                OrderInfo orderInfo;
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//
+////                        Log.d(TAG, document.getId() + " => " + document.getData());
+////                        HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+//
+//                        Order2 order2 = document.toObject(Order2.class);
+//                        String documentID;
+//                        if(currOrder.equals(order2)) {
+//                            documentID = document.getId();
+//
+//
+//                            db.collection("Orders").document(documentID)
+//                                    .delete()
+//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Log.v("=======", "DocumentSnapshot successfully deleted!");
+//                                        }
+//                                    })
+//                                    .addOnFailureListener(new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            Log.v("========", "Error deleting document", e);
+//                                        }
+//                                    });
+//                        }
+//
+//                    }
+//                } else {
+//                    Log.d(TAG, "Error getting documents: ", task.getException());
+//                }
+//            }
+//        });
 
-//                        Log.d(TAG, document.getId() + " => " + document.getData());
-//                        HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
-
-                        Order2 order2 = document.toObject(Order2.class);
-                        String documentID;
-                        if(currOrder.equals(order2)) {
-                            documentID = document.getId();
-
-
-                            db.collection("Orders").document(documentID)
-                                    .delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.v("=======", "DocumentSnapshot successfully deleted!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.v("========", "Error deleting document", e);
-                                        }
-                                    });
-                        }
-
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
+        //---------------
 
 //        db.collection("Orders").document("13")
 //                .delete()
@@ -328,6 +329,8 @@ public class CancelOrderFragment extends Fragment {
 //                    }
 //                });
 
+        //-----------------
+
         final int position1 = position;
 
         AlertDialog.Builder builder;
@@ -336,14 +339,68 @@ public class CancelOrderFragment extends Fragment {
         } else {
             builder = new AlertDialog.Builder(getContext());
         }
-        builder//.setTitle("Logout")
+        builder.setTitle("Cancel Order")
                 .setMessage("Are you sure you want to cancel this order?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
 
-//                        Log.d("ayyyyyyyyyyyyyyyyyy",orderInfos.get(position1).toString());
-                        Log.d("ayyyyyyyyyyyyyyyyyyy",currOrder.provider + " " + currOrder.orderTotal + " " + currOrder.consumer);
+                        //---------------------------
+                        Log.d("===========", "here");
+
+                        db.collection("Orders").whereEqualTo("consumer", myconsumerID).whereEqualTo("delivered", false).whereEqualTo("paid", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                OrderInfo orderInfo;
+                                if (task.isSuccessful()) {
+                                    Log.d("=======", "searching");
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("=========", "searching2");
+
+//                        Log.d(TAG, document.getId() + " => " + document.getData());
+//                        HashMap<String, Object> map = (HashMap<String, Object>) document.getData();
+
+                                        Order2 order2 = document.toObject(Order2.class);
+                                        String documentID;
+                                        Log.d("===========", order2.getOrderTime() + " currorder " + currOrder.getOrderTime());
+                                        if(currOrder.getOrderTime().equals(order2.getOrderTime())) {
+                                            documentID = document.getId();
+
+                                            Log.d("============", "found order");
+                                            db.collection("Orders").document(documentID)
+                                                    .delete()
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("=======", "DocumentSnapshot successfully deleted!");
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.d("========", "Error deleting document", e);
+                                                        }
+                                                    });
+                                            break;
+                                        }
+                                        else{
+                                            Log.d("=========", "next loop");
+                                            continue;
+                                        }
+
+
+                                    }
+                                } else {
+                                    Log.d("================", "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+//-----------------------------------------
+                        Log.d("===========", "here2");
+
+                        Log.d("==========",orderInfos.get(position1).toString());
+                        Log.d("=============",currOrder.provider + " " + currOrder.orderTotal + " " + currOrder.consumer);
 
                         db.collection("Provider").document(currOrder.provider).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
@@ -360,10 +417,9 @@ public class CancelOrderFragment extends Fragment {
                                 db.collection("Provider").document(currOrder.consumer).update("wallet",cost);
                             }
                         });
-
                         orderInfos.remove(position1);
                         mAdapter.notifyItemRemoved(position1);
-                        inform("Successfully cancelled order");
+                        Log.d("============","Successfully cancelled order");
 
                     }
                 })
@@ -471,8 +527,8 @@ public class CancelOrderFragment extends Fragment {
 
                         Log.d("=========", "hour " + hour + " mins " + mins + " currentHour " + currentHour + " currentMinute " + currentMinute + " timeBeforeCancel " + timeBeforeCancel);
 
-                        if(((currentDay-1)*1440 + (currentMonth-1)*43800 /*+ (currentYear-1)*525600*/ + currentHour * 60 + currentMinute <
-                                (day-1)*1440 + (month-1)*43800 + /*(year-1)*525600*/ + hour * 60 + mins + timeBeforeCancel) && (currentHour * 60 + currentMinute > hour * 60 + mins)
+                        if(((currentDay-1)*1440 + (currentMonth-1)*43800 + /*(currentYear-1)*525600 + */ currentHour * 60 + currentMinute <
+                                (day-1)*1440 + (month-1)*43800 + /*+ (year-1)*525600 + */hour * 60 + mins + timeBeforeCancel) && (currentHour * 60 + currentMinute >= hour * 60 + mins)
                                 ) {
 
                                 removeItem(position2);
