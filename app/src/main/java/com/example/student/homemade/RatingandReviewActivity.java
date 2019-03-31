@@ -43,6 +43,10 @@ public class RatingandReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
+
+        Intent intent = getIntent();
+        String providerID = intent.getStringExtra("providerID");
+        Toast.makeText(this, providerID, Toast.LENGTH_SHORT).show();
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("RatingandReviewActivity");
         setSupportActionBar(toolbar);

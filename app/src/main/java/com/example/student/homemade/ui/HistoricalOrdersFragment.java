@@ -44,7 +44,7 @@ public class HistoricalOrdersFragment extends Fragment {
 
     View v;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<String> nameArrayList,dateArrayList,timeArrayList,providerArrayList;
+    ArrayList<String> nameArrayList,dateArrayList,timeArrayList,providerIDArrayList,providersNameArrayList;
     ArrayList<Double> priceArrayList;
     ListView historyOfOrdersListView;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -114,7 +114,8 @@ public class HistoricalOrdersFragment extends Fragment {
         timeArrayList = new ArrayList<>();
         priceArrayList = new ArrayList<>();
         nameArrayList = new ArrayList<>();
-        providerArrayList = new ArrayList<>();
+        providerIDArrayList = new ArrayList<>();
+        providersNameArrayList = new ArrayList<>();
 
 
         ordersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -140,7 +141,15 @@ public class HistoricalOrdersFragment extends Fragment {
                                     dateArrayList.add(currDate);
                                     timeArrayList.add(currTime);
                                     priceArrayList.add( Double.valueOf(String.valueOf(orders.get(i).get("itemCost"))));
-                                    providerArrayList.add(map.get("provider").toString());
+                                    if(map.get("provider")!= null){
+                                        providerIDArrayList.add(map.get("provider").toString());
+                                    }
+                                    else providerIDArrayList.add("");
+                                    if(map.get("providerName") !=null)
+                                        providersNameArrayList.add(map.get("providerName").toString());
+                                    else
+                                        providersNameArrayList.add("The Yellow Chilli");
+
 //                                    Log.i("items", nameArrayList.get(i) + "\t" + dateArrayList.get(i) + "\t" + timeArrayList.get(i) +"\t"
 //                                                        + statusArrayList.get(i) + "\t" + Double.toString(priceArrayList.get(i)));
                                 }
@@ -199,6 +208,7 @@ public class HistoricalOrdersFragment extends Fragment {
             TextView price = view.findViewById(R.id.tvPriceOfFood);
             TextView date = view.findViewById(R.id.tvDateOfFood);
             TextView time = view.findViewById(R.id.tvTimeOfFood);
+            TextView nameOfProvider = view.findViewById(R.id.tvNameOfResturant);
             Button reviewButton = view.findViewById(R.id.btnToReviewsPage);
 
             reviewButton.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +216,7 @@ public class HistoricalOrdersFragment extends Fragment {
                 public void onClick(View v) {
                     try {
                         Intent intent = new Intent(getActivity(), RatingandReviewActivity.class);
-                        intent.putExtra("providerID", providerArrayList.get(i));
+                        intent.putExtra("providerID", providerIDArrayList.get(i));
                         startActivity(intent);
                     }
                     catch (Exception e){
@@ -219,6 +229,7 @@ public class HistoricalOrdersFragment extends Fragment {
             price.setText(priceArrayList.get(i).toString());
             date.setText(dateArrayList.get(i));
             time.setText(timeArrayList.get(i));
+            nameOfProvider.setText(providersNameArrayList.get(i));
 
 
             return view;
