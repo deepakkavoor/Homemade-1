@@ -73,9 +73,7 @@ public class ViewExistingMassOrders extends AppCompatActivity {
 
                         }
                     }
-                    for(String test : foodItemsArrayList){
-                        Log.i("items",test);
-                    }
+
                     sizeOfArrayList = nameOfProviderArrayList.size();
                     if(flag){
                     ViewExistingMassOrders.MassOrderAdapter adapter = new ViewExistingMassOrders.MassOrderAdapter();
