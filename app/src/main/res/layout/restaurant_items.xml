@@ -89,7 +89,7 @@
                     android:layout_width="88dp"
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
-                    android:numStars="10"
+                    android:numStars="5"
                     android:paddingStart="8dp" />
 
 

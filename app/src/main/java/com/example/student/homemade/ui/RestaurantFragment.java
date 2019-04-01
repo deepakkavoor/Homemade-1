@@ -713,7 +713,7 @@ public class RestaurantFragment extends Fragment {
                                 }
                                 RestaurantModel restaurantModel = new RestaurantModel(restaurantNames.get(0), descriptions.get(0), localReviews, distances.get(0), imageResourceIds.get(0), finalRating,document.getId());
                                 Log.d(TAG,"Model has"+restaurantModel.getReview().get(0));
-                                if(restaurantModel.getDistance()<=1000){
+                                if(restaurantModel.getDistance()<=20){
                                     restaurantList.add(restaurantModel);
                                     dupRestaurantList.add(restaurantModel);
                                 }
